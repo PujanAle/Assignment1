@@ -30,7 +30,7 @@ public class CorporateOwner extends Owner{
     }
     
     /**
-     * setAustralianBusinessNumber method
+     * setAustralianBusinessNumber mutator method
      * @param abn 
      */
     public void setAustralianBusinessNumber(int abn){
