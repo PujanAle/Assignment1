@@ -39,7 +39,7 @@ public class CorporateOwner extends Owner{
     }
     
     /**
-     * 
+     * getAustralianBusinessNumber accessor method
      * @return 
      */
     public int getAustralianBusinessNumber(){
