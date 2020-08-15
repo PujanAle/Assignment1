@@ -54,6 +54,7 @@ public class HeavyVehicle extends Vehicle{
      * toString method
      * @return details of the heavy vehicle with it's loading capacity
      */
+    @Override
     public String toString(){
         
         return String.format(super.toString() + " The load capacity of the heavy vehicle is %.2f", loadCapacity);
