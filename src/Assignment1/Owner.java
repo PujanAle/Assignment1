@@ -34,7 +34,7 @@ public abstract class Owner{
     }
     
     /**
-     * setFirstName method
+     * setFirstName mutator method
      * @param firstName 
      */
     public void setFirstName(String firstName){
@@ -43,7 +43,7 @@ public abstract class Owner{
     }
     
     /**
-     * setLastName method
+     * setLastName mutator method
      * @param lastName 
      */
     public void setLastName(String lastName){
@@ -52,7 +52,7 @@ public abstract class Owner{
     }
     
     /**
-     * setLicenseNumber method
+     * setLicenseNumber mutator method
      * @param licenseNumber 
      */
     public void setLicenseNumber(int licenseNumber){
@@ -61,7 +61,7 @@ public abstract class Owner{
     }
      
     /**
-     * setAddress method
+     * setAddress mutator method
      * @param address 
      */
     public void setAddress(String address){
@@ -70,7 +70,7 @@ public abstract class Owner{
     }
     
     /**
-     * setPhoneNumber method
+     * setPhoneNumber mutator method
      * @param phoneNumber 
      */
     public void setPhoneNumber(String phoneNumber){
@@ -79,7 +79,7 @@ public abstract class Owner{
     }
     
     /**
-     * getFirstName method
+     * getFirstName accessor method
      * @return first name of owner
      */
     public String getFirstName(){
@@ -88,7 +88,7 @@ public abstract class Owner{
     }
     
     /**
-     * getLastName method
+     * getLastName accessor method
      * @return last name of owner
      */
     public String getLastName(){
@@ -97,7 +97,7 @@ public abstract class Owner{
     }
     
     /**
-     * getLicenseNumber method
+     * getLicenseNumber accessor method
      * @return license number of owner
      */
     public int getLicenseNumber(){
@@ -106,7 +106,7 @@ public abstract class Owner{
     }
     
     /**
-     * getAddress method
+     * getAddress accessor method
      * @return address of owner
      */
     public String getAddress(){
@@ -115,7 +115,7 @@ public abstract class Owner{
     }
     
     /**
-     * getPhoneNumber method
+     * getPhoneNumber accessor method
      * @return phone number of owner
      */
     public String getPhoneNumber(){
