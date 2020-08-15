@@ -32,7 +32,7 @@ public class PrivateOwner extends Owner{
     }
 
     /**
-     * setDateOfBirth method
+     * setDateOfBirth mutator method
      * @param dateOfBirth 
      */
     public void setDateOfBirth(String dateOfBirth){
@@ -41,7 +41,7 @@ public class PrivateOwner extends Owner{
     }
     
     /**
-     * getDateOfBirth method
+     * getDateOfBirth accessor method
      * @return date of birth of private owner
      */
     public String getDateOfBirth(){
