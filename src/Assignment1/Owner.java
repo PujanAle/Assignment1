@@ -12,7 +12,7 @@ public abstract class Owner{
     private String lastName;        // last name of owner
     private int licenseNumber;     // license number which is the ID
     private String address;         // address of owner
-    private int phoneNumber;        // phone no. of owner
+    private String phoneNumber;        // phone no. of owner
     
     /**
      * constructor
@@ -22,7 +22,7 @@ public abstract class Owner{
      * @param addr address of owner
      * @param number phone no. of owner
      */
-    public Owner(String fName, String lName, int lNumber, String addr, int number){
+    public Owner(String fName, String lName, int lNumber, String addr, String number){
         
         firstName = fName;
         lastName = lName;
@@ -73,7 +73,7 @@ public abstract class Owner{
      * setPhoneNumber method
      * @param phoneNumber 
      */
-    public void setPhoneNumber(int phoneNumber){
+    public void setPhoneNumber(String phoneNumber){
         
         this.phoneNumber = phoneNumber;
     }
@@ -118,7 +118,7 @@ public abstract class Owner{
      * getPhoneNumber method
      * @return phone number of owner
      */
-    public int getPhoneNumber(){
+    public String getPhoneNumber(){
         
         return phoneNumber;
     }
@@ -130,7 +130,7 @@ public abstract class Owner{
     @Override
     public String toString(){
         
-        return String.format("%s %s's license number is %d, address is %s and phone number is %d.", 
+        return String.format("%s %s's license number is %d, address is %s and phone number is %s.", 
                 firstName, lastName, licenseNumber, address, phoneNumber);
     }
     
