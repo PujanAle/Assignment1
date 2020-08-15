@@ -47,6 +47,10 @@ public class CorporateOwner extends Owner{
         return australianBusinessNumber;
     }
     
+    /**
+     * toString method
+     * @return Details of corporate owner along with their ABN
+     */
     @Override
     public String toString(){
         
