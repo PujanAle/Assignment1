@@ -152,7 +152,7 @@ public abstract class Vehicle{
     public String toString(){
         
         return String.format("The vehicle's plate number is %s. It was made by %s. It's model is %s.\n "
-                + "It was made in %d. It's engine capacity is %.2f litre. The owner ID of the vehicle is %d",
+                + "It was made in %d. It's engine capacity is %.2f litre. The owner ID of the vehicle is %d.",
                 plateNumber, make, model, year, engineCapacity, ownerId);
     }
     
