@@ -80,7 +80,11 @@ public class SystemGui extends JFrame{
         // adding  main panel to app
         this.add(panel5);
  
+        // adding functionality to "Register" button
         register.addActionListener(a -> {
+            
+            // so that the main menu is hidden
+            this.hide();
             
             // frame for registration information
             JFrame regFrame = new JFrame();
@@ -267,11 +271,24 @@ public class SystemGui extends JFrame{
             // making buttons
             JButton registerButton = new JButton("Register");    // to register the owner and vehicle
             JButton clearButton = new JButton("Clear");          // to clear every textarea
+            JButton backButton = new JButton("Back");            // to go back to main menu
+            JButton exitButton = new JButton("Exit");
+            
+            // adding functionality to back button
+            backButton.addActionListener(f -> {
+                
+                regFrame.hide();
+                this.setVisible(true);
+            });
+            
+            // adding functionality to exit button
+            exitButton.addActionListener(g -> exit());
             
             // adding buttons to panel buttons
             buttons.add(registerButton);
             buttons.add(clearButton);
-            buttons.add(exit);
+            buttons.add(backButton);
+            buttons.add(exitButton);
             
             
             // adding all the major panels to the frame
@@ -283,12 +300,21 @@ public class SystemGui extends JFrame{
          // end of register button action listener            
         });
         
-        exit.addActionListener(d -> {
-            
-            System.exit(0);
-        });
-                
+        // adding functionality to "Exit" button
+        exit.addActionListener(d -> exit());
+        
+                      
      // end of constructor   
+    }
+    
+
+    /**
+     * exit() method
+     * to exit the application
+     */
+    public void exit(){
+        
+        System.exit(0);
     }
     
     
