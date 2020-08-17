@@ -3,6 +3,7 @@ package Assignment1;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -15,7 +16,9 @@ public class SystemGui extends JFrame{
     
     // size of app
     private final int DEFAULT_WIDTH = 360;
-    private final int DEFAULT_HEIGHT = 180;
+    private final int DEFAULT_HEIGHT = 215;
+    
+    private final JLabel welcomeLabel;
     
     // panels for upper buttons
     private final JPanel panel1;
@@ -42,9 +45,12 @@ public class SystemGui extends JFrame{
         // size of app
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         
+        // welcome text for the main menu
+        welcomeLabel = new JLabel("Welcome to the Motor Vehicle Registration System");
+        
         // panel for upper buttons
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayout(3, 1, 10, 5));
+        panel1.setLayout(new GridLayout(4, 1, 10, 5));
         panel2 = new JPanel();
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
                
@@ -63,7 +69,8 @@ public class SystemGui extends JFrame{
         sAndEVehicle = new JButton("Search and Edit Vehicle Info");  // button to search and edit vehicle info
         exit = new JButton("Exit");      // button to exit system
         
-        // adding buttons to nested panel
+        // adding welcome label and buttons to nested panel
+        panel1.add(welcomeLabel);
         panel1.add(register);
         panel1.add(sAndEOwner);
         panel1.add(sAndEVehicle);
@@ -80,7 +87,9 @@ public class SystemGui extends JFrame{
         // adding  main panel to app
         this.add(panel5);
  
-        // adding functionality to "Register" button
+        /**
+         * adding functionality to "Register" button
+         */
         register.addActionListener(a -> {
             
             // so that the main menu is hidden
@@ -98,17 +107,17 @@ public class SystemGui extends JFrame{
             regFrame.setLayout(new BorderLayout());        
             
             // making a titled border for owner detail entry
-            TitledBorder ownerLine = BorderFactory.createTitledBorder("Owenr Information");
+            TitledBorder ownerLine = BorderFactory.createTitledBorder(" Owenr Information ");
             ownerLine.setTitleColor(Color.BLUE);
             
             // making a titled border for vehicle detail entry
-            TitledBorder vehicleLine = BorderFactory.createTitledBorder("Vehicle Information");
+            TitledBorder vehicleLine = BorderFactory.createTitledBorder(" Vehicle Information ");
             vehicleLine.setTitleColor(Color.BLUE);
                                 
             
             /**
              * entering owner information
-            */
+             */
             JPanel ownerPanel = new JPanel();            // main panel for entering owner details
             ownerPanel.setLayout(new BorderLayout());
             
@@ -123,13 +132,13 @@ public class SystemGui extends JFrame{
             JLabel ownerType = new JLabel("Select the which type of owner.");
     
             // Test area for entering vehicle details
-            JTextArea fNameText = new JTextArea();
-            JTextArea lNameText = new JTextArea();
-            JTextArea licenceNumberText = new JTextArea();
-            JTextArea addrText = new JTextArea();
-            JTextArea phoneNoText = new JTextArea();
-            JTextArea dobText = new JTextArea();
-            JTextArea abnText = new JTextArea();
+            JTextArea fNameText = new JTextArea(1, 15);
+            JTextArea lNameText = new JTextArea(1, 15);
+            JTextArea licenceNumberText = new JTextArea(1, 15);
+            JTextArea addrText = new JTextArea(1, 15);
+            JTextArea phoneNoText = new JTextArea(1, 15);
+            JTextArea dobText = new JTextArea(1, 15);
+            JTextArea abnText = new JTextArea(1, 15);
     
             // radiobuttons to choose the type of owner
             JRadioButton privateOwner = new JRadioButton("Private");
@@ -202,7 +211,7 @@ public class SystemGui extends JFrame{
             
             /**
              * entering vehicle information
-            */
+             */
             JPanel vehiclePanel = new JPanel();           // main panel for vehicle info entry
             vehiclePanel.setLayout(new BorderLayout());
             
@@ -226,12 +235,12 @@ public class SystemGui extends JFrame{
             vehicleComboBox.setSelectedIndex(0);
             
             // textarea for entering vehicle details
-            JTextArea engineCapacityText = new JTextArea();
-            JTextArea makeText = new JTextArea();
-            JTextArea modelText = new JTextArea();
-            JTextArea yearText = new JTextArea();
-            JTextArea loadCapacityText = new JTextArea();
-            JTextArea seatNumbersText = new JTextArea();
+            JTextArea engineCapacityText = new JTextArea(1, 15);
+            JTextArea makeText = new JTextArea(1, 15);
+            JTextArea modelText = new JTextArea(1, 15);
+            JTextArea yearText = new JTextArea(1, 15);
+            JTextArea loadCapacityText = new JTextArea(1, 15);
+            JTextArea seatNumbersText = new JTextArea(1, 15);
             
             // nested panels
             panelx.setLayout(new FlowLayout());
@@ -264,7 +273,7 @@ public class SystemGui extends JFrame{
                       
             /**
              * exit and clear buttons
-            */
+             */
             JPanel buttons = new JPanel();          // panel for buttons
             buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
             
@@ -274,14 +283,18 @@ public class SystemGui extends JFrame{
             JButton backButton = new JButton("Back");            // to go back to main menu
             JButton exitButton = new JButton("Exit");
             
-            // adding functionality to back button
+            /**
+             * adding functionality to back button
+             */
             backButton.addActionListener(f -> {
                 
                 regFrame.hide();
                 this.setVisible(true);
             });
             
-            // adding functionality to exit button
+            /**
+             * adding functionality to exit button
+             */
             exitButton.addActionListener(g -> exit());
             
             // adding buttons to panel buttons
@@ -300,7 +313,109 @@ public class SystemGui extends JFrame{
          // end of register button action listener            
         });
         
-        // adding functionality to "Exit" button
+        /**
+         * adding functionality to "Search and Edit Owner Info" button
+         */
+        sAndEOwner.addActionListener( h -> {
+            
+            // making frame for searching and editing button
+            JFrame ownerSearchf = new JFrame();
+            
+            ownerSearchf.setTitle("Search and Edit Owner Info");                 // title of frame
+            ownerSearchf.setSize(400, 280);                                      // size of app
+            ownerSearchf.setVisible(true);                                       // making app visible
+            ownerSearchf.setLocationRelativeTo(null);                            // making app appear in center of screen
+            ownerSearchf.setResizable(true);                                     // making app sizable
+            ownerSearchf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         // making app close when X button is clicked
+            ownerSearchf.setLayout(new BorderLayout());                 
+            
+            // label for search
+            JLabel ownerSearchTitle = new JLabel("   Search for owner with their licence number");
+            JLabel resultLabel = new JLabel("Result of search: ");
+            
+            // text areas
+            JTextArea ownerSearchArea = new JTextArea(1, 15);
+            JTextArea ownerDisplayArea = new JTextArea(5,25);
+            ownerDisplayArea.setEditable(false);
+            
+            // buttons 
+            JButton ownerSearchButton = new JButton("Search");
+            JButton ownerEditButton = new JButton("Edit");
+            JButton ownerBackButton = new JButton("Back");
+            JButton ownerExitButton = new JButton("Exit");
+            
+            // main and nested panels
+            JPanel ownerMainPanel = new JPanel();
+            JPanel panela1 = new JPanel();
+            JPanel panela2 = new JPanel();
+            JPanel panela3 = new JPanel();
+            JPanel panela4 = new JPanel();
+            JPanel panela5 = new JPanel();
+            JPanel panela6 = new JPanel();            
+            
+            ownerMainPanel.setLayout(new BorderLayout());
+            panela1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            panela2.setLayout(new BorderLayout());
+            
+            // making black border 
+            Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+            ownerSearchArea.setBorder(border);
+            
+            panela1.add(ownerSearchArea);
+            panela1.add(ownerSearchButton);
+            
+            // adding search area 
+            panela2.add(ownerSearchTitle, BorderLayout.NORTH);
+            panela2.add(panela1, BorderLayout.WEST);
+            
+            // adding display area
+            panela3.setLayout(new BorderLayout());
+            panela3.add(resultLabel, BorderLayout.NORTH);
+            panela3.add(ownerDisplayArea, BorderLayout.CENTER);
+            panela4.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            panela4.add(panela3);
+            ownerDisplayArea.setBorder(border);
+            
+            // adding buttons
+            panela5.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            panela5.add(ownerEditButton);
+            panela5.add(ownerBackButton);
+            panela5.add(ownerExitButton);
+            
+            panela6.setLayout(new GridLayout(2, 1, 1, 1));
+            panela6.add(panela2);
+            panela6.add(panela4);
+            
+            /**
+             * adding functionality to "Back" button
+             */
+            ownerBackButton.addActionListener(i -> {
+                
+                ownerSearchf.hide();
+                this.setVisible(true);                     
+            });
+            
+            /**
+             * adding functionality to "Exit" button
+             */
+            ownerExitButton.addActionListener(j -> exit());
+            
+            // adding all nested panel to main panel
+            ownerMainPanel.add(panela6, BorderLayout.CENTER);
+            ownerMainPanel.add(panela5, BorderLayout.SOUTH);            
+            
+            // adding maing panel to the search frame
+            ownerSearchf.add(ownerMainPanel);
+            
+                       
+         // end of owner info search and edit button action listener
+        });
+        
+        
+        
+        /**
+         * adding functionality to "Exit" button
+         */
         exit.addActionListener(d -> exit());
         
                       
