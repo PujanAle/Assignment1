@@ -2,6 +2,7 @@
 package Assignment1;
 
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -18,6 +19,22 @@ public class SystemGui extends JFrame{
     private final int DEFAULT_WIDTH = 360;
     private final int DEFAULT_HEIGHT = 215;
     
+    // private owner object arraylist
+    ArrayList<PrivateOwner> privateOwnerArray = new ArrayList<>();
+    
+    // corporate owner objcet arraylist
+    ArrayList<CorporateOwner> corporateOwnerArray = new ArrayList<>();
+    
+    // motorcycle objcet arraylist
+    ArrayList<Motorcycle> motorcycleArray = new ArrayList<>();
+    
+    // light vehicle objcet arraylist
+    ArrayList<LightVehicle> lightVehicleArray = new ArrayList<>();
+    
+    // heavy vehicle objcet arraylist
+    ArrayList<HeavyVehicle> heavyVehicleArray = new ArrayList<>();
+    
+    // welcome text in the app
     private final JLabel welcomeLabel;
     
     // panels for upper buttons
@@ -158,6 +175,7 @@ public class SystemGui extends JFrame{
             // radiobuttons to choose the type of owner
             JRadioButton privateOwner = new JRadioButton("Private");
             JRadioButton corporateOwner = new JRadioButton("Corporate");
+            JRadioButton hiddenButton = new JRadioButton("Hidden");
     
             // nested panels for owner details
             JPanel panela = new JPanel();
@@ -168,17 +186,19 @@ public class SystemGui extends JFrame{
             JPanel panelf = new JPanel();
             JPanel panelg = new JPanel();
             JPanel panelh = new JPanel();
-                              
-            // selecting type of owner
-            panela.add(ownerType);
-            panelb.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-            panelb.add(privateOwner);
-            panelb.add(corporateOwner);
             
             // button group for the raido buttons
             ButtonGroup buttonGroup = new ButtonGroup();
             buttonGroup.add(privateOwner);
             buttonGroup.add(corporateOwner);
+            buttonGroup.add(hiddenButton);
+            hiddenButton.setSelected(true);      
+            
+            // selecting type of owner
+            panela.add(ownerType);
+            panelb.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+            panelb.add(privateOwner);
+            panelb.add(corporateOwner);
             
             panelc.setLayout(new BorderLayout());
             panelc.add(panela, BorderLayout.NORTH);
@@ -308,6 +328,84 @@ public class SystemGui extends JFrame{
             JButton clearButton = new JButton("Clear");          // to clear every textarea
             JButton backButton = new JButton("Back");            // to go back to main menu
             JButton exitButton = new JButton("Exit");
+            
+            
+            /**
+             * adding functionality to "Register" button
+             */
+            registerButton.addActionListener(a1 -> {
+            
+                String fName = fNameText.getText();             // first name
+                String lName = lNameText.getText();             // last name
+                int licenceNumber = Integer.parseInt(licenceNumberText.getText());   // licence number
+                String address = addrText.getText();            // address
+                String phoneNo = phoneNoText.getText();         // phone number
+                String dateOfBirth = dobText.getText();         // date of birth
+                int abn = Integer.parseInt(abnText.getText());  // Australian Business Number
+                
+                // checking if the owner is private or corporate
+                if(privateOwner.isSelected()){
+                    
+                    // adding details of private owner object in arraylist
+                    privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
+                }
+                else if(corporateOwner.isSelected()){
+                    
+                    // adding details of corporate owner object in arraylist
+                    corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
+                }
+                
+                
+                String plateNumber = "AUS203";              // plate number
+                double engineCapacity = Double.parseDouble(engineCapacityText.getText());  // engine capacity
+                String make = makeText.getText();                       // make of vehicle
+                String model = modelText.getText();                     // vehicle's model
+                int year = Integer.parseInt(yearText.getText());        // year of manufacture
+                double loadCapacity = Double.parseDouble(loadCapacityText.getText());    // load capacity
+                int seatNumbers = Integer.parseInt(seatNumbersText.getText());           // number of seats
+                
+                // checking the type of vehicle
+                if(((String)vehicleComboBox.getSelectedItem()).equals("Motorcycle")){
+                    
+                    motorcycleArray.add(new Motorcycle(plateNumber, engineCapacity, make, model, year, licenceNumber));
+                }
+                else if(((String)vehicleComboBox.getSelectedItem()).equals("Light vehicle")){
+                    
+                    lightVehicleArray.add(new LightVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, seatNumbers));
+                }
+                else{
+                    
+                    heavyVehicleArray.add(new HeavyVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, loadCapacity));
+                }
+            
+            });
+            
+                        
+            /**
+             * adding functionality to "Clear" button
+             */
+            clearButton.addActionListener(a2 -> {
+                
+                // making all the textareas empty
+                fNameText.setText("");
+                lNameText.setText("");
+                licenceNumberText.setText("");
+                addrText.setText("");
+                phoneNoText.setText("");
+                hiddenButton.setSelected(true);
+                dobText.setText("");
+                abnText.setText("");
+                
+                vehicleComboBox.setSelectedIndex(0);
+                engineCapacityText.setText("");
+                makeText.setText(""); 
+                modelText.setText(""); 
+                yearText.setText("");     
+                loadCapacityText.setText("");  
+                seatNumbersText.setText(""); 
+                        
+            });
+            
             
             /**
              * adding functionality to back button
