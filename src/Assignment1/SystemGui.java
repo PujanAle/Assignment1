@@ -2,6 +2,7 @@
 package Assignment1;
 
 import java.awt.*;
+import java.lang.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -173,8 +174,8 @@ public class SystemGui extends JFrame{
             abnText.setBorder(border);
     
             // radiobuttons to choose the type of owner
-            JRadioButton privateOwner = new JRadioButton("Private");
-            JRadioButton corporateOwner = new JRadioButton("Corporate");
+            JRadioButton privateOwnerButton = new JRadioButton("Private");
+            JRadioButton corporateOwnerButton = new JRadioButton("Corporate");
             JRadioButton hiddenButton = new JRadioButton("Hidden");
     
             // nested panels for owner details
@@ -189,16 +190,16 @@ public class SystemGui extends JFrame{
             
             // button group for the raido buttons
             ButtonGroup buttonGroup = new ButtonGroup();
-            buttonGroup.add(privateOwner);
-            buttonGroup.add(corporateOwner);
+            buttonGroup.add(privateOwnerButton);
+            buttonGroup.add(corporateOwnerButton);
             buttonGroup.add(hiddenButton);
-            hiddenButton.setSelected(true);      
+            hiddenButton.isSelected();      
             
             // selecting type of owner
             panela.add(ownerType);
             panelb.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-            panelb.add(privateOwner);
-            panelb.add(corporateOwner);
+            panelb.add(privateOwnerButton);
+            panelb.add(corporateOwnerButton);
             
             panelc.setLayout(new BorderLayout());
             panelc.add(panela, BorderLayout.NORTH);
@@ -222,7 +223,7 @@ public class SystemGui extends JFrame{
             paneld.add(phoneNoText);
             
             // adding radiobuttons to panele
-            panele.add(panelc);
+            panele.add(panelc);     
             
             panelf.setLayout(new GridLayout(2, 2, 10, 5));
             panelf.add(dobLabel);
@@ -243,7 +244,7 @@ public class SystemGui extends JFrame{
             ownerPanel.add(panelh, BorderLayout.CENTER);
             ownerPanel.setBorder(ownerLine);
             
-            
+                      
             /**
              * entering vehicle information
              */
@@ -336,20 +337,40 @@ public class SystemGui extends JFrame{
             registerButton.addActionListener(a1 -> {
             
                 String fName = fNameText.getText();             // first name
+                if(fName.equals("")){
+                    errorMessageBox("You must enter first name.");
+                }
+                else if(!(fName instanceof String)){
+                    errorMessageBox("You must enter first name with words or letters and nothing else.");
+                }
+                    
                 String lName = lNameText.getText();             // last name
-                int licenceNumber = Integer.parseInt(licenceNumberText.getText());   // licence number
+                if(lName.equals("")){
+                    errorMessageBox("You must enter last name.");
+                }
+                else if(!(lName instanceof String)){
+                    errorMessageBox("You must enter last name with words or letters and nothing else.");
+                }
+                
+                //int licenceNumber = Integer.parseInt(licenceNumberText.getText());   // licence number
+                if(licenceNumberText.getText().equals("")){
+                    errorMessageBox("You must enter the licence number.");
+                }
+                else if(licenceNumberText.getText() instanceof String)
+                    
+                    
                 String address = addrText.getText();            // address
                 String phoneNo = phoneNoText.getText();         // phone number
                 String dateOfBirth = dobText.getText();         // date of birth
                 int abn = Integer.parseInt(abnText.getText());  // Australian Business Number
                 
                 // checking if the owner is private or corporate
-                if(privateOwner.isSelected()){
+                if(privateOwnerButton.isSelected()){
                     
                     // adding details of private owner object in arraylist
                     privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
                 }
-                else if(corporateOwner.isSelected()){
+                else if(corporateOwnerButton.isSelected()){
                     
                     // adding details of corporate owner object in arraylist
                     corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
@@ -932,6 +953,14 @@ public class SystemGui extends JFrame{
     public void exit(){
         
         System.exit(0);
+    }
+    
+    
+    private void errorMessageBox(String errorMessage){                  //method to create an error message window
+            
+        JFrame frame2 = new JFrame();
+        String title = "Error message";
+        JOptionPane.showMessageDialog(frame2, errorMessage, title, JOptionPane.ERROR_MESSAGE);
     }
     
     
