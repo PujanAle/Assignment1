@@ -124,14 +124,14 @@ public class SystemGui extends JFrame{
             ownerPanel.setLayout(new BorderLayout());
             
             // labels for owner details
-            JLabel fNameLabel = new JLabel("First Name: ");
-            JLabel lNameLabel = new JLabel("Last Name: ");
-            JLabel licenceNumberLabel = new JLabel("Licence Number: ");
-            JLabel addrLabel = new JLabel("Address: ");
-            JLabel phoneNoLabel = new JLabel("Phone Number: ");
-            JLabel dobLabel = new JLabel("Date Of Birth: ");
-            JLabel abnLabel = new JLabel("Australian Business Number: ");
-            JLabel ownerType = new JLabel("Select the which type of owner.");
+            JLabel fNameLabel = new JLabel("First Name");
+            JLabel lNameLabel = new JLabel("Last Name");
+            JLabel licenceNumberLabel = new JLabel("Licence Number");
+            JLabel addrLabel = new JLabel("Address");
+            JLabel phoneNoLabel = new JLabel("Phone Number");
+            JLabel dobLabel = new JLabel("Date Of Birth");
+            JLabel abnLabel = new JLabel("Australian Business Number");
+            JLabel ownerType = new JLabel("Select the which type of owner");
     
             // Test area for entering vehicle details
             JTextArea fNameText = new JTextArea(1, 15);
@@ -236,13 +236,13 @@ public class SystemGui extends JFrame{
             JPanel panelz = new JPanel();
             
             // label for vehicle details
-            JLabel vehicleTypeLabel = new JLabel("Type of vehicle: ");
-            JLabel engineCapacityLabel = new JLabel("Engine Capacity: ");
-            JLabel makeLabel = new JLabel("Make: ");
-            JLabel modelLabel = new JLabel("Model: ");
-            JLabel yearLabel = new JLabel("Year: ");
-            JLabel loadCapacityLabel = new JLabel("Load Capacity (tonnes): ");
-            JLabel seatNumbersLabel = new JLabel("Seat Number: ");
+            JLabel vehicleTypeLabel = new JLabel("Type of vehicle");
+            JLabel engineCapacityLabel = new JLabel("Engine Capacity");
+            JLabel makeLabel = new JLabel("Make");
+            JLabel modelLabel = new JLabel("Model");
+            JLabel yearLabel = new JLabel("Year");
+            JLabel loadCapacityLabel = new JLabel("Load Capacity (tonnes)");
+            JLabel seatNumbersLabel = new JLabel("Seat Number");
             
             // making combobox for type of vehicle
             String[] vehicleTypeArray = {"Motorcycle", "Light vehicle", "Heavy vehicle"};
@@ -339,6 +339,8 @@ public class SystemGui extends JFrame{
          // end of register button action listener            
         });
         
+        
+        
         /**
          * adding functionality to "Search and Edit Owner Info" button
          */
@@ -391,11 +393,6 @@ public class SystemGui extends JFrame{
             panela2.add(ownerSearchTitle, BorderLayout.NORTH);
             panela2.add(panela1, BorderLayout.WEST);
             
-            // adding display area
-            panela3.setLayout(new BorderLayout());
-            panela4.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-            panela4.add(panela3);
-            
             // adding buttons
             panela3.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
             panela3.add(ownerBackButton);
@@ -407,17 +404,17 @@ public class SystemGui extends JFrame{
             
             
             /**
-             * adding functionality to "Search" button
+             * adding functionality to "Search" button for owner
              */
             ownerSearchButton.addActionListener(k -> {
             
                 // so that the search menu is hidden
                 ownerSearchf.hide();
             
-                // frame search result of registration information
+                // frame search result of owner registration information
                 JFrame searchOwnerFrame = new JFrame();
             
-                searchOwnerFrame.setTitle("Search Result");                      // title of frame
+                searchOwnerFrame.setTitle("Owner Search Result");                      // title of frame
                 searchOwnerFrame.setSize(500, 310);                                 // size of app
                 searchOwnerFrame.setVisible(true);                                  // making app visible
                 searchOwnerFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
@@ -425,12 +422,12 @@ public class SystemGui extends JFrame{
                 searchOwnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // making app close when X button is clicked
                 searchOwnerFrame.setLayout(new BorderLayout());        
             
-                // making a titled border for owner detail entry
+                // making a titled border for owner details
                 TitledBorder searchOwnerLine = BorderFactory.createTitledBorder(" Owenr Information ");
                 searchOwnerLine.setTitleColor(Color.BLUE);
             
+                // making border 
                 Border border1 = BorderFactory.createLineBorder(Color.BLACK, 1);
-                ownerSearchArea.setBorder(border);
              
                 /**
                  * showing owner information
@@ -441,16 +438,16 @@ public class SystemGui extends JFrame{
                 JPanel searchOwnerButton = new JPanel();
             
                 // labels for owner details
-                JLabel searchfNameLabel = new JLabel("First Name: ");
-                JLabel searchlNameLabel = new JLabel("Last Name: ");
-                JLabel searchLicenceNumberLabel = new JLabel("Licence Number: ");
+                JLabel searchfNameLabel = new JLabel("First Name");
+                JLabel searchlNameLabel = new JLabel("Last Name");
+                JLabel searchLicenceNumberLabel = new JLabel("Licence Number");
                 JLabel searchAddrLabel = new JLabel("Address: ");
-                JLabel searchPhoneNoLabel = new JLabel("Phone Number: ");
-                JLabel searchdobLabel = new JLabel("Date Of Birth: ");
-                JLabel searchabnLabel = new JLabel("Australian Business Number: ");
-                JLabel searchOwnerType = new JLabel("The type of owner.");
+                JLabel searchPhoneNoLabel = new JLabel("Phone Number");
+                JLabel searchdobLabel = new JLabel("Date Of Birth");
+                JLabel searchabnLabel = new JLabel("Australian Business Number");
+                JLabel searchOwnerType = new JLabel("The type of owner");
     
-                // Test area for diplaying vehicle details
+                // Test area for diplaying owner details
                 JTextArea searchfNameText = new JTextArea(1, 15);
                 searchfNameText.setBorder(border1);
                 
@@ -590,11 +587,232 @@ public class SystemGui extends JFrame{
             // adding all nested panel to main panel
             ownerMainPanel.add(panela4, BorderLayout.CENTER);
             
-            // adding maing panel to the search frame
+            // adding main panel to the search frame
             ownerSearchf.add(ownerMainPanel);
             
                        
          // end of owner info search and edit button action listener
+        });
+        
+        
+        
+        /**
+         * adding functionality to "Search and Edit Vehicle Info" button
+         */
+        sAndEVehicle.addActionListener(n -> {
+            
+            // so that the main menu is hidden
+            this.hide();            
+            
+            // making frame for searching and editing button
+            JFrame vehicleSearchf = new JFrame();
+            
+            vehicleSearchf.setTitle("Search and Edit Vehicle Info");                // title of frame
+            vehicleSearchf.setSize(300, 160);                                      // size of app
+            vehicleSearchf.setVisible(true);                                       // making app visible
+            vehicleSearchf.setLocationRelativeTo(null);                            // making app appear in center of screen
+            vehicleSearchf.setResizable(true);                                     // making app sizable
+            vehicleSearchf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         // making app close when X button is clicked
+            vehicleSearchf.setLayout(new BorderLayout());                 
+            
+            // label for search
+            JLabel vehicleSearchTitle = new JLabel("   Search for vehicle with their plate number");
+                       
+            // text areas
+            JTextArea vehicleSearchArea = new JTextArea(1, 15);
+                
+            // buttons 
+            JButton vehicleSearchButton = new JButton("Search");
+            JButton vehicleBackButton = new JButton("Back");
+            JButton vehicleExitButton = new JButton("Exit");
+            
+            // main and nested panels
+            JPanel vehicleMainPanel = new JPanel();
+            JPanel panelc1 = new JPanel();
+            JPanel panelc2 = new JPanel();
+            JPanel panelc3 = new JPanel();
+            JPanel panelc4 = new JPanel();
+            
+            vehicleMainPanel.setLayout(new BorderLayout());
+            panelc1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            panelc2.setLayout(new BorderLayout());
+            
+            // making black border 
+            Border border2 = BorderFactory.createLineBorder(Color.BLACK, 1);
+            vehicleSearchArea.setBorder(border2);
+            
+            panelc1.add(vehicleSearchArea);
+            panelc1.add(vehicleSearchButton);
+            
+            // adding search area 
+            panelc2.add(vehicleSearchTitle, BorderLayout.NORTH);
+            panelc2.add(panelc1, BorderLayout.WEST);
+            
+            // adding buttons
+            panelc3.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            panelc3.add(vehicleBackButton);
+            panelc3.add(vehicleExitButton);
+            
+            panelc4.setLayout(new GridLayout(2, 1, 1, 1));
+            panelc4.add(panelc2);
+            panelc4.add(panelc3);       
+            
+            // adding all nested panel to main panel
+            vehicleMainPanel.add(panelc4, BorderLayout.CENTER);
+            
+            // adding maing panel to the search frame
+            vehicleSearchf.add(vehicleMainPanel);        
+            
+            
+            /**
+             * adding functionality to "Search" button for vehicles
+             */
+            vehicleSearchButton.addActionListener(q -> {
+                
+                // so that the search menu is hidden
+                vehicleSearchf.hide();
+            
+                // frame search result of vehicle registration information
+                JFrame searchVehicleFrame = new JFrame();
+            
+                searchVehicleFrame.setTitle("Vehicle Search Result");                 // title of frame
+                searchVehicleFrame.setSize(500, 260);                                 // size of app
+                searchVehicleFrame.setVisible(true);                                  // making app visible
+                searchVehicleFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
+                searchVehicleFrame.setResizable(true);                                // making app sizable
+                searchVehicleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // making app close when X button is clicked
+                searchVehicleFrame.setLayout(new BorderLayout());        
+            
+                // making a titled border for vehicle details
+                TitledBorder searchVehicleLine = BorderFactory.createTitledBorder(" Vehicle Information ");
+                searchVehicleLine.setTitleColor(Color.BLUE);
+            
+                // making border
+                Border border3 = BorderFactory.createLineBorder(Color.BLACK, 1);
+                
+                // main panel for vehicle info
+                JPanel vehicleSearchPanel = new JPanel();           
+                vehicleSearchPanel.setLayout(new BorderLayout());
+                
+                // main and nested panels
+                JPanel searchVehicleButton = new JPanel();
+                JPanel paneld1 = new JPanel();
+                JPanel paneld2 = new JPanel();
+                JPanel paneld3 = new JPanel();
+                
+                // buttons
+                JButton vehicleSearchEdit = new JButton("Edit");
+                JButton vehicleSearchBack = new JButton("Back");
+                JButton vehicleSearchExit = new JButton("Exit");                
+            
+                // label for vehicle details
+                JLabel vehicleSearchTypeLabel = new JLabel("Type of vehicle");
+                JLabel searchEngineCapacityLabel = new JLabel("Engine Capacity");
+                JLabel searchMakeLabel = new JLabel("Make");
+                JLabel searchModelLabel = new JLabel("Model");
+                JLabel searchYearLabel = new JLabel("Year");
+                JLabel searchLoadCapacityLabel = new JLabel("Load Capacity (tonnes)");
+                JLabel searchSeatNumbersLabel = new JLabel("Seat Number");
+            
+                // making combobox for type of vehicles
+                String[] searchVehicleTypeArray = {"Motorcycle", "Light vehicle", "Heavy vehicle"};
+                JComboBox searchVehicleComboBox = new JComboBox(searchVehicleTypeArray);
+                searchVehicleComboBox.setSelectedIndex(0);
+            
+                // textarea for dispalying vehicle details
+                JTextArea searchEngineCapacityText = new JTextArea(1, 15);
+                searchEngineCapacityText.setBorder(border3);
+            
+                JTextArea searchMakeText = new JTextArea(1, 15);
+                searchMakeText.setBorder(border3);
+            
+                JTextArea searchModelText = new JTextArea(1, 15);
+                searchModelText.setBorder(border3);
+            
+                JTextArea searchYearText = new JTextArea(1, 15);
+                searchYearText.setBorder(border3);
+            
+                JTextArea searchLoadCapacityText = new JTextArea(1, 15);
+                searchLoadCapacityText.setBorder(border3);
+
+                JTextArea searchSeatNumbersText = new JTextArea(1, 15);
+                searchSeatNumbersText.setBorder(border3);
+                
+                // nested panels
+                paneld1.setLayout(new FlowLayout());
+                paneld3.setLayout(new BorderLayout());
+
+                paneld1.add(vehicleSearchTypeLabel);
+                paneld1.add(searchVehicleComboBox);
+                paneld3.add(paneld1, BorderLayout.NORTH);
+
+                // adding detail label and field to a nested panel
+                paneld2.setLayout(new GridLayout(6, 2, 10, 4));
+                paneld2.add(searchEngineCapacityLabel);
+                paneld2.add(searchEngineCapacityText);
+                paneld2.add(searchMakeLabel);
+                paneld2.add(searchMakeText);
+                paneld2.add(searchModelLabel);
+                paneld2.add(searchModelText);
+                paneld2.add(searchYearLabel);
+                paneld2.add(searchYearText);
+                paneld2.add(searchLoadCapacityLabel);
+                paneld2.add(searchLoadCapacityText);
+                paneld2.add(searchSeatNumbersLabel);
+                paneld2.add(searchSeatNumbersText);            
+                paneld3.add(paneld2, BorderLayout.CENTER);
+
+                // adding all nested panels to main search vehicle panel
+                vehicleSearchPanel.add(paneld3, BorderLayout.WEST);
+                vehicleSearchPanel.setBorder(searchVehicleLine);             
+                          
+                // adding buttons 
+                searchVehicleButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+                searchVehicleButton.add(vehicleSearchEdit);
+                searchVehicleButton.add(vehicleSearchBack);
+                searchVehicleButton.add(vehicleSearchExit);
+                
+                // adding main panel and buttons to searchVehicleFrame
+                searchVehicleFrame.add(vehicleSearchPanel, BorderLayout.NORTH);
+                searchVehicleFrame.add(searchVehicleButton, BorderLayout.SOUTH);
+                
+                
+                /**
+                 * adding functionality to "Back" button
+                 */
+                vehicleSearchBack.addActionListener(r -> {
+                    
+                    searchVehicleFrame.hide();
+                    vehicleSearchf.setVisible(true);
+                });
+                
+                
+                /**
+                 * adding functionality to "Exit" button
+                 */
+                vehicleSearchExit.addActionListener(s -> exit());
+                
+            });
+            
+            
+            
+            /**
+             * adding functionality to "Back" button
+             */
+            vehicleBackButton.addActionListener(o -> {
+                
+                vehicleSearchf.hide();
+                this.setVisible(true);
+            });
+            
+                        
+            /**
+             * adding functionality to "Exit" button
+             */
+            vehicleExitButton.addActionListener(p -> exit());
+            
+            
+         // end of vehicle info search and edit button action listener    
         });
         
         
