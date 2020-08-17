@@ -99,12 +99,14 @@ public class SystemGui extends JFrame{
             JFrame regFrame = new JFrame();
             
             regFrame.setTitle("Register");                 // title of frame
-            regFrame.setSize(600, 475);                    // size of app
+            regFrame.setSize(500, 500);                    // size of app
             regFrame.setVisible(true);                     // making app visible
             regFrame.setLocationRelativeTo(null);          // making app appear in center of screen
             regFrame.setResizable(true);                   // making app sizable
             regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      // making app close when X button is clicked
             regFrame.setLayout(new BorderLayout());        
+            
+            Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
             
             // making a titled border for owner detail entry
             TitledBorder ownerLine = BorderFactory.createTitledBorder(" Owenr Information ");
@@ -133,12 +135,25 @@ public class SystemGui extends JFrame{
     
             // Test area for entering vehicle details
             JTextArea fNameText = new JTextArea(1, 15);
+            fNameText.setBorder(border);
+            
             JTextArea lNameText = new JTextArea(1, 15);
+            lNameText.setBorder(border);
+            
             JTextArea licenceNumberText = new JTextArea(1, 15);
+            licenceNumberText.setBorder(border);
+            
             JTextArea addrText = new JTextArea(1, 15);
+            addrText.setBorder(border);
+            
             JTextArea phoneNoText = new JTextArea(1, 15);
+            phoneNoText.setBorder(border);
+            
             JTextArea dobText = new JTextArea(1, 15);
+            dobText.setBorder(border);
+            
             JTextArea abnText = new JTextArea(1, 15);
+            abnText.setBorder(border);
     
             // radiobuttons to choose the type of owner
             JRadioButton privateOwner = new JRadioButton("Private");
@@ -170,7 +185,7 @@ public class SystemGui extends JFrame{
             panelc.add(panelb, BorderLayout.CENTER);
                        
             // adding label and text to the nested panel
-            paneld.setLayout(new GridLayout(5, 2, 10, 5));
+            paneld.setLayout(new GridLayout(5, 2, 10, 4));
             paneld.add(fNameLabel);
             paneld.add(fNameText);
             
@@ -236,11 +251,22 @@ public class SystemGui extends JFrame{
             
             // textarea for entering vehicle details
             JTextArea engineCapacityText = new JTextArea(1, 15);
+            engineCapacityText.setBorder(border);
+            
             JTextArea makeText = new JTextArea(1, 15);
+            makeText.setBorder(border);
+            
             JTextArea modelText = new JTextArea(1, 15);
+            modelText.setBorder(border);
+            
             JTextArea yearText = new JTextArea(1, 15);
+            yearText.setBorder(border);
+            
             JTextArea loadCapacityText = new JTextArea(1, 15);
+            loadCapacityText.setBorder(border);
+            
             JTextArea seatNumbersText = new JTextArea(1, 15);
+            seatNumbersText.setBorder(border);
             
             // nested panels
             panelx.setLayout(new FlowLayout());
@@ -251,7 +277,7 @@ public class SystemGui extends JFrame{
             panelz.add(panelx, BorderLayout.NORTH);
             
             // adding detail label and field to a nested panel
-            panely.setLayout(new GridLayout(6, 2, 15, 5));
+            panely.setLayout(new GridLayout(6, 2, 10, 4));
             panely.add(engineCapacityLabel);
             panely.add(engineCapacityText);
             panely.add(makeLabel);
@@ -318,11 +344,14 @@ public class SystemGui extends JFrame{
          */
         sAndEOwner.addActionListener( h -> {
             
+            // so that the main menu is hidden
+            this.hide();            
+            
             // making frame for searching and editing button
             JFrame ownerSearchf = new JFrame();
             
             ownerSearchf.setTitle("Search and Edit Owner Info");                 // title of frame
-            ownerSearchf.setSize(400, 280);                                      // size of app
+            ownerSearchf.setSize(300, 160);                                      // size of app
             ownerSearchf.setVisible(true);                                       // making app visible
             ownerSearchf.setLocationRelativeTo(null);                            // making app appear in center of screen
             ownerSearchf.setResizable(true);                                     // making app sizable
@@ -331,16 +360,12 @@ public class SystemGui extends JFrame{
             
             // label for search
             JLabel ownerSearchTitle = new JLabel("   Search for owner with their licence number");
-            JLabel resultLabel = new JLabel("Result of search: ");
-            
+                       
             // text areas
             JTextArea ownerSearchArea = new JTextArea(1, 15);
-            JTextArea ownerDisplayArea = new JTextArea(5,25);
-            ownerDisplayArea.setEditable(false);
-            
+                
             // buttons 
             JButton ownerSearchButton = new JButton("Search");
-            JButton ownerEditButton = new JButton("Edit");
             JButton ownerBackButton = new JButton("Back");
             JButton ownerExitButton = new JButton("Exit");
             
@@ -350,8 +375,6 @@ public class SystemGui extends JFrame{
             JPanel panela2 = new JPanel();
             JPanel panela3 = new JPanel();
             JPanel panela4 = new JPanel();
-            JPanel panela5 = new JPanel();
-            JPanel panela6 = new JPanel();            
             
             ownerMainPanel.setLayout(new BorderLayout());
             panela1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
@@ -370,22 +393,186 @@ public class SystemGui extends JFrame{
             
             // adding display area
             panela3.setLayout(new BorderLayout());
-            panela3.add(resultLabel, BorderLayout.NORTH);
-            panela3.add(ownerDisplayArea, BorderLayout.CENTER);
             panela4.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
             panela4.add(panela3);
-            ownerDisplayArea.setBorder(border);
             
             // adding buttons
-            panela5.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-            panela5.add(ownerEditButton);
-            panela5.add(ownerBackButton);
-            panela5.add(ownerExitButton);
+            panela3.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            panela3.add(ownerBackButton);
+            panela3.add(ownerExitButton);
             
-            panela6.setLayout(new GridLayout(2, 1, 1, 1));
-            panela6.add(panela2);
-            panela6.add(panela4);
+            panela4.setLayout(new GridLayout(2, 1, 1, 1));
+            panela4.add(panela2);
+            panela4.add(panela3);
             
+            
+            /**
+             * adding functionality to "Search" button
+             */
+            ownerSearchButton.addActionListener(k -> {
+            
+                // so that the search menu is hidden
+                ownerSearchf.hide();
+            
+                // frame search result of registration information
+                JFrame searchOwnerFrame = new JFrame();
+            
+                searchOwnerFrame.setTitle("Search Result");                      // title of frame
+                searchOwnerFrame.setSize(500, 310);                                 // size of app
+                searchOwnerFrame.setVisible(true);                                  // making app visible
+                searchOwnerFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
+                searchOwnerFrame.setResizable(true);                                // making app sizable
+                searchOwnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // making app close when X button is clicked
+                searchOwnerFrame.setLayout(new BorderLayout());        
+            
+                // making a titled border for owner detail entry
+                TitledBorder searchOwnerLine = BorderFactory.createTitledBorder(" Owenr Information ");
+                searchOwnerLine.setTitleColor(Color.BLUE);
+            
+                Border border1 = BorderFactory.createLineBorder(Color.BLACK, 1);
+                ownerSearchArea.setBorder(border);
+             
+                /**
+                 * showing owner information
+                 */
+                JPanel searchOwnerPanel = new JPanel();            // main panel for entering owner details
+                searchOwnerPanel.setLayout(new BorderLayout());
+                
+                JPanel searchOwnerButton = new JPanel();
+            
+                // labels for owner details
+                JLabel searchfNameLabel = new JLabel("First Name: ");
+                JLabel searchlNameLabel = new JLabel("Last Name: ");
+                JLabel searchLicenceNumberLabel = new JLabel("Licence Number: ");
+                JLabel searchAddrLabel = new JLabel("Address: ");
+                JLabel searchPhoneNoLabel = new JLabel("Phone Number: ");
+                JLabel searchdobLabel = new JLabel("Date Of Birth: ");
+                JLabel searchabnLabel = new JLabel("Australian Business Number: ");
+                JLabel searchOwnerType = new JLabel("The type of owner.");
+    
+                // Test area for diplaying vehicle details
+                JTextArea searchfNameText = new JTextArea(1, 15);
+                searchfNameText.setBorder(border1);
+                
+                JTextArea searchlNameText = new JTextArea(1, 15);
+                searchlNameText.setBorder(border1);
+                
+                JTextArea searchLicenceNumberText = new JTextArea(1, 15);
+                searchLicenceNumberText.setBorder(border1);
+                
+                JTextArea searchAddrText = new JTextArea(1, 15);
+                searchAddrText.setBorder(border1);
+                
+                JTextArea searchPhoneNoText = new JTextArea(1, 15);
+                searchPhoneNoText.setBorder(border1);
+                
+                JTextArea searchdobText = new JTextArea(1, 15);
+                searchdobText.setBorder(border1);
+                
+                JTextArea searchabnText = new JTextArea(1, 15);
+                searchabnText.setBorder(border1);                
+    
+                // radiobuttons to show the type of owner
+                JRadioButton searchPrivateOwner = new JRadioButton("Private");
+                JRadioButton searchCorporateOwner = new JRadioButton("Corporate");
+                
+                // buttons
+                JButton ownerSearchEdit = new JButton("Edit");
+                JButton ownerSearchBack = new JButton("Back");
+                JButton ownerSearchExit = new JButton("Exit");
+
+                // nested panels for owner details
+                JPanel panelb1 = new JPanel();
+                JPanel panelb2 = new JPanel();
+                JPanel panelb3 = new JPanel();
+                JPanel panelb4 = new JPanel();
+                JPanel panelb5 = new JPanel();
+                JPanel panelb6 = new JPanel();
+                JPanel panelb7 = new JPanel();
+                JPanel panelb8 = new JPanel();
+
+                // showing the type of owner
+                panelb1.add(searchOwnerType);
+                panelb2.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+                panelb2.add(searchPrivateOwner);
+                panelb2.add(searchCorporateOwner);
+
+                // button group for the raido buttons
+                ButtonGroup buttonGroup = new ButtonGroup();
+                buttonGroup.add(searchPrivateOwner);
+                buttonGroup.add(searchCorporateOwner);
+
+                panelb3.setLayout(new BorderLayout());
+                panelb3.add(panelb1, BorderLayout.NORTH);
+                panelb3.add(panelb2, BorderLayout.CENTER);
+
+                // adding label and text to the nested panel
+                panelb4.setLayout(new GridLayout(5, 2, 10, 5));
+
+                panelb4.add(searchfNameLabel);
+                panelb4.add(searchfNameText);
+               
+                panelb4.add(searchlNameLabel);
+                panelb4.add(searchlNameText);
+       
+                panelb4.add(searchLicenceNumberLabel);
+                panelb4.add(searchLicenceNumberText);
+
+                panelb4.add(searchAddrLabel);
+                panelb4.add(searchAddrText);
+
+                panelb4.add(searchPhoneNoLabel);
+                panelb4.add(searchPhoneNoText);
+
+                // adding radiobuttons to panelb5
+                panelb5.add(panelb3);
+
+                panelb6.setLayout(new GridLayout(2, 2, 10, 5));
+                panelb6.add(searchdobLabel);
+                panelb6.add(searchdobText);
+                panelb6.add(searchabnLabel);
+                panelb6.add(searchabnText);
+
+                // adding all fields to panelb7 
+                panelb7.setLayout(new BorderLayout());
+                panelb7.add(panelb4, BorderLayout.NORTH);
+                panelb7.add(panelb5, BorderLayout.CENTER);
+                panelb7.add(panelb6, BorderLayout.SOUTH);
+
+                panelb8.setLayout(new BorderLayout());
+                panelb8.add(panelb7, BorderLayout.WEST);
+
+                // adding nested panel to the main panel -> searchOwnerPanel
+                searchOwnerPanel.add(panelb8, BorderLayout.CENTER);
+                searchOwnerPanel.setBorder(searchOwnerLine);
+                
+                // adding buttons 
+                searchOwnerButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+                searchOwnerButton.add(ownerSearchEdit);
+                searchOwnerButton.add(ownerSearchBack);
+                searchOwnerButton.add(ownerSearchExit);
+
+                // adding searchOwnerPanel and searchOwnerButton to main frame -> searchOwnerFrame
+                searchOwnerFrame.add(searchOwnerPanel, BorderLayout.NORTH);
+                searchOwnerFrame.add(searchOwnerButton, BorderLayout.SOUTH);
+                
+                /**
+                 * adding functionality to "Back" button
+                 */
+                ownerSearchBack.addActionListener(l -> {
+                    
+                    searchOwnerFrame.hide();
+                    ownerSearchf.setVisible(true); 
+                });
+                
+                /**
+                 * adding functionality to "Exit" button
+                 */
+                ownerSearchExit.addActionListener(m -> exit());
+
+            });
+            
+          
             /**
              * adding functionality to "Back" button
              */
@@ -401,8 +588,7 @@ public class SystemGui extends JFrame{
             ownerExitButton.addActionListener(j -> exit());
             
             // adding all nested panel to main panel
-            ownerMainPanel.add(panela6, BorderLayout.CENTER);
-            ownerMainPanel.add(panela5, BorderLayout.SOUTH);            
+            ownerMainPanel.add(panela4, BorderLayout.CENTER);
             
             // adding maing panel to the search frame
             ownerSearchf.add(ownerMainPanel);
