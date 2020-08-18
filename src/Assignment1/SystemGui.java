@@ -2,8 +2,8 @@
 package Assignment1;
 
 import java.awt.*;
-import java.lang.*;
 import java.util.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -670,7 +670,10 @@ public class SystemGui extends JFrame{
             /**
              * adding functionality to exit button
              */
-            exitButton.addActionListener(g -> exit());
+            exitButton.addActionListener(g -> {
+                regFrame.hide();
+                exit();
+            });
             
             // adding buttons to panel buttons
             buttons.add(registerButton);
@@ -914,7 +917,22 @@ public class SystemGui extends JFrame{
                 /**
                  * adding functionality to "Exit" button
                  */
-                ownerSearchExit.addActionListener(m -> exit());
+                ownerSearchExit.addActionListener(m -> {
+                    searchOwnerFrame.hide();
+                    exit();
+                    });
+                
+                
+                /**
+                 * when the user pushes the system close (X top right corner)
+                 */
+                // override window closing method
+                addWindowListener(new WindowAdapter(){
+                    @Override
+                    public void windowClosing(WindowEvent d5){  // Attempt to exit application
+                        exit();				
+                    }
+                });
 
             });
             
@@ -931,13 +949,28 @@ public class SystemGui extends JFrame{
             /**
              * adding functionality to "Exit" button
              */
-            ownerExitButton.addActionListener(j -> exit());
+            ownerExitButton.addActionListener(j -> {
+                ownerSearchf.hide();
+                exit();
+                });
             
             // adding all nested panel to main panel
             ownerMainPanel.add(panela4, BorderLayout.CENTER);
             
             // adding main panel to the search frame
             ownerSearchf.add(ownerMainPanel);
+            
+            
+            /**
+             * when the user pushes the system close (X top right corner)
+             */
+            // override window closing method
+            addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent d4){  // Attempt to exit application
+                    exit();				
+                }
+            });
             
                        
          // end of owner info search and edit button action listener
@@ -1139,7 +1172,22 @@ public class SystemGui extends JFrame{
                 /**
                  * adding functionality to "Exit" button
                  */
-                vehicleSearchExit.addActionListener(s -> exit());
+                vehicleSearchExit.addActionListener(s -> {
+                    searchVehicleFrame.hide();
+                    exit();
+                    });
+                
+                
+                /**
+                 * when the user pushes the system close (X top right corner)
+                 */
+                // override window closing method
+                addWindowListener(new WindowAdapter(){
+                    @Override
+                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
+                        exit();				
+                    }
+                });
                 
             });
             
@@ -1158,7 +1206,22 @@ public class SystemGui extends JFrame{
             /**
              * adding functionality to "Exit" button
              */
-            vehicleExitButton.addActionListener(p -> exit());
+            vehicleExitButton.addActionListener(p -> {
+                vehicleSearchf.hide();
+                exit();
+                });
+            
+            
+            /**
+             * when the user pushes the system close (X top right corner)
+             */
+            // override window closing method
+            addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent d2){  // Attempt to exit application
+                    exit();				
+                }
+            });
             
             
          // end of vehicle info search and edit button action listener    
@@ -1169,7 +1232,22 @@ public class SystemGui extends JFrame{
         /**
          * adding functionality to "Exit" button
          */
-        exit.addActionListener(d -> exit());
+        exit.addActionListener(d -> {
+            this.hide();
+            exit();           
+            });
+        
+        
+        /**
+         * when the user pushes the system close (X top right corner)
+         */
+        // override window closing method
+        addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent d1){  // Attempt to exit application
+		exit();				
+            }
+	});
         
                       
      // end of constructor   
@@ -1181,7 +1259,9 @@ public class SystemGui extends JFrame{
      * to exit the application
      */
     public void exit(){
-        
+        JFrame frame6 = new JFrame();
+        String title = "Motor Vehicle Registration (MVR)";
+        JOptionPane.showMessageDialog(frame6, "Thank you for using Victoria's Motor Vehicle Registration System", title, JOptionPane.PLAIN_MESSAGE);
         System.exit(0);
     }
     
