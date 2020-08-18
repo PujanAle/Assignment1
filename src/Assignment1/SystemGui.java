@@ -35,6 +35,10 @@ public class SystemGui extends JFrame{
     // heavy vehicle objcet arraylist
     ArrayList<HeavyVehicle> heavyVehicleArray = new ArrayList<>();
     
+    // assigning plate number to the vehicle registered
+    String plateNumber = "VIC2033";
+    int currentOwner = 0;
+    
     // welcome text in the app
     private final JLabel welcomeLabel;
     
@@ -244,7 +248,50 @@ public class SystemGui extends JFrame{
             ownerPanel.add(panelh, BorderLayout.CENTER);
             ownerPanel.setBorder(ownerLine);
             
-                      
+            
+            // checking which owner type is selected
+            int radioButtonSelected = 0;
+            if(hiddenButton.isSelected()){
+                radioButtonSelected = 1;
+            }
+            else if(privateOwnerButton.isSelected()){
+                radioButtonSelected = 2;                
+            }
+            else if(corporateOwnerButton.isSelected()){
+                radioButtonSelected = 3;
+            }
+            
+            
+            // making adjustment to text field and text color according to radio button selected
+            switch(radioButtonSelected){
+                
+                // when hiddenButton is selected
+                case 1:
+                    abnLabel.setForeground(Color.gray);
+                    abnText.setEditable(false);
+                    dobLabel.setForeground(Color.gray);
+                    dobText.setEditable(false);
+                    break;
+                    
+                // wnen priavate owner is selected    
+                case 2:
+                    abnLabel.setForeground(Color.gray);
+                    abnText.setEditable(false);
+                    dobLabel.setForeground(Color.black);
+                    dobText.setEditable(true);
+                    break;
+                    
+                // when corporate owner is selected
+                case 3:
+                    abnLabel.setForeground(Color.black);
+                    abnText.setEditable(true);
+                    dobLabel.setForeground(Color.gray);
+                    dobText.setEditable(false);
+                    break;
+            }
+            
+            
+            
             /**
              * entering vehicle information
              */
@@ -316,6 +363,41 @@ public class SystemGui extends JFrame{
             // adding all nested panels to main vehicle panel
             vehiclePanel.add(panelz, BorderLayout.WEST);
             vehiclePanel.setBorder(vehicleLine);            
+            
+            
+            // finding which vehicle type is selected
+            switch((String)vehicleComboBox.getSelectedItem()) {
+                
+                // motorcycle 
+                case "Motorcycle":
+                    
+                    loadCapacityLabel.setForeground(Color.gray);
+                    loadCapacityText.setEditable(false);
+                    
+                    seatNumbersLabel.setForeground(Color.gray);
+                    seatNumbersText.setEditable(false);
+                    break;
+                    
+                // light vehicle    
+                case "Light vehicle":
+                    
+                    loadCapacityLabel.setForeground(Color.gray);
+                    loadCapacityText.setEditable(false);
+                    
+                    seatNumbersLabel.setForeground(Color.black);
+                    seatNumbersText.setEditable(true);
+                    break;
+                  
+                // heavy vehicle    
+                case "Heavy vehicle":
+                    
+                    loadCapacityLabel.setForeground(Color.black);
+                    loadCapacityText.setEditable(true);
+                    
+                    seatNumbersLabel.setForeground(Color.gray);
+                    seatNumbersText.setEditable(false);
+                    break;
+                }
             
                       
             /**
@@ -424,66 +506,52 @@ public class SystemGui extends JFrame{
                 }
                 
                 
-                // checking if type of owner is chosen or not
-                String ownerTypeCheck = "";
+                // checking if type of owner
                 if(hiddenButton.isSelected()){
-                    errorMessageBox("You must choose if you are a private owner or a corporate owner");
+                    errorMessageBox("You must choose whether you are a private owner or a corporate owner");
                     privateOwnerButton.requestFocus();
                     return;
                 }
                 else if(privateOwnerButton.isSelected()){
-                    ownerTypeCheck = "private";
-                }
-                else{
-                    ownerTypeCheck = "corporate";
-                }
-                
-                // for date of birth
-                String dateOfBirth;// = dobText.getText();         // date of birth
-                if(dobText.getText().equals("")){
-                    errorMessageBox("You must enter date of birth");
-                    return;
-                }
-                else{
-                    dateOfBirth = dobText.getText(); 
-                }
-                
-                
-                // for Australian Business Number
-                int abn;
-                if(abnText.getText().equals("")){
-                    errorMessageBox("You must enter Australian Business Number");
-                    abnText.requestFocus();
-                    return;
-                }
-                try{
-                    Integer.parseInt(abnText.getText());
-                    abn = Integer.parseInt(abnText.getText());
-                }
-                catch(NumberFormatException c2){
-                    errorMessageBox("You must enter only numbers");
-                    abnText.requestFocus();
-                    return;
-                }
-                
-                
-                // checking if the owner is private or corporate
-                if(ownerTypeCheck.equals("private")){
+                    
+                    // for date of birth
+                    String dateOfBirth;// = dobText.getText();         // date of birth
+                    if(dobText.getText().equals("")){
+                        errorMessageBox("You must enter date of birth");
+                        return;
+                    }
+                    else{
+                        dateOfBirth = dobText.getText(); 
+                    }
                     
                     // adding details of private owner object in arraylist
                     privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
+
                 }
-                else if(ownerTypeCheck.equals("corporate")){
+                else{
+                    // for Australian Business Number
+                    int abn;
+                    if(abnText.getText().equals("")){
+                        errorMessageBox("You must enter Australian Business Number");
+                        abnText.requestFocus();
+                        return;
+                    }
+                    try{
+                        Integer.parseInt(abnText.getText());
+                        abn = Integer.parseInt(abnText.getText());
+                    }
+                    catch(NumberFormatException c2){
+                        errorMessageBox("You must enter numbers for Australian Business Number");
+                        abnText.requestFocus();
+                        return;
+                    }
                     
                     // adding details of corporate owner object in arraylist
                     corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
                 }
-                
-                
-                // assigning plate number to the vehicle registered
-                String plateNumber = "AUS2033";
-                
-                
+                                                             
+                                
+                // for vehicle registration
                 // for engine capacity of vehicle
                 double engineCapacity;
                 if(engineCapacityText.getText().equals("")){
@@ -547,57 +615,215 @@ public class SystemGui extends JFrame{
                     yearText.requestFocus();
                     return;
                 }
+                                
                 
-                
-                // for load capacity of heavy vehicle
-                double loadCapacity;
-                if(loadCapacityText.getText().equals("")){
-                    errorMessageBox("You must enter the load capacity");
-                    loadCapacityText.requestFocus();
-                    return;
-                }
-                try{
-                    Double.parseDouble(loadCapacityText.getText());
-                    loadCapacity = Double.parseDouble(loadCapacityText.getText());
-                }
-                catch(NumberFormatException c5){
-                    errorMessageBox("You must enter load capacity as numbers");
-                    loadCapacityText.requestFocus();
-                    return;
-                }
-                
-                
-                // for number of seats of light vehicle
-                int seatNumbers;
-                if(seatNumbersText.getText().equals("")){
-                    errorMessageBox("You must enter the number of seats");
-                    seatNumbersText.requestFocus();
-                    return;
-                }
-                try{
-                    Integer.parseInt(seatNumbersText.getText());
-                    seatNumbers = Integer.parseInt(seatNumbersText.getText());
-                }
-                catch(NumberFormatException c6){
-                    errorMessageBox("You must enter number of seats a number");
-                    seatNumbersText.requestFocus();
-                    return;
-                }
-                
-                
-                // checking the type of vehicle
-                if(((String)vehicleComboBox.getSelectedItem()).equals("Motorcycle")){
+                // for checking the type of vehicle
+                switch ((String)vehicleComboBox.getSelectedItem()) {
                     
-                    motorcycleArray.add(new Motorcycle(plateNumber, engineCapacity, make, model, year, licenceNumber));
+                    case "Motorcycle":
+                        
+                        // adding motorcycle details to object of motorcycleArray
+                        motorcycleArray.add(new Motorcycle(plateNumber, engineCapacity, make, model, year, licenceNumber));
+                        break;
+                        
+                    case "Light vehicle":
+                        
+                        // for number of seats of light vehicle
+                        int seatNumbers;
+                        if(seatNumbersText.getText().equals("")){
+                            errorMessageBox("You must enter the number of seats");
+                            seatNumbersText.requestFocus();
+                            return;
+                        }   try{
+                            Integer.parseInt(seatNumbersText.getText());
+                            seatNumbers = Integer.parseInt(seatNumbersText.getText());
+                        }
+                        catch(NumberFormatException c6){
+                            errorMessageBox("You must enter number of seats a number");
+                            seatNumbersText.requestFocus();
+                            return;
+                        }   // adding light vehicle details to object of lightVehicleArray
+                        lightVehicleArray.add(new LightVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, seatNumbers));
+                        break;
+                        
+                    case "Heavy vehicle":
+                        
+                        // for load capacity of heavy vehicle
+                        double loadCapacity;
+                        if(loadCapacityText.getText().equals("")){
+                            errorMessageBox("You must enter the load capacity");
+                            loadCapacityText.requestFocus();
+                            return;
+                        }   try{
+                            Double.parseDouble(loadCapacityText.getText());
+                            loadCapacity = Double.parseDouble(loadCapacityText.getText());
+                        }
+                        catch(NumberFormatException c5){
+                            errorMessageBox("You must enter load capacity as numbers");
+                            loadCapacityText.requestFocus();
+                            return;
+                        }   // adding heavy vehicle details to object of heavyVehicleArray
+                        heavyVehicleArray.add(new HeavyVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, loadCapacity));
+                        break;
+                }
+             
+                
+                
+                /**
+                 * frame for the confirmation of registration
+                 * when the register button is clicked, the details will be shown
+                 * to the user
+                 */
+                JFrame confirFrame = new JFrame();
+                confirFrame.setSize(360, 340);               // size of app
+                confirFrame.setVisible(true);                // making app visible
+                confirFrame.setLocationRelativeTo(null);     // setting location to center of screen
+                confirFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);     // closing frame without closing the app
+                confirFrame.setResizable(false);                 // app is not resizable
+                confirFrame.setTitle("Registration details");    // title of app
+                confirFrame.setLayout(new BorderLayout());        // app layout
+                
+                // text area for displaying the details
+                JTextArea detailsDisplay = new JTextArea(15, 30);
+                detailsDisplay.setText("");
+                detailsDisplay.setEditable(false);
+                
+                // panel for textarea
+                JPanel detailsPanel = new JPanel();
+                detailsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+                JPanel closeButtonPanel = new JPanel();
+                closeButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+                
+                // "Close" button
+                JButton closeButton = new JButton("Close");
+                
+                // getting private owner details form the object of privateOwnerArray
+                String firstN = privateOwnerArray.get(currentOwner).getFirstName();
+                String lastN = privateOwnerArray.get(currentOwner).getLastName();
+                int licenceN = privateOwnerArray.get(currentOwner).getLicenseNumber();
+                String addres = privateOwnerArray.get(currentOwner).getAddress();
+                String phoneN = privateOwnerArray.get(currentOwner).getPhoneNumber();   
+                    
+                // getting corporate owner details from the object of corporateOwnerArray
+                String plateN = motorcycleArray.get(currentOwner).getPlateNumber();
+                double engineC = motorcycleArray.get(currentOwner).getEngineCapacity();
+                String make2 = motorcycleArray.get(currentOwner).getMake();
+                String model2 = motorcycleArray.get(currentOwner).getModel();
+                int year1 = motorcycleArray.get(currentOwner).getYear();                    
+                
+                
+                // finding which radio button is selected
+                int buttonChoice = 0;
+                if(privateOwnerButton.isSelected()){
+                    buttonChoice = 1;
+                }
+                else if(corporateOwnerButton.isSelected()){
+                    buttonChoice = 2;
+                }
+                
+                // adding detail to text area according to the owner type
+                switch(buttonChoice){
+                    
+                    // for private owner
+                    case 1:{
+                        
+                        String dateOB = privateOwnerArray.get(currentOwner).getDateOfBirth();
+                    
+                         detailsDisplay.append(String.format("%s %s has been registered with the following details:\n"
+                            + "Licence Number: %d\n"
+                            + "Address: %s\n"
+                            + "Phone number: %s\n"
+                            + "Date of birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN, dateOB)); 
+                        break;
+                    }
+                    
+                    // for corporate owner
+                    case 2:{
+                        
+                        int australianBN = corporateOwnerArray.get(currentOwner).getAustralianBusinessNumber();
+
+                        detailsDisplay.append(String.format("%s %s has been registered with the following details:\n"
+                            + "Licence Number: %d\n"
+                            + "Address: %s\n"
+                            + "Phone number: %s\n"
+                            + "Australian Business Number: %s\n\n", firstN, lastN, licenceN, addres, phoneN, australianBN));   
+                        break;
+                    }
+                    
+                }
+                        
+                
+                // checking which type of vehicle is selected
+                int vehicleChoice = 0;
+                if(((String)vehicleComboBox.getSelectedItem()).equals("Motorcycle")){
+                    vehicleChoice = 1;
                 }
                 else if(((String)vehicleComboBox.getSelectedItem()).equals("Light vehicle")){
-                    
-                    lightVehicleArray.add(new LightVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, seatNumbers));
+                    vehicleChoice = 2;
                 }
-                else{
-                    
-                    heavyVehicleArray.add(new HeavyVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, loadCapacity));
+                else if(((String)vehicleComboBox.getSelectedItem()).equals("Heavy vehicle")){
+                    vehicleChoice = 3;
                 }
+                
+                // adding details to textarea according to vehicle type
+                switch(vehicleChoice){
+                    
+                    // for motorcycle
+                    case 1:{
+                        
+                        detailsDisplay.append(String.format("The details of the motorcycle registered by %s is: \n"
+                            + "Plate number: %s\n"
+                            + "Engine capacity: %.1f Litre\n"
+                            + "Make: %s\n"
+                            + "Model: %s\n"
+                            + "Year of manufacture: %d\n", firstN, plateN, engineC, make2, model2, year1));
+                        break;
+                    }
+                    
+                    // for light vehicle
+                    case 2:{
+                        
+                        int seatN = lightVehicleArray.get(currentOwner).getSeatNumber();
+                    
+                        detailsDisplay.append(String.format("The details of the light vehicle registered by %s is: \n"
+                            + "Plate number: %s\n"
+                            + "Engine capacity: %.1f Litre\n"
+                            + "Make: %s\n"
+                            + "Model: %s\n"
+                            + "Year of manufacture: %d\n"
+                            + "Number of seats: %d", firstN, plateN, engineC, make2, model2, year1, seatN));
+                        break;
+                    }
+                    
+                    // for heavy vehicle
+                    case 3:{
+                        
+                        double loadC = heavyVehicleArray.get(currentOwner).getLoadCapacity();
+                    
+                        detailsDisplay.append(String.format("The details of the heavy vehicle registered by %s is: \n"
+                            + "Plate number: %s\n"
+                            + "Engine capacity: %.1f Litre\n"
+                            + "Make: %s\n"
+                            + "Model: %s\n"
+                            + "Year of manufacture: %d\n"
+                            + "Load Capacity: %1f Tonne", firstN, plateN, engineC, make2, model2, year1, loadC));
+                        break;
+                    }
+                    
+                }
+                
+                // adding detailDisplay to details panel              
+                detailsPanel.add(detailsDisplay);
+                closeButtonPanel.add(closeButton);
+                
+                // adding panel and button to main frame
+                confirFrame.add(detailsPanel, BorderLayout.NORTH);
+                confirFrame.add(closeButtonPanel, BorderLayout.SOUTH);
+                
+                // adding functionality to "Close" button
+                closeButton.addActionListener(h1 -> {                
+                    confirFrame.hide();                    
+                });
                 
                 
                 /**
@@ -628,6 +854,26 @@ public class SystemGui extends JFrame{
                 // appending the new 4-digit number to "AUS"
                 plateNumber = letter + num3;
                 
+                // currentOwner for new owenr
+                currentOwner++;
+                
+                // making all the textareas empty when registerd
+                fNameText.setText("");
+                lNameText.setText("");
+                licenceNumberText.setText("");
+                addrText.setText("");
+                phoneNoText.setText("");
+                hiddenButton.setSelected(true);
+                dobText.setText("");
+                abnText.setText("");
+                
+                vehicleComboBox.setSelectedIndex(0);
+                engineCapacityText.setText("");
+                makeText.setText(""); 
+                modelText.setText(""); 
+                yearText.setText("");     
+                loadCapacityText.setText("");  
+                seatNumbersText.setText("");
             
             });
             
