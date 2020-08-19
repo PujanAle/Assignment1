@@ -257,6 +257,7 @@ public class SystemGui extends JFrame{
                 dobText.setEnabled(true);
                 abnLabel.setForeground(Color.gray);
                 abnText.setEnabled(false);
+                abnText.setText("");
             });
             
             // when corporate radio button is selected
@@ -266,6 +267,7 @@ public class SystemGui extends JFrame{
                 abnText.setEnabled(true);
                 dobLabel.setForeground(Color.gray);
                 dobText.setEnabled(false);
+                dobText.setText("");
             });
             
             
@@ -306,7 +308,7 @@ public class SystemGui extends JFrame{
             // making combobox for type of vehicle
             String[] vehicleTypeArray = {"Motorcycle", "Light vehicle", "Heavy vehicle"};
             JComboBox vehicleComboBox = new JComboBox(vehicleTypeArray);
-            vehicleComboBox.setSelectedIndex(0);
+            vehicleComboBox.setSelectedItem("Motorcycle");
             
             // textarea for entering vehicle details
             JTextField engineCapacityText = new JTextField(15);
@@ -354,41 +356,47 @@ public class SystemGui extends JFrame{
             // adding all nested panels to main vehicle panel
             vehiclePanel.add(panelz, BorderLayout.WEST);
             vehiclePanel.setBorder(vehicleLine);            
+                                
+            // can be changed according to the vehicle type selected
+            loadCapacityLabel.setForeground(Color.gray);
+            seatNumbersLabel.setForeground(Color.gray);
+            loadCapacityText.setEnabled(false);
+            seatNumbersText.setEnabled(false);
             
             
-            // finding which vehicle type is selected
-            switch((String)vehicleComboBox.getSelectedItem()) {
+            // letting user enter data according to the vehicle chosen
+            vehicleComboBox.addItemListener(event5 -> {
                 
-                // motorcycle 
-                case "Motorcycle":
+                Object vh = vehicleComboBox.getSelectedItem();
+                if(vh.equals("Motorcycle")){
                     
                     loadCapacityLabel.setForeground(Color.gray);
                     loadCapacityText.setEnabled(false);  
+                    loadCapacityText.setText("");
                     
                     seatNumbersLabel.setForeground(Color.gray);
-                    seatNumbersText.setEnabled(false);                 
-                    break;
-                    
-                // light vehicle    
-                case "Light vehicle":
+                    seatNumbersText.setEnabled(false);   
+                    loadCapacityText.setText("");
+                }
+                else if(vh.equals("Light vehicle")){
                     
                     loadCapacityLabel.setForeground(Color.gray);
                     loadCapacityText.setEnabled(false);
+                    loadCapacityText.setText("");
                     
                     seatNumbersLabel.setForeground(Color.black);
                     seatNumbersText.setEnabled(true);
-                    break;
-                  
-                // heavy vehicle    
-                case "Heavy vehicle":
+                }
+                else if(vh.equals("Heavy vehicle")){
                     
                     loadCapacityLabel.setForeground(Color.black);
                     loadCapacityText.setEnabled(true);
                     
                     seatNumbersLabel.setForeground(Color.gray);
                     seatNumbersText.setEnabled(false);
-                    break;
-                }
+                    seatNumbersText.setText("");
+                }                
+            });
             
                       
             /**
@@ -402,6 +410,7 @@ public class SystemGui extends JFrame{
             JButton clearButton = new JButton("Clear");          // to clear every textarea
             JButton backButton = new JButton("Back");            // to go back to main menu
             JButton exitButton = new JButton("Exit");
+            
             
             
             /**
@@ -992,7 +1001,7 @@ public class SystemGui extends JFrame{
             // override window closing method
             addWindowListener(new WindowAdapter(){
                 @Override
-                public void windowClosing(WindowEvent d7){  // Attempt to exit application
+                public void windowClosing(WindowEvent d2){  // Attempt to exit application
                     exit();				
                 }
             });
@@ -1239,7 +1248,7 @@ public class SystemGui extends JFrame{
                 // override window closing method
                 addWindowListener(new WindowAdapter(){
                     @Override
-                    public void windowClosing(WindowEvent d5){  // Attempt to exit application
+                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
                         exit();				
                     }
                 });
@@ -1494,7 +1503,7 @@ public class SystemGui extends JFrame{
                 // override window closing method
                 addWindowListener(new WindowAdapter(){
                     @Override
-                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
+                    public void windowClosing(WindowEvent d5){  // Attempt to exit application
                         exit();				
                     }
                 });
@@ -1528,7 +1537,7 @@ public class SystemGui extends JFrame{
             // override window closing method
             addWindowListener(new WindowAdapter(){
                 @Override
-                public void windowClosing(WindowEvent d2){  // Attempt to exit application
+                public void windowClosing(WindowEvent d6){  // Attempt to exit application
                     exit();				
                 }
             });
@@ -1594,7 +1603,7 @@ public class SystemGui extends JFrame{
             frame.setTitle("Motor Vehicle Registration(MVR)");      // title of app 
             frame.setLocationRelativeTo(null);                      // placing app at center of screen
             frame.setVisible(true);                                 // making app visible
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // making app close when the X button is clicked
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);   // making app close when the X button is clicked
             frame.setResizable(true);                               // making app resizable
         });
         
