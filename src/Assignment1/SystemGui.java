@@ -125,7 +125,7 @@ public class SystemGui extends JFrame{
             regFrame.setVisible(true);                     // making app visible
             regFrame.setLocationRelativeTo(null);          // making app appear in center of screen
             regFrame.setResizable(false);                   // making app sizable
-            regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      // making app close when X button is clicked
+            regFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);      // making app close when X button is clicked
             regFrame.setLayout(new BorderLayout());        
             
             Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -152,8 +152,9 @@ public class SystemGui extends JFrame{
             JLabel addrLabel = new JLabel("Address");
             JLabel phoneNoLabel = new JLabel("Phone Number");
             JLabel dobLabel = new JLabel("Date Of Birth");
-            JLabel abnLabel = new JLabel("Australian Business Number");
-            JLabel ownerType = new JLabel("Select the which type of owner");
+            JLabel abnLabel = new JLabel("Australian Business Number (ABN)");
+            JLabel ownerType = new JLabel("Select owner type");
+            JLabel ownerInfo = new JLabel("Private needs Date of birth. Corporate needs ABN");
     
             // Test area for entering vehicle details
             JTextField fNameText = new JTextField(15);
@@ -197,37 +198,40 @@ public class SystemGui extends JFrame{
             buttonGroup.add(privateOwnerButton);
             buttonGroup.add(corporateOwnerButton);
             buttonGroup.add(hiddenButton);
-            hiddenButton.isSelected();      
+            hiddenButton.setSelected(true);      
             
-            // selecting type of owner
-            panela.add(ownerType);
-            panelb.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-            panelb.add(privateOwnerButton);
-            panelb.add(corporateOwnerButton);
-            
-            panelc.setLayout(new BorderLayout());
-            panelc.add(panela, BorderLayout.NORTH);
-            panelc.add(panelb, BorderLayout.CENTER);
-                       
+                                 
             // adding label and text to the nested panel
-            paneld.setLayout(new GridLayout(5, 2, 10, 4));
-            paneld.add(fNameLabel);
-            paneld.add(fNameText);
+            panela.setLayout(new GridLayout(5, 2, 10, 4));
+            panela.add(fNameLabel);
+            panela.add(fNameText);
             
-            paneld.add(lNameLabel);
-            paneld.add(lNameText);
+            panela.add(lNameLabel);
+            panela.add(lNameText);
             
-            paneld.add(licenceNumberLabel);
-            paneld.add(licenceNumberText);
+            panela.add(licenceNumberLabel);
+            panela.add(licenceNumberText);
             
-            paneld.add(addrLabel);
-            paneld.add(addrText);
+            panela.add(addrLabel);
+            panela.add(addrText);
             
-            paneld.add(phoneNoLabel);
-            paneld.add(phoneNoText);
+            panela.add(phoneNoLabel);
+            panela.add(phoneNoText);
             
+            
+             // selecting type of owner
+            panelb.setLayout(new BorderLayout());
+            panelb.add(ownerType, BorderLayout.NORTH);
+            panelb.add(ownerInfo, BorderLayout.CENTER);
+            panelc.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+            panelc.add(privateOwnerButton);
+            panelc.add(corporateOwnerButton);
+            
+            paneld.setLayout(new BorderLayout());
+            paneld.add(panelb, BorderLayout.NORTH);
+            paneld.add(panelc, BorderLayout.CENTER);
             // adding radiobuttons to panele
-            panele.add(panelc);     
+            panele.add(paneld);     
             
             panelf.setLayout(new GridLayout(2, 2, 10, 5));
             panelf.add(dobLabel);
@@ -235,9 +239,39 @@ public class SystemGui extends JFrame{
             panelf.add(abnLabel);
             panelf.add(abnText);
             
+            
+            // when hiddenButton is selected user cannot
+            // enter date of birth or ABN
+            if(hiddenButton.isSelected()){
+                abnLabel.setForeground(Color.gray);                                            
+                abnText.setEnabled(false);
+                dobLabel.setForeground(Color.gray);
+                dobText.setEnabled(false);
+               
+            }           
+            
+            // when private radio button is selected
+            privateOwnerButton.addActionListener(event -> {
+                
+                dobLabel.setForeground(Color.black);                                                  
+                dobText.setEnabled(true);
+                abnLabel.setForeground(Color.gray);
+                abnText.setEnabled(false);
+            });
+            
+            // when corporate radio button is selected
+            corporateOwnerButton.addActionListener(event2 -> {
+                
+                abnLabel.setForeground(Color.black);                
+                abnText.setEnabled(true);
+                dobLabel.setForeground(Color.gray);
+                dobText.setEnabled(false);
+            });
+            
+            
             // adding all fields to panelg 
             panelg.setLayout(new BorderLayout());
-            panelg.add(paneld, BorderLayout.NORTH);
+            panelg.add(panela, BorderLayout.NORTH);
             panelg.add(panele, BorderLayout.CENTER);
             panelg.add(panelf, BorderLayout.SOUTH);
             
@@ -248,50 +282,7 @@ public class SystemGui extends JFrame{
             ownerPanel.add(panelh, BorderLayout.CENTER);
             ownerPanel.setBorder(ownerLine);
             
-            
-            // checking which owner type is selected
-            int radioButtonSelected = 0;
-            if(hiddenButton.isSelected()){
-                radioButtonSelected = 1;
-            }
-            else if(privateOwnerButton.isSelected()){
-                radioButtonSelected = 2;                
-            }
-            else if(corporateOwnerButton.isSelected()){
-                radioButtonSelected = 3;
-            }
-            
-            
-            // making adjustment to text field and text color according to radio button selected
-            switch(radioButtonSelected){
-                
-                // when hiddenButton is selected
-                case 1:
-                    abnLabel.setForeground(Color.gray);
-                    abnText.setEditable(false);
-                    dobLabel.setForeground(Color.gray);
-                    dobText.setEditable(false);
-                    break;
-                    
-                // wnen priavate owner is selected    
-                case 2:
-                    abnLabel.setForeground(Color.gray);
-                    abnText.setEditable(false);
-                    dobLabel.setForeground(Color.black);
-                    dobText.setEditable(true);
-                    break;
-                    
-                // when corporate owner is selected
-                case 3:
-                    abnLabel.setForeground(Color.black);
-                    abnText.setEditable(true);
-                    dobLabel.setForeground(Color.gray);
-                    dobText.setEditable(false);
-                    break;
-            }
-            
-            
-            
+                     
             /**
              * entering vehicle information
              */
@@ -372,30 +363,30 @@ public class SystemGui extends JFrame{
                 case "Motorcycle":
                     
                     loadCapacityLabel.setForeground(Color.gray);
-                    loadCapacityText.setEditable(false);
+                    loadCapacityText.setEnabled(false);  
                     
                     seatNumbersLabel.setForeground(Color.gray);
-                    seatNumbersText.setEditable(false);
+                    seatNumbersText.setEnabled(false);                 
                     break;
                     
                 // light vehicle    
                 case "Light vehicle":
                     
                     loadCapacityLabel.setForeground(Color.gray);
-                    loadCapacityText.setEditable(false);
+                    loadCapacityText.setEnabled(false);
                     
                     seatNumbersLabel.setForeground(Color.black);
-                    seatNumbersText.setEditable(true);
+                    seatNumbersText.setEnabled(true);
                     break;
                   
                 // heavy vehicle    
                 case "Heavy vehicle":
                     
                     loadCapacityLabel.setForeground(Color.black);
-                    loadCapacityText.setEditable(true);
+                    loadCapacityText.setEnabled(true);
                     
                     seatNumbersLabel.setForeground(Color.gray);
-                    seatNumbersText.setEditable(false);
+                    seatNumbersText.setEnabled(false);
                     break;
                 }
             
@@ -521,9 +512,29 @@ public class SystemGui extends JFrame{
                     phoneNoText.requestFocus();
                     return;
                 }
-                else{
+                
+                String checkPhoneNo = phoneNoText.getText();
+                boolean checkPhoneBool = true;
+                
+                // converitng the phone number entry to character array
+                char[] phoneCharArray = checkPhoneNo.toCharArray();
+                for(char ch: phoneCharArray){
+                    
+                    if(Character.isLetterOrDigit(ch) == false){
+                        checkPhoneBool = false;
+                                break;
+                    }                    
+                }
+                
+                if(checkPhoneBool == true){
                     phoneNo = phoneNoText.getText();
                 }
+                else{
+                    errorMessageBox("You must enter alphabets or digits for phone number");
+                    phoneNoText.requestFocus();
+                    return;
+                }
+                
                 
                 
                 // checking if type of owner
@@ -535,19 +546,36 @@ public class SystemGui extends JFrame{
                 else if(privateOwnerButton.isSelected()){
                     
                     // for date of birth
-                    String dateOfBirth;// = dobText.getText();         // date of birth
+                    String dateOfBirth;
                     if(dobText.getText().equals("")){
                         errorMessageBox("You must enter date of birth");
                         return;
                     }
-                    else{
-                        dateOfBirth = dobText.getText(); 
+                    
+                    String checkDob = dobText.getText();
+                    boolean checkDobBool = true;
+                    
+                    char[] dobCharArray = checkDob.toCharArray();
+                    for(char ch: dobCharArray){
+                        
+                        if(Character.isLetterOrDigit(ch) == false){
+                            checkDobBool = false;
+                            break;
+                        }
                     }
                     
-                    // adding details of private owner object in arraylist
-                    privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
-
+                    if(checkDobBool == true){
+                        dateOfBirth = dobText.getText(); 
+                        // adding details of private owner object in arraylist
+                        privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
+                    }
+                    else{
+                        errorMessageBox("You must enter alphabets or digits for date of birth");
+                        dobText.requestFocus();
+                        return;
+                    }                  
                 }
+                
                 else{
                     // for Australian Business Number
                     int abn;
@@ -569,9 +597,13 @@ public class SystemGui extends JFrame{
                     // adding details of corporate owner object in arraylist
                     corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
                 }
-                                                             
+                                           
+                
                                 
-                // for vehicle registration
+                /**
+                 * for vehicle registration
+                 */ 
+                
                 // for engine capacity of vehicle
                 double engineCapacity;
                 if(engineCapacityText.getText().equals("")){
@@ -953,6 +985,18 @@ public class SystemGui extends JFrame{
             regFrame.add(vehiclePanel, BorderLayout.CENTER);
             regFrame.add(buttons, BorderLayout.SOUTH);
             
+            
+            /**
+             * when the user pushes the system close (X top right corner)
+             */
+            // override window closing method
+            addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent d7){  // Attempt to exit application
+                    exit();				
+                }
+            });
+            
                     
          // end of register button action listener            
         });
@@ -975,7 +1019,7 @@ public class SystemGui extends JFrame{
             ownerSearchf.setVisible(true);                                       // making app visible
             ownerSearchf.setLocationRelativeTo(null);                            // making app appear in center of screen
             ownerSearchf.setResizable(true);                                     // making app sizable
-            ownerSearchf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         // making app close when X button is clicked
+            ownerSearchf.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);         // making app close when X button is clicked
             ownerSearchf.setLayout(new BorderLayout());                 
             
             // label for search
@@ -1037,7 +1081,7 @@ public class SystemGui extends JFrame{
                 searchOwnerFrame.setVisible(true);                                  // making app visible
                 searchOwnerFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
                 searchOwnerFrame.setResizable(true);                                // making app sizable
-                searchOwnerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // making app close when X button is clicked
+                searchOwnerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    // making app close when X button is clicked
                 searchOwnerFrame.setLayout(new BorderLayout());        
             
                 // making a titled border for owner details
@@ -1260,7 +1304,7 @@ public class SystemGui extends JFrame{
             vehicleSearchf.setVisible(true);                                       // making app visible
             vehicleSearchf.setLocationRelativeTo(null);                            // making app appear in center of screen
             vehicleSearchf.setResizable(true);                                     // making app sizable
-            vehicleSearchf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         // making app close when X button is clicked
+            vehicleSearchf.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);         // making app close when X button is clicked
             vehicleSearchf.setLayout(new BorderLayout());                 
             
             // label for search
@@ -1328,7 +1372,7 @@ public class SystemGui extends JFrame{
                 searchVehicleFrame.setVisible(true);                                  // making app visible
                 searchVehicleFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
                 searchVehicleFrame.setResizable(true);                                // making app sizable
-                searchVehicleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // making app close when X button is clicked
+                searchVehicleFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    // making app close when X button is clicked
                 searchVehicleFrame.setLayout(new BorderLayout());        
             
                 // making a titled border for vehicle details
