@@ -418,7 +418,7 @@ public class SystemGui extends JFrame{
              */
             registerButton.addActionListener(a1 -> {
             
-                // for first name
+                // checking first name
                 String fName;
                 if(fNameText.getText().equals("")){
                     errorMessageBox("You must enter first name");
@@ -427,16 +427,20 @@ public class SystemGui extends JFrame{
                 }
                 
                 String checkingfName = fNameText.getText();
-                boolean checkfNameBool = true;
-                checkingfName = checkingfName.toLowerCase();
-                char[] charArray = checkingfName.toCharArray();
-                for(int i =0; i < charArray.length; i++){
-                    char ch = charArray[i];
-                    if(!(ch >= 'a' && ch <= 'z')){
+                boolean checkfNameBool  = true;
+                
+                // converting string to an array of its characters
+                char[] charFArray = checkingfName.toCharArray();
+                
+                // checking if character is not a string
+                for(char ch : charFArray){
+                    if(Character.isLetter(ch) == false){
                         checkfNameBool = false;
+                        break;
                     }
+                    
                 }
-                if(checkfNameBool = true){
+                if(checkfNameBool == true){
                     fName = fNameText.getText();
                 }
                 else{
@@ -446,23 +450,39 @@ public class SystemGui extends JFrame{
                 }
                             
                 
-                // for last name
+                
+                // checking last name
                 String lName;             
                 if(lNameText.getText().equals("")){
                     errorMessageBox("You must enter last name");
                     lNameText.requestFocus();
                     return;
                 }
-                try{
-                    Integer.parseInt(lNameText.getText());
-                    errorMessageBox("You should enter words for last name");
-                    lNameText.requestFocus();
-                    return;
+                
+                String checkinglName = lNameText.getText();
+                boolean checklNameBool  = true;
+                
+                // converting string to an array of its characters
+                char[] charLArray = checkinglName.toCharArray();
+                
+                // checking if character is not a string
+                for(char ch : charLArray){
+                    if(Character.isLetter(ch) == false){
+                        checklNameBool = false;
+                        break;
+                    }
+                    
                 }
-                catch(NumberFormatException c7){
+                if(checklNameBool == true){
                     lName = lNameText.getText();
                 }
-                          
+                else{
+                    errorMessageBox("You must enter last name with alphabets");
+                    fNameText.requestFocus();
+                    return;
+                }          
+                
+                
                 
                 // for licence number
                 int licenceNumber;
