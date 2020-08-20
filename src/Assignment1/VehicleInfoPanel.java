@@ -34,6 +34,8 @@ public class VehicleInfoPanel extends JPanel{
      * constructor
      */
     public VehicleInfoPanel(){
+        
+        setLayout(new BorderLayout());
            
         // making a titled border for vehicle detail entry
         TitledBorder vehicleLine = BorderFactory.createTitledBorder(" Vehicle Information ");
@@ -42,10 +44,7 @@ public class VehicleInfoPanel extends JPanel{
         // making border
         Border border5 = BorderFactory.createLineBorder(Color.blue, 1);
         
-        // main panel for vehicle info entry
-        JPanel vehiclePanel = new JPanel();           
-        vehiclePanel.setLayout(new BorderLayout());
-            
+       
         // nested panels
         JPanel panelx = new JPanel();
         JPanel panely = new JPanel();
@@ -109,8 +108,8 @@ public class VehicleInfoPanel extends JPanel{
         panelz.add(panely, BorderLayout.CENTER);
             
         // adding all nested panels to main vehicle panel
-        vehiclePanel.add(panelz, BorderLayout.WEST);
-        vehiclePanel.setBorder(vehicleLine);            
+        add(panelz, BorderLayout.WEST);
+        setBorder(vehicleLine);            
                                 
         // can be changed according to the vehicle type selected
         loadCapacityLabel.setForeground(Color.gray);
