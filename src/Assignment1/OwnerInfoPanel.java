@@ -20,36 +20,24 @@ import javax.swing.border.TitledBorder;
  * OwnerInfoPanel class for the panel related to owner 
  */
 public class OwnerInfoPanel extends JPanel{
-     
-    private String firstName;             // first name
-    private String lastName;              // last name
-    private int lNumber;                  // licence number
-    private String addr;                  // address
-    private String pNumber;               // phone number
-    private String DateOB;                // date of birth
-    private int australianBN;             // Australian Business Number
-    private int selectedOwnerType;        // which owner type is selected
+    
+    int selectedOwnerType = 0;
+    
+    JTextField fNameText;
+    JTextField lNameText;
+    JTextField licenceNumberText;
+    JTextField addrText;
+    JTextField phoneNoText;
+    JTextField dobText;
+    JTextField abnText;
     
     
     /**
      * constructor
-     * @param fName              // first name
-     * @param lName              // last name
-     * @param licenceNumber      // license number
-     * @param address            // address
-     * @param phoneNumber        // phone number
-     * @param dob                // date of birth
-     * @param abn                // Australian Business Number
      */
-    public OwnerInfoPanel(String fName, String lName, int licenceNumber, String address, String phoneNumber, String dob, int abn){
+    public OwnerInfoPanel(){
         
-        firstName = fName;
-        lastName = lName;
-        lNumber = licenceNumber;
-        addr = address;
-        pNumber = phoneNumber;
-        DateOB = dob;
-        australianBN = abn; 
+        setLayout(new BorderLayout());
         
         // making a titled border for owner detail entry
         TitledBorder ownerLine = BorderFactory.createTitledBorder(" Owenr Information ");
@@ -58,10 +46,7 @@ public class OwnerInfoPanel extends JPanel{
         // making border
         Border border6 = BorderFactory.createLineBorder(Color.black, 1);        
         
-        // main panel for entering owner details
-        JPanel ownerPanel = new JPanel();            
-        ownerPanel.setLayout(new BorderLayout());
-            
+                   
         // labels for owner details
         JLabel fNameLabel = new JLabel("First Name");
         JLabel lNameLabel = new JLabel("Last Name");
@@ -74,34 +59,25 @@ public class OwnerInfoPanel extends JPanel{
         JLabel ownerInfo = new JLabel("Private needs Date of birth. Corporate needs ABN");
     
         // Test area for entering vehicle details
-        JTextField fNameText = new JTextField(15);
-        fNameText.setText(fName);
+        fNameText = new JTextField(15);
         fNameText.setBorder(border6);
             
-        JTextField lNameText = new JTextField(15);
-        lNameText.setText(lName);
+        lNameText = new JTextField(15);
         lNameText.setBorder(border6);
             
-        JTextField licenceNumberText = new JTextField(15);
-        String licenceNumberInt = Integer.toString(licenceNumber);
-        licenceNumberText.setText(licenceNumberInt);
+        licenceNumberText = new JTextField(15);
         licenceNumberText.setBorder(border6);
             
-        JTextField addrText = new JTextField(15);
-        addrText.setText(address);
+        addrText = new JTextField(15);
         addrText.setBorder(border6);
             
-        JTextField phoneNoText = new JTextField(15);
-        phoneNoText.setText(phoneNumber);
+        phoneNoText = new JTextField(15);
         phoneNoText.setBorder(border6);
             
-        JTextField dobText = new JTextField(15);
-        dobText.setText(dob);
+        dobText = new JTextField(15);
         dobText.setBorder(border6);
             
-        JTextField abnText = new JTextField(15);
-        String abnInt = Integer.toString(abn);
-        abnText.setText(abnInt);
+        abnText = new JTextField(15);
         abnText.setBorder(border6);
     
         // radiobuttons to choose the type of owner
@@ -215,8 +191,8 @@ public class OwnerInfoPanel extends JPanel{
         panelh.add(panelg, BorderLayout.WEST);
             
         // adding nested panel to the main panel -> ownerPanel
-        ownerPanel.add(panelh, BorderLayout.CENTER);
-        ownerPanel.setBorder(ownerLine);      
+        add(panelh, BorderLayout.CENTER);
+        setBorder(ownerLine);      
         
         
      // end of constructor   
@@ -228,7 +204,7 @@ public class OwnerInfoPanel extends JPanel{
      * @param firstName 
      */
     public void setFirstName(String firstName){
-        this.firstName = firstName;
+        fNameText.setText(firstName);
     }
     
     
@@ -237,7 +213,7 @@ public class OwnerInfoPanel extends JPanel{
      * @param lastName 
      */
     public void setLastName(String lastName){
-        this.lastName = lastName;
+        lNameText.setText(lastName);
     }
     
     
@@ -246,7 +222,8 @@ public class OwnerInfoPanel extends JPanel{
      * @param lNumber 
      */
     public void setLicenceNumber(int lNumber){
-        this.lNumber = lNumber;
+        String licenceN = Integer.toString(lNumber);
+        licenceNumberText.setText(licenceN);
     }
     
     
@@ -255,7 +232,7 @@ public class OwnerInfoPanel extends JPanel{
      * @param addr 
      */
     public void setAddress(String addr){
-        this.addr = addr;
+        addrText.setText(addr);
     }
     
     
@@ -264,7 +241,7 @@ public class OwnerInfoPanel extends JPanel{
      * @param pNumber 
      */
     public void setPhoneNumber(String pNumber){
-        this.pNumber = pNumber;
+        phoneNoText.setText(pNumber);
     }
     
     
@@ -273,7 +250,7 @@ public class OwnerInfoPanel extends JPanel{
      * @param DateOB 
      */
     public void setDateOfBirth(String DateOB){
-        this.DateOB = DateOB;
+        dobText.setText(DateOB);
     }
     
     
@@ -282,7 +259,8 @@ public class OwnerInfoPanel extends JPanel{
      * @param australianBN 
      */
     public void setAustralianBusinessNumber(int australianBN){
-        this.australianBN = australianBN;
+        String abn = Integer.toString(australianBN);
+        abnText.setText(abn);
     }
     
     
@@ -291,7 +269,8 @@ public class OwnerInfoPanel extends JPanel{
      * @return first name
      */
     public String getFirstName(){
-        return firstName;
+        return fNameText.getText();
+       
     }
     
     
@@ -300,7 +279,7 @@ public class OwnerInfoPanel extends JPanel{
      * @return last name
      */
     public String getLastName(){
-        return lastName;
+        return lNameText.getText();
     }
     
     
@@ -308,8 +287,8 @@ public class OwnerInfoPanel extends JPanel{
      * getLicenceNumber accessor method
      * @return licence method
      */
-    public int getLicenceNumber(){
-        return lNumber;
+    public String getLicenceNumber(){
+        return licenceNumberText.getText();
     }
     
     
@@ -318,7 +297,7 @@ public class OwnerInfoPanel extends JPanel{
      * @return address
      */
     public String getAddress(){
-        return addr;
+        return addrText.getText();
     }
     
     
@@ -327,7 +306,7 @@ public class OwnerInfoPanel extends JPanel{
      * @return phone number
      */
     public String getPhoneNumber(){
-        return pNumber;
+        return phoneNoText.getText();
     }
     
     
@@ -336,7 +315,7 @@ public class OwnerInfoPanel extends JPanel{
      * @return date of birth
      */
     public String getDateOfBirth(){
-        return DateOB;
+        return dobText.getText();
     }
     
     
@@ -344,8 +323,8 @@ public class OwnerInfoPanel extends JPanel{
      * getAustralianBusinessNumber accessor method
      * @return Australian Business Number
      */
-    public int getAustralianBusinessNumber(){
-        return australianBN;
+    public String getAustralianBusinessNumber(){
+        return abnText.getText();
     }
     
     
