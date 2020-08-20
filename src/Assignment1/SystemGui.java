@@ -580,10 +580,7 @@ public class SystemGui extends JFrame{
                     if(checkDobBool == true){
                         dateOfBirth = dobText.getText(); 
                         // adding details of private owner object in arraylist
-                        privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
-                        
-                        // variable so that we know the owner is private owner
-                        ownerSearchType = 1;
+                        privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));                       
                     }
                     else{
                         errorMessageBox("You must enter alphabets or digits for date of birth");
@@ -603,10 +600,7 @@ public class SystemGui extends JFrame{
                     try{
                         Integer.parseInt(abnText.getText());
                         abn = Integer.parseInt(abnText.getText());
-                        
-                        // variable so that we know the owner is corporate owner
-                        ownerSearchType = 2;
-                        
+                                                
                         // adding details of corporate owner object in arraylist
                         corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
                     }
@@ -692,10 +686,7 @@ public class SystemGui extends JFrame{
                 switch ((String)vehicleComboBox.getSelectedItem()) {
                     
                     case "Motorcycle":
-                        
-                        // variable to specify that the search key is for a motorcycle
-                        vehicleSearchType = 1;
-                        
+                                             
                         // adding motorcycle details to object of motorcycleArray
                         motorcycleArray.add(new Motorcycle(plateNumber, engineCapacity, make, model, year, licenceNumber));
                         break;
@@ -712,10 +703,7 @@ public class SystemGui extends JFrame{
                         try{
                             Integer.parseInt(seatNumbersText.getText());
                             seatNumbers = Integer.parseInt(seatNumbersText.getText());
-                            
-                            // variable to specify that the search key is for light vehicle
-                            vehicleSearchType = 2;
-                            
+                                                        
                             // adding light vehicle details to object of lightVehicleArray
                             lightVehicleArray.add(new LightVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, seatNumbers));
                         }
@@ -738,10 +726,7 @@ public class SystemGui extends JFrame{
                         try{
                             Double.parseDouble(loadCapacityText.getText());
                             loadCapacity = Double.parseDouble(loadCapacityText.getText());
-                            
-                            // variable to specify that the search key is for heavy vehicle
-                            vehicleSearchType = 3;
-                            
+                                                    
                             // adding heavy vehicle details to object of heavyVehicleArray
                             heavyVehicleArray.add(new HeavyVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, loadCapacity));
                         }
@@ -1104,6 +1089,14 @@ public class SystemGui extends JFrame{
              */
             ownerSearchButton.addActionListener(k -> {
                 
+                String fName;
+                String lName;
+                int licenceNumber;
+                String address;
+                String phoneNumber;
+                String dateOfBirth;
+                int australianBusinessNumber;
+                
                 if(ownerSearchArea.getText().equals("")){
                     errorMessageBox("You must enter licence number");
                 }
@@ -1114,21 +1107,56 @@ public class SystemGui extends JFrame{
                     }
                     else{                        
                         int ownerSearchKey;
+                        int privateSearchInt = 0;
+                        int corporateSearchInt = 0;
                         try{
                             Integer.parseInt(ownerSearchArea.getText());
                             ownerSearchKey = Integer.parseInt(ownerSearchArea.getText());
                             
-                            if(ownerSearchType == 1){
-                                
-                                for(int i = 0; i < privateOwnerArray.size(); i++){
+                            for(int i = 0; i < privateOwnerArray.size(); i++){
                                     
-                                    if(ownerSearchKey == privateOwnerArray.get(i).getLicenseNumber()){
+                                if(ownerSearchKey == privateOwnerArray.get(i).getLicenseNumber()){
                                         
-                                    }
+                                    fName = privateOwnerArray.get(i).getFirstName();
+                                    lName= privateOwnerArray.get(i).getLastName();
+                                    licenceNumber = privateOwnerArray.get(i).getLicenseNumber();
+                                    address = privateOwnerArray.get(i).getAddress();
+                                    phoneNumber = privateOwnerArray.get(i).getPhoneNumber();
+                                    dateOfBirth = privateOwnerArray.get(i).getDateOfBirth();   
+                                    ownerSearchType = 1;
+                                    break;
+                                }
+                                else{
+                                    privateSearchInt = 1;
+                                }
+                            }   
+                            
+                            for(int i = 0; i < corporateOwnerArray.size(); i++){
+                                
+                                if(ownerSearchKey == corporateOwnerArray.get(i).getLicenseNumber()){
                                     
+                                    fName = corporateOwnerArray.get(i).getFirstName();
+                                    lName = corporateOwnerArray.get(i).getLastName();
+                                    licenceNumber = corporateOwnerArray.get(i).getLicenseNumber();
+                                    address = corporateOwnerArray.get(i).getAddress();
+                                    phoneNumber = corporateOwnerArray.get(i).getPhoneNumber();
+                                    australianBusinessNumber = corporateOwnerArray.get(i).getAustralianBusinessNumber();
+                                    ownerSearchType = 2;
+                                    break;                                    
+                                }
+                                else{
+                                    corporateSearchInt = 1;
                                 }
                                 
-                            }                            
+                            }    
+                            
+                            if((privateSearchInt + corporateSearchInt) == 2){
+                                
+                                errorMessageBox("Owner not found");
+                                ownerSearchArea.requestFocus();
+                                return;                                
+                            }
+                            
                         }
                         catch(NumberFormatException g1){
                             errorMessageBox("You must enter numbers in the search area");
@@ -1138,18 +1166,6 @@ public class SystemGui extends JFrame{
 
                         // so that the search menu is hidden
                         ownerSearchf.hide();
-
-
-
-
-
-                        // getting private owner details form the object of privateOwnerArray
-                        String nameFirst = privateOwnerArray.get(currentOwner).getFirstName();
-                        String nameLast = privateOwnerArray.get(currentOwner).getLastName();
-                        int numberLicence = privateOwnerArray.get(currentOwner).getLicenseNumber();
-                        String adder = privateOwnerArray.get(currentOwner).getAddress();
-                        String numberPhone = privateOwnerArray.get(currentOwner).getPhoneNumber();   
-
 
                         // frame search result of owner registration information
                         JFrame searchOwnerFrame = new JFrame();
