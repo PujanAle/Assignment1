@@ -20,33 +20,21 @@ import javax.swing.border.TitledBorder;
  */
 public class VehicleInfoPanel extends JPanel{    
     
-    private double engineCapacity;          // engine capacity
-    private String make;                    // brand of vehicle
-    private String model;                   // model
-    private int year;                       // year of manufacture
-    private int seatNumber;                 // number of seats
-    private double loadCapacity;            // load capacity
-    private int selectedVehicleType = 0;    // which vehicle is selected
+    int selectedVehicleType = 0;    // which vehicle is selected
+    
+    JTextField engineCapacityText;
+    JTextField makeText;
+    JTextField modelText;
+    JTextField yearText;
+    JTextField loadCapacityText;
+    JTextField seatNumbersText;
     
     
     /**
      * constructor
-     * @param engineCapacity    // engine capacity
-     * @param make              // brand of vehicle
-     * @param model             // model
-     * @param year              // year of manufacture
-     * @param seatNumber        // number of seats
-     * @param loadCapacity      // load capacity
      */
-    public VehicleInfoPanel(double engineCapacity, String make, String model, int year, int seatNumber, double loadCapacity){
-        
-        this.engineCapacity = engineCapacity;
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.seatNumber = seatNumber;
-        this.loadCapacity = loadCapacity;
-        
+    public VehicleInfoPanel(){
+           
         // making a titled border for vehicle detail entry
         TitledBorder vehicleLine = BorderFactory.createTitledBorder(" Vehicle Information ");
         vehicleLine.setTitleColor(Color.BLUE);
@@ -78,32 +66,22 @@ public class VehicleInfoPanel extends JPanel{
         vehicleComboBox.setSelectedItem("Motorcycle");
             
         // textarea for entering vehicle details
-        JTextField engineCapacityText = new JTextField(15);
-        String engineInt = Double.toString(engineCapacity);
-        engineCapacityText.setText(engineInt);
+        engineCapacityText = new JTextField(15);
         engineCapacityText.setBorder(border5);
             
-        JTextField makeText = new JTextField(15);
-        makeText.setText(make);
+        makeText = new JTextField(15);
         makeText.setBorder(border5);
            
-        JTextField modelText = new JTextField(15);
-        modelText.setText(model);
+        modelText = new JTextField(15);
         modelText.setBorder(border5);
             
-        JTextField yearText = new JTextField(15);
-        String yearInt = Integer.toString(year);
-        yearText.setText(yearInt);
+        yearText = new JTextField(15);
         yearText.setBorder(border5);
             
-        JTextField loadCapacityText = new JTextField(15);
-        String loadInt = Double.toString(loadCapacity);
-        loadCapacityText.setText(loadInt);
+        loadCapacityText = new JTextField(15);
         loadCapacityText.setBorder(border5);
             
-        JTextField seatNumbersText = new JTextField(15);
-        String seatInt = Integer.toString(seatNumber);
-        seatNumbersText.setText(seatInt);
+        seatNumbersText = new JTextField(15);
         seatNumbersText.setBorder(border5);
             
         // nested panels
@@ -193,7 +171,8 @@ public class VehicleInfoPanel extends JPanel{
      * @param engineCapacity 
      */
     public void setEngineCapacity(double engineCapacity){
-        this.engineCapacity = engineCapacity;
+        String eCap = Double.toString(engineCapacity);
+        engineCapacityText.setText(eCap);
     }
     
     
@@ -202,7 +181,7 @@ public class VehicleInfoPanel extends JPanel{
      * @param make 
      */
     public void setMake(String make){
-        this.make = make;
+        makeText.setText(make);
     }
     
     
@@ -211,7 +190,7 @@ public class VehicleInfoPanel extends JPanel{
      * @param model 
      */
     public void setModel(String model){
-        this.model = model;
+        modelText.setText(model);
     }
     
     
@@ -220,7 +199,8 @@ public class VehicleInfoPanel extends JPanel{
      * @param year 
      */
     public void setYear(int year){
-        this.year = year;
+        String yearInput = Integer.toString(year);
+        yearText.setText(yearInput);
     }
     
     
@@ -229,7 +209,8 @@ public class VehicleInfoPanel extends JPanel{
      * @param seatNumber 
      */
     public void setSeatNumber(int seatNumber){
-        this.seatNumber = seatNumber;
+        String seatN = Integer.toString(seatNumber);
+        seatNumbersText.setText(seatN);
     }
     
     
@@ -238,7 +219,8 @@ public class VehicleInfoPanel extends JPanel{
      * @param loadCapacity 
      */
     public void setLoadCapacity(double loadCapacity){
-        this.loadCapacity = loadCapacity;
+        String loadC = Double.toString(loadCapacity);
+        loadCapacityText.setText(loadC);
     }
     
     
@@ -246,8 +228,8 @@ public class VehicleInfoPanel extends JPanel{
      * getEngineCapacity accessor method
      * @return engine capacity
      */
-    public double getEngineCapacity(){
-        return engineCapacity;
+    public String getEngineCapacity(){
+        return engineCapacityText.getText();
     }
     
     
@@ -256,7 +238,7 @@ public class VehicleInfoPanel extends JPanel{
      * @return brand of vehicle
      */
     public String getMake(){
-        return make;
+        return makeText.getText();
     }
     
     
@@ -265,7 +247,7 @@ public class VehicleInfoPanel extends JPanel{
      * @return model
      */
     public String getModel(){
-        return model;
+        return modelText.getText();
     }
     
     
@@ -273,8 +255,8 @@ public class VehicleInfoPanel extends JPanel{
      * getYear accessor method
      * @return year of manufacture
      */
-    public int getYear(){
-        return year;
+    public String getYear(){
+        return yearText.getText();
     }
     
     
@@ -282,8 +264,8 @@ public class VehicleInfoPanel extends JPanel{
      * getSeatNumber accessor method
      * @return number of seats
      */
-    public int getSeatNumber(){
-        return seatNumber;
+    public String getSeatNumber(){
+        return seatNumbersText.getText();
     }
     
     
@@ -291,8 +273,8 @@ public class VehicleInfoPanel extends JPanel{
      * getLoadCapacity accessor method
      * @return load capacity
      */
-    public double getLoadCapacity(){
-        return loadCapacity;
+    public String getLoadCapacity(){
+        return loadCapacityText.getText();
     }
     
     
