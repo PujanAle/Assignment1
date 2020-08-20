@@ -29,6 +29,8 @@ public class VehicleInfoPanel extends JPanel{
     JTextField loadCapacityText;
     JTextField seatNumbersText;
     
+    JComboBox vehicleComboBox;
+    
     
     /**
      * constructor
@@ -42,7 +44,7 @@ public class VehicleInfoPanel extends JPanel{
         vehicleLine.setTitleColor(Color.BLUE);
         
         // making border
-        Border border5 = BorderFactory.createLineBorder(Color.blue, 1);
+        Border border5 = BorderFactory.createLineBorder(Color.black, 1);
         
        
         // nested panels
@@ -61,7 +63,7 @@ public class VehicleInfoPanel extends JPanel{
             
         // making combobox for type of vehicle
         String[] vehicleTypeArray = {"Motorcycle", "Light vehicle", "Heavy vehicle"};
-        JComboBox vehicleComboBox = new JComboBox(vehicleTypeArray);
+        vehicleComboBox = new JComboBox(vehicleTypeArray);
         vehicleComboBox.setSelectedItem("Motorcycle");
             
         // textarea for entering vehicle details
@@ -169,9 +171,8 @@ public class VehicleInfoPanel extends JPanel{
      * setEngineCapacity mutator method
      * @param engineCapacity 
      */
-    public void setEngineCapacity(double engineCapacity){
-        String eCap = Double.toString(engineCapacity);
-        engineCapacityText.setText(eCap);
+    public void setEngineCapacity(String engineCapacity){
+        engineCapacityText.setText(engineCapacity);
     }
     
     
@@ -197,9 +198,8 @@ public class VehicleInfoPanel extends JPanel{
      * setYear mutator method
      * @param year 
      */
-    public void setYear(int year){
-        String yearInput = Integer.toString(year);
-        yearText.setText(yearInput);
+    public void setYear(String year){
+        yearText.setText(year);
     }
     
     
@@ -207,9 +207,8 @@ public class VehicleInfoPanel extends JPanel{
      * setSeatNumber mutator method
      * @param seatNumber 
      */
-    public void setSeatNumber(int seatNumber){
-        String seatN = Integer.toString(seatNumber);
-        seatNumbersText.setText(seatN);
+    public void setSeatNumber(String seatNumber){
+        seatNumbersText.setText(seatNumber);
     }
     
     
@@ -217,9 +216,8 @@ public class VehicleInfoPanel extends JPanel{
      * setLoadCapacity mutator method
      * @param loadCapacity 
      */
-    public void setLoadCapacity(double loadCapacity){
-        String loadC = Double.toString(loadCapacity);
-        loadCapacityText.setText(loadC);
+    public void setLoadCapacity(String loadCapacity){
+        loadCapacityText.setText(loadCapacity);
     }
     
     
