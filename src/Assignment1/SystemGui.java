@@ -37,11 +37,12 @@ public class SystemGui extends JFrame{
     
     // assigning plate number to the vehicle registered
     String plateNumber = "VIC2033";
-    int currentOwner = 0;
-    
+   
+    // current owner position in array
     int currentPrivateOwner = 0;
     int currentCorporateOwner = 0;
     
+    // current vehicle position in array
     int currentMotorcycle = 0;
     int currentLight = 0;
     int currentHeavy = 0;
@@ -457,6 +458,7 @@ public class SystemGui extends JFrame{
                 }
                 else{
                     errorMessageBox("You must enter first name with alphabets");
+                    fNameText.setText("");
                     fNameText.requestFocus();
                     return;
                 }
@@ -490,6 +492,7 @@ public class SystemGui extends JFrame{
                 }
                 else{
                     errorMessageBox("You must enter last name with alphabets");
+                    fNameText.setText("");
                     fNameText.requestFocus();
                     return;
                 }          
@@ -508,7 +511,8 @@ public class SystemGui extends JFrame{
                     licenceNumber = Integer.parseInt(licenceNumberText.getText());
                 }  
                 catch(NumberFormatException c1){ 
-                     errorMessageBox("You must enter numbers for licence number"); 
+                     errorMessageBox("You must enter numbers for licence number");
+                     licenceNumberText.setText("");
                      licenceNumberText.requestFocus();
                      return;
                 } 
@@ -552,6 +556,7 @@ public class SystemGui extends JFrame{
                 }
                 else{
                     errorMessageBox("You must enter alphabets or digits for phone number");
+                    phoneNoText.setText("");
                     phoneNoText.requestFocus();
                     return;
                 }
@@ -597,6 +602,7 @@ public class SystemGui extends JFrame{
                     }
                     else{
                         errorMessageBox("You must enter alphabets or digits for date of birth");
+                        dobText.setText("");
                         dobText.requestFocus();
                         return;
                     }                  
@@ -624,6 +630,7 @@ public class SystemGui extends JFrame{
                     }
                     catch(NumberFormatException c2){
                         errorMessageBox("You must enter numbers for Australian Business Number");
+                        abnText.setText("");
                         abnText.requestFocus();
                         return;
                     }                                 
@@ -647,7 +654,8 @@ public class SystemGui extends JFrame{
                     engineCapacity = Double.parseDouble(engineCapacityText.getText());
                 }
                 catch(NumberFormatException c3){
-                    errorMessageBox("You should enter only numbers");
+                    errorMessageBox("You should enter number only numbers");
+                    engineCapacityText.setText("");
                     engineCapacityText.requestFocus();
                     return;
                 }
@@ -662,6 +670,7 @@ public class SystemGui extends JFrame{
                 }
                 else if(!(makeText.getText() instanceof String)){
                     errorMessageBox("You must brand name with words");
+                    makeText.setText("");
                     makeText.requestFocus();
                     return;
                 }
@@ -694,7 +703,8 @@ public class SystemGui extends JFrame{
                     year = Integer.parseInt(yearText.getText()); 
                 }
                 catch(NumberFormatException c4){
-                    errorMessageBox("You must enter year as number");
+                    errorMessageBox("You must enter year as numbers");
+                    yearText.setText("");
                     yearText.requestFocus();
                     return;
                 }
@@ -739,6 +749,7 @@ public class SystemGui extends JFrame{
                         }
                         catch(NumberFormatException c6){
                             errorMessageBox("You must enter number of seats a number");
+                            seatNumbersText.setText("");
                             seatNumbersText.requestFocus();
                             return;
                         }                       
@@ -768,17 +779,23 @@ public class SystemGui extends JFrame{
                         }
                         catch(NumberFormatException c5){
                             errorMessageBox("You must enter load capacity as numbers");
+                            loadCapacityText.setText("");
                             loadCapacityText.requestFocus();
                             return;
                         }                        
                         break;
                 }
              
-          
-                String OwnerString;      
-                String vehicleString;
+                
+                // strings for the cofrimation message
+                String OwnerString = "";      
+                String vehicleString = "";
+                
+                // final confirmation message
+                String confirmMessage;
 
                 
+                // checking the owner type and giving the appropriate confirmation message
                 if(ownerSearchType == 1){
                     
                     String firstN = privateOwnerArray.get(currentPrivateOwner  - 1).getFirstName();
@@ -792,7 +809,7 @@ public class SystemGui extends JFrame{
                             + "Licence Number: %d\n"
                             + "Address: %s\n"
                             + "Phone number: %s\n"
-                            + "Date of Birth: %s", firstN, lastN, licenceN, addres, phoneN,dob);
+                            + "Date of Birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN,dob);
                 }
                 else if(ownerSearchType == 2){
                     
@@ -807,12 +824,14 @@ public class SystemGui extends JFrame{
                             + "Licence Number: %d\n"
                             + "Address: %s\n"
                             + "Phone Number: %s\n"
-                            + "Australian Business Number: %d", firstN, lastN, licenceN, addres, phoneN, abn);
+                            + "Australian Business Number: %d\n\n", firstN, lastN, licenceN, addres, phoneN, abn);
                 }
                 
                 
+                // checking the vehicle type and creating the appropriate confirmation message
                 switch(vehicleSearchType){
                     
+                    // for motorcycle
                     case 1:{
                         
                         String plateN = motorcycleArray.get(currentMotorcycle - 1).getPlateNumber();
@@ -829,6 +848,7 @@ public class SystemGui extends JFrame{
                         break;
                     }
                     
+                    // for light vehicle
                     case 2:{
                         
                         String plateN = lightVehicleArray.get(currentLight  - 1).getPlateNumber();
@@ -847,6 +867,7 @@ public class SystemGui extends JFrame{
                         break;
                     }
                     
+                    // for heavy vehicle
                     case 3:{
                         
                         String plateN = heavyVehicleArray.get(currentHeavy   - 1).getPlateNumber();
@@ -869,18 +890,17 @@ public class SystemGui extends JFrame{
                 }
                                 
                 
+                // final confirmation message to display
+                confirmMessage = OwnerString + vehicleString;
+                confirmationMessage(confirmMessage);
+                
                 
                 /**
                  * The first plate number assigned is "AUS2033"
                  * changing the four numbers in the plate number for every new vehicle
                  */
-                String letter = "";
-                String num = "";
+                String num = "";    // initial number of plate number
                 
-                // sepearting "AUS" from plate number
-                for(int i = 0; i < plateNumber.indexOf("S") + 1; i++){
-                    letter += plateNumber.charAt(i);
-                }
                 // seperating the number from plate number
                 for(int i = 3; i < plateNumber.length(); i++){
                     num += plateNumber.charAt(i);
@@ -896,11 +916,9 @@ public class SystemGui extends JFrame{
                 String num3 = Integer.toString(newNum);
                 
                 // appending the new 4-digit number to "AUS"
-                plateNumber = letter + num3;
+                plateNumber = "AUS" + num3;
                 
-                // currentOwner for new owenr
-                currentOwner++;
-                
+                               
                 // making all the textareas empty when registerd
                 fNameText.setText("");
                 lNameText.setText("");
@@ -1102,11 +1120,11 @@ public class SystemGui extends JFrame{
 
 
                         // getting private owner details form the object of privateOwnerArray
-                        String nameFirst = privateOwnerArray.get(currentOwner).getFirstName();
+                       /* String nameFirst = privateOwnerArray.get(currentOwner).getFirstName();
                         String nameLast = privateOwnerArray.get(currentOwner).getLastName();
                         int numberLicence = privateOwnerArray.get(currentOwner).getLicenseNumber();
                         String adder = privateOwnerArray.get(currentOwner).getAddress();
-                        String numberPhone = privateOwnerArray.get(currentOwner).getPhoneNumber();   
+                        String numberPhone = privateOwnerArray.get(currentOwner).getPhoneNumber();  */ 
 
 
                         // frame search result of owner registration information
@@ -1613,6 +1631,11 @@ public class SystemGui extends JFrame{
     }
     
     
+    /**
+     * errorMessageBox method
+     * @param errorMessage 
+     * frame for all the error messages
+     */
     private void errorMessageBox(String errorMessage){                  //method to create an error message window
             
         JFrame frame2 = new JFrame();
@@ -1621,6 +1644,11 @@ public class SystemGui extends JFrame{
     }
     
     
+    /**
+     * confirmation message
+     * @param confirm 
+     * frame for confirmation of registration
+     */
     private void confirmationMessage(String confirm){
         
         JFrame frame5 = new JFrame();
@@ -1629,6 +1657,11 @@ public class SystemGui extends JFrame{
     }
     
     
+    /**
+     * main method 
+     * @param args 
+     * contains the frame for the main menu
+     */
     public static void main(String[] args){
         
         EventQueue.invokeLater(() -> {
