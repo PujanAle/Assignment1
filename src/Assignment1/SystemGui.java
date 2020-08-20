@@ -39,6 +39,14 @@ public class SystemGui extends JFrame{
     String plateNumber = "VIC2033";
     int currentOwner = 0;
     
+    int currentPrivateOwner = 0;
+    int currentCorporateOwner = 0;
+    
+    int currentMotorcycle = 0;
+    int currentLight = 0;
+    int currentHeavy = 0;
+    
+    
     // variable to know which owner type or vehicle type is being searched
     int ownerSearchType = 0;
     int vehicleSearchType = 0;
@@ -583,7 +591,9 @@ public class SystemGui extends JFrame{
                         privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
                         
                         // variable so that we know the owner is private owner
-                        ownerSearchType = 1;
+                        ownerSearchType = 1;  
+                        
+                        currentPrivateOwner++;
                     }
                     else{
                         errorMessageBox("You must enter alphabets or digits for date of birth");
@@ -609,6 +619,8 @@ public class SystemGui extends JFrame{
                         
                         // adding details of corporate owner object in arraylist
                         corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
+                        
+                        currentCorporateOwner++;
                     }
                     catch(NumberFormatException c2){
                         errorMessageBox("You must enter numbers for Australian Business Number");
@@ -698,6 +710,9 @@ public class SystemGui extends JFrame{
                         
                         // adding motorcycle details to object of motorcycleArray
                         motorcycleArray.add(new Motorcycle(plateNumber, engineCapacity, make, model, year, licenceNumber));
+                        
+                        currentMotorcycle++;
+                        
                         break;
                         
                     case "Light vehicle":                        
@@ -718,6 +733,9 @@ public class SystemGui extends JFrame{
                             
                             // adding light vehicle details to object of lightVehicleArray
                             lightVehicleArray.add(new LightVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, seatNumbers));
+                            
+                            currentLight++;
+                            
                         }
                         catch(NumberFormatException c6){
                             errorMessageBox("You must enter number of seats a number");
@@ -744,6 +762,9 @@ public class SystemGui extends JFrame{
                             
                             // adding heavy vehicle details to object of heavyVehicleArray
                             heavyVehicleArray.add(new HeavyVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, loadCapacity));
+                            
+                            currentHeavy++;
+                            
                         }
                         catch(NumberFormatException c5){
                             errorMessageBox("You must enter load capacity as numbers");
@@ -753,163 +774,100 @@ public class SystemGui extends JFrame{
                         break;
                 }
              
-                
-                
-                /**
-                 * frame for the confirmation of registration
-                 * when the register button is clicked, the details will be shown
-                 * to the user
-                 */
-                JFrame confirFrame = new JFrame();
-                confirFrame.setSize(360, 340);               // size of app
-                confirFrame.setVisible(true);                // making app visible
-                confirFrame.setLocationRelativeTo(null);     // setting location to center of screen
-                confirFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);     // closing frame without closing the app
-                confirFrame.setResizable(false);                 // app is not resizable
-                confirFrame.setTitle("Registration details");    // title of app
-                confirFrame.setLayout(new BorderLayout());        // app layout
-                
-                // text area for displaying the details
-                JTextArea detailsDisplay = new JTextArea(15, 30);
-                detailsDisplay.setText("");
-                detailsDisplay.setEditable(false);
-                
-                // panel for textarea
-                JPanel detailsPanel = new JPanel();
-                detailsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-                JPanel closeButtonPanel = new JPanel();
-                closeButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-                
-                // "Close" button
-                JButton closeButton = new JButton("Close");
-                
-                // getting private owner details form the object of privateOwnerArray
-                String firstN = privateOwnerArray.get(currentOwner).getFirstName();
-                String lastN = privateOwnerArray.get(currentOwner).getLastName();
-                int licenceN = privateOwnerArray.get(currentOwner).getLicenseNumber();
-                String addres = privateOwnerArray.get(currentOwner).getAddress();
-                String phoneN = privateOwnerArray.get(currentOwner).getPhoneNumber();   
-                    
-                // getting corporate owner details from the object of corporateOwnerArray
-                String plateN = motorcycleArray.get(currentOwner).getPlateNumber();
-                double engineC = motorcycleArray.get(currentOwner).getEngineCapacity();
-                String make2 = motorcycleArray.get(currentOwner).getMake();
-                String model2 = motorcycleArray.get(currentOwner).getModel();
-                int year1 = motorcycleArray.get(currentOwner).getYear();                    
-                
-                
-                // finding which radio button is selected
-                int buttonChoice = 0;
-                if(privateOwnerButton.isSelected()){
-                    buttonChoice = 1;
-                }
-                else if(corporateOwnerButton.isSelected()){
-                    buttonChoice = 2;
-                }
-                
-                // adding detail to text area according to the owner type
-                switch(buttonChoice){
-                    
-                    // for private owner
-                    case 1:{
-                        
-                        String dateOB = privateOwnerArray.get(currentOwner).getDateOfBirth();
-                    
-                         detailsDisplay.append(String.format("%s %s has been registered with the following details:\n"
-                            + "Licence Number: %d\n"
-                            + "Address: %s\n"
-                            + "Phone number: %s\n"
-                            + "Date of birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN, dateOB)); 
-                        break;
-                    }
-                    
-                    // for corporate owner
-                    case 2:{
-                        
-                        int australianBN = corporateOwnerArray.get(currentOwner).getAustralianBusinessNumber();
+          
+                String OwnerString;      
+                String vehicleString;
 
-                        detailsDisplay.append(String.format("%s %s has been registered with the following details:\n"
+                
+                if(ownerSearchType == 1){
+                    
+                    String firstN = privateOwnerArray.get(currentPrivateOwner  - 1).getFirstName();
+                    String lastN = privateOwnerArray.get(currentPrivateOwner  - 1).getLastName();
+                    int licenceN = privateOwnerArray.get(currentPrivateOwner  - 1).getLicenseNumber();
+                    String addres = privateOwnerArray.get(currentPrivateOwner  - 1).getAddress();
+                    String phoneN = privateOwnerArray.get(currentPrivateOwner  - 1).getPhoneNumber();
+                    String dob = privateOwnerArray.get(currentPrivateOwner  - 1).getDateOfBirth();
+
+                    OwnerString = String.format("%s %s has been registered with the following details: \n"
                             + "Licence Number: %d\n"
                             + "Address: %s\n"
                             + "Phone number: %s\n"
-                            + "Australian Business Number: %s\n\n", firstN, lastN, licenceN, addres, phoneN, australianBN));   
-                        break;
-                    }
+                            + "Date of Birth: %s", firstN, lastN, licenceN, addres, phoneN,dob);
+                }
+                else if(ownerSearchType == 2){
                     
-                }
-                        
-                
-                // checking which type of vehicle is selected
-                int vehicleChoice = 0;
-                if(((String)vehicleComboBox.getSelectedItem()).equals("Motorcycle")){
-                    vehicleChoice = 1;
-                }
-                else if(((String)vehicleComboBox.getSelectedItem()).equals("Light vehicle")){
-                    vehicleChoice = 2;
-                }
-                else if(((String)vehicleComboBox.getSelectedItem()).equals("Heavy vehicle")){
-                    vehicleChoice = 3;
-                }
-                
-                // adding details to textarea according to vehicle type
-                switch(vehicleChoice){
+                    String firstN = corporateOwnerArray.get(currentCorporateOwner  - 1).getFirstName();
+                    String lastN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLastName();
+                    int licenceN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLicenseNumber();
+                    String addres = corporateOwnerArray.get(currentCorporateOwner  - 1).getAddress();
+                    String phoneN = corporateOwnerArray.get(currentCorporateOwner  - 1).getPhoneNumber();
+                    int abn = corporateOwnerArray.get(currentCorporateOwner  - 1).getAustralianBusinessNumber();
                     
-                    // for motorcycle
+                    OwnerString = String.format("%s %s has been registered with the following details: \n"
+                            + "Licence Number: %d\n"
+                            + "Address: %s\n"
+                            + "Phone Number: %s\n"
+                            + "Australian Business Number: %d", firstN, lastN, licenceN, addres, phoneN, abn);
+                }
+                
+                
+                switch(vehicleSearchType){
+                    
                     case 1:{
                         
-                        detailsDisplay.append(String.format("The details of the motorcycle registered by %s is: \n"
-                            + "Plate number: %s\n"
-                            + "Engine capacity: %.1f Litre\n"
-                            + "Make: %s\n"
-                            + "Model: %s\n"
-                            + "Year of manufacture: %d\n", firstN, plateN, engineC, make2, model2, year1));
+                        String plateN = motorcycleArray.get(currentMotorcycle - 1).getPlateNumber();
+                        double engineC = motorcycleArray.get(currentMotorcycle - 1).getEngineCapacity();
+                        String make2 = motorcycleArray.get(currentMotorcycle - 1).getMake();
+                        String model2 = motorcycleArray.get(currentMotorcycle - 1).getModel();
+                        int year1 = motorcycleArray.get(currentMotorcycle - 1).getYear();
+                        vehicleString = String.format("The motorcycle is registered with the following details: \n"
+                                + "Plate Number: %s\n"
+                                + "Engine Capacity: %.1f Litre\n"
+                                + "Make: %s\n"
+                                + "Model: %s\n"
+                                + "Year: %d", plateN, engineC, make2, model2, year1);
                         break;
                     }
                     
-                    // for light vehicle
                     case 2:{
                         
-                        int seatN = lightVehicleArray.get(currentOwner).getSeatNumber();
-                    
-                        detailsDisplay.append(String.format("The details of the light vehicle registered by %s is: \n"
-                            + "Plate number: %s\n"
-                            + "Engine capacity: %.1f Litre\n"
-                            + "Make: %s\n"
-                            + "Model: %s\n"
-                            + "Year of manufacture: %d\n"
-                            + "Number of seats: %d", firstN, plateN, engineC, make2, model2, year1, seatN));
+                        String plateN = lightVehicleArray.get(currentLight  - 1).getPlateNumber();
+                        double engineC = lightVehicleArray.get(currentLight  - 1).getEngineCapacity();
+                        String make2 = lightVehicleArray.get(currentLight  - 1).getMake();
+                        String model2 = lightVehicleArray.get(currentLight  - 1).getModel();
+                        int year1 = lightVehicleArray.get(currentLight  - 1).getYear();
+                        int seatN = lightVehicleArray.get(currentLight - 1).getSeatNumber();
+                        vehicleString = String.format("The light vehicle is registered with the following details: \n"
+                                + "Plate Number: %s\n"
+                                + "Engine Capacity: %.1f Litre\n"
+                                + "Make: %s\n"
+                                + "Model: %s\n"
+                                + "Year: %d\n"
+                                + "Seat number: %d", plateN, engineC, make2, model2, year1, seatN);
                         break;
                     }
                     
-                    // for heavy vehicle
                     case 3:{
                         
-                        double loadC = heavyVehicleArray.get(currentOwner).getLoadCapacity();
-                    
-                        detailsDisplay.append(String.format("The details of the heavy vehicle registered by %s is: \n"
-                            + "Plate number: %s\n"
-                            + "Engine capacity: %.1f Litre\n"
-                            + "Make: %s\n"
-                            + "Model: %s\n"
-                            + "Year of manufacture: %d\n"
-                            + "Load Capacity: %1f Tonne", firstN, plateN, engineC, make2, model2, year1, loadC));
+                        String plateN = heavyVehicleArray.get(currentHeavy   - 1).getPlateNumber();
+                        double engineC = heavyVehicleArray.get(currentHeavy   - 1).getEngineCapacity();
+                        String make2 = heavyVehicleArray.get(currentHeavy   - 1).getMake();
+                        String model2 = heavyVehicleArray.get(currentHeavy   - 1).getModel();
+                        int year1 = heavyVehicleArray.get(currentHeavy   - 1).getYear();
+                        double loadC = heavyVehicleArray.get(currentHeavy   - 1).getLoadCapacity();
+                        vehicleString = String.format("The light vehicle is registered with the following details: \n"
+                                + "Plate Number: %s\n"
+                                + "Engine Capacity: %.1f Litre\n"
+                                + "Make: %s\n"
+                                + "Model: %s\n"
+                                + "Year: %d\n"
+                                + "Load Capacity: %.1f Tonne", plateN, engineC, make2, model2, year1, loadC);
                         break;
                     }
-                    
+                    default:
+                    break;
                 }
-                
-                // adding detailDisplay to details panel              
-                detailsPanel.add(detailsDisplay);
-                closeButtonPanel.add(closeButton);
-                
-                // adding panel and button to main frame
-                confirFrame.add(detailsPanel, BorderLayout.NORTH);
-                confirFrame.add(closeButtonPanel, BorderLayout.SOUTH);
-                
-                // adding functionality to "Close" button
-                closeButton.addActionListener(h1 -> {                
-                    confirFrame.hide();                    
-                });
+                                
                 
                 
                 /**
@@ -1660,6 +1618,14 @@ public class SystemGui extends JFrame{
         JFrame frame2 = new JFrame();
         String title = "Error message";
         JOptionPane.showMessageDialog(frame2, errorMessage, title, JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
+    private void confirmationMessage(String confirm){
+        
+        JFrame frame5 = new JFrame();
+        String title = "Confirmation message";
+        JOptionPane.showMessageDialog(frame5, confirm, title, JOptionPane.PLAIN_MESSAGE);
     }
     
     
