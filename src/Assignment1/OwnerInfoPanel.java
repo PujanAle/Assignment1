@@ -31,6 +31,10 @@ public class OwnerInfoPanel extends JPanel{
     JTextField dobText;
     JTextField abnText;
     
+    JRadioButton privateOwnerButton;
+    JRadioButton corporateOwnerButton;
+    JRadioButton hiddenButton;
+    
     
     /**
      * constructor
@@ -81,9 +85,9 @@ public class OwnerInfoPanel extends JPanel{
         abnText.setBorder(border6);
     
         // radiobuttons to choose the type of owner
-        JRadioButton privateOwnerButton = new JRadioButton("Private");
-        JRadioButton corporateOwnerButton = new JRadioButton("Corporate");
-        JRadioButton hiddenButton = new JRadioButton("Hidden");
+        privateOwnerButton = new JRadioButton("Private");
+        corporateOwnerButton = new JRadioButton("Corporate");
+        hiddenButton = new JRadioButton("Hidden");
     
         // nested panels for owner details
         JPanel panela = new JPanel();
@@ -197,7 +201,7 @@ public class OwnerInfoPanel extends JPanel{
         
      // end of constructor   
     }
-    
+   
     
     /**
      * setFirstName mutator method
@@ -221,9 +225,8 @@ public class OwnerInfoPanel extends JPanel{
      * setLicenceNumber mutator method
      * @param lNumber 
      */
-    public void setLicenceNumber(int lNumber){
-        String licenceN = Integer.toString(lNumber);
-        licenceNumberText.setText(licenceN);
+    public void setLicenceNumber(String lNumber){
+        licenceNumberText.setText(lNumber);
     }
     
     
@@ -258,9 +261,8 @@ public class OwnerInfoPanel extends JPanel{
      * setAustralianBusinessNumber mutator method
      * @param australianBN 
      */
-    public void setAustralianBusinessNumber(int australianBN){
-        String abn = Integer.toString(australianBN);
-        abnText.setText(abn);
+    public void setAustralianBusinessNumber(String australianBN){
+        abnText.setText(australianBN);
     }
     
     
@@ -334,8 +336,8 @@ public class OwnerInfoPanel extends JPanel{
      */
     public int getSelectedOwner(){
         return selectedOwnerType;
-    }
-    
+    } 
+      
 
  // End of class
 }
