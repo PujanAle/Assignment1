@@ -174,6 +174,7 @@ public class OwnerInfoPanel extends JPanel{
             dobLabel.setForeground(Color.gray);
             dobText.setEnabled(false);
                
+            // when hidden button is selected
             selectedOwnerType = 0;
         }           
             
@@ -186,6 +187,7 @@ public class OwnerInfoPanel extends JPanel{
             abnText.setEnabled(false);
             abnText.setText("");
             
+            // when private owner is selected
             selectedOwnerType = 1;
         });
             
@@ -198,6 +200,7 @@ public class OwnerInfoPanel extends JPanel{
             dobText.setEnabled(false);
             dobText.setText("");
             
+            // when corporate owner is selected
             selectedOwnerType = 2;
         });
             
