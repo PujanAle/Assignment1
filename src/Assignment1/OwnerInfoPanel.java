@@ -55,8 +55,8 @@ public class OwnerInfoPanel extends JPanel{
         TitledBorder ownerLine = BorderFactory.createTitledBorder(" Owenr Information ");
         ownerLine.setTitleColor(Color.BLUE);
         
-        Border border6 = BorderFactory.createLineBorder(Color.black, 1);
-        
+        // making border
+        Border border6 = BorderFactory.createLineBorder(Color.black, 1);        
         
         // main panel for entering owner details
         JPanel ownerPanel = new JPanel();            
