@@ -47,10 +47,9 @@ public class SystemGui extends JFrame{
     int currentLight = 0;
     int currentHeavy = 0;
     
-    
-    // variable to know which owner type or vehicle type is being searched
-    int ownerSearchType = 0;
-    int vehicleSearchType = 0;
+    // selection of owner and vehicle
+    int ownerSelection = 0;
+    int vehicleSelection = 0;
     
     // welcome text in the app
     private final JLabel welcomeLabel;
@@ -594,9 +593,9 @@ public class SystemGui extends JFrame{
                         dateOfBirth = dobText.getText(); 
                         // adding details of private owner object in arraylist
                         privateOwnerArray.add(new PrivateOwner(fName, lName, licenceNumber, address, phoneNo, dateOfBirth));
-                        
-                        // variable so that we know the owner is private owner
-                        ownerSearchType = 1;  
+                 
+                        // owner selection for private owner
+                        ownerSelection = 1;
                         
                         currentPrivateOwner++;
                     }
@@ -619,12 +618,12 @@ public class SystemGui extends JFrame{
                     try{
                         Integer.parseInt(abnText.getText());
                         abn = Integer.parseInt(abnText.getText());
-                        
-                        // variable so that we know the owner is corporate owner
-                        ownerSearchType = 2;
-                        
+                    
                         // adding details of corporate owner object in arraylist
                         corporateOwnerArray.add(new CorporateOwner(fName, lName, licenceNumber, address, phoneNo, abn));
+                        
+                        // owner selection for corporate owner
+                        ownerSelection = 2;
                         
                         currentCorporateOwner++;
                     }
@@ -715,11 +714,11 @@ public class SystemGui extends JFrame{
                     
                     case "Motorcycle":
                         
-                        // variable to specify that the search key is for a motorcycle
-                        vehicleSearchType = 1;
-                        
                         // adding motorcycle details to object of motorcycleArray
                         motorcycleArray.add(new Motorcycle(plateNumber, engineCapacity, make, model, year, licenceNumber));
+                        
+                        // vehicle selection for motorcycle
+                        vehicleSelection = 1;
                         
                         currentMotorcycle++;
                         
@@ -738,11 +737,11 @@ public class SystemGui extends JFrame{
                             Integer.parseInt(seatNumbersText.getText());
                             seatNumbers = Integer.parseInt(seatNumbersText.getText());
                             
-                            // variable to specify that the search key is for light vehicle
-                            vehicleSearchType = 2;
-                            
                             // adding light vehicle details to object of lightVehicleArray
                             lightVehicleArray.add(new LightVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, seatNumbers));
+                            
+                            // vehicle selection for light vehicle
+                            vehicleSelection = 2;
                             
                             currentLight++;
                             
@@ -767,12 +766,12 @@ public class SystemGui extends JFrame{
                         try{
                             Double.parseDouble(loadCapacityText.getText());
                             loadCapacity = Double.parseDouble(loadCapacityText.getText());
-                            
-                            // variable to specify that the search key is for heavy vehicle
-                            vehicleSearchType = 3;
-                            
+               
                             // adding heavy vehicle details to object of heavyVehicleArray
                             heavyVehicleArray.add(new HeavyVehicle(plateNumber, engineCapacity, make, model, year, licenceNumber, loadCapacity));
+                            
+                            // vehicle selection for heavy vehicle
+                            vehicleSelection = 3;
                             
                             currentHeavy++;
                             
@@ -796,7 +795,7 @@ public class SystemGui extends JFrame{
 
                 
                 // checking the owner type and giving the appropriate confirmation message
-                if(ownerSearchType == 1){
+                if(ownerSelection == 1){
                     
                     String firstN = privateOwnerArray.get(currentPrivateOwner  - 1).getFirstName();
                     String lastN = privateOwnerArray.get(currentPrivateOwner  - 1).getLastName();
@@ -811,7 +810,7 @@ public class SystemGui extends JFrame{
                             + "Phone number: %s\n"
                             + "Date of Birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN,dob);
                 }
-                else if(ownerSearchType == 2){
+                else if(ownerSelection == 2){
                     
                     String firstN = corporateOwnerArray.get(currentCorporateOwner  - 1).getFirstName();
                     String lastN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLastName();
@@ -829,7 +828,7 @@ public class SystemGui extends JFrame{
                 
                 
                 // checking the vehicle type and creating the appropriate confirmation message
-                switch(vehicleSearchType){
+                switch(vehicleSelection){
                     
                     // for motorcycle
                     case 1:{
@@ -1080,223 +1079,325 @@ public class SystemGui extends JFrame{
              */
             ownerSearchButton.addActionListener(k -> {
                 
+                // varirables to store the result of search
+                String firstName = "";       // first name
+                String lastName = "";        // last name
+                int licenceNumber = 0;       // licence number
+                String address = "";         // address
+                String phoneNumber= "";      // phone number
+                String dateOfBirth = "";     // date of birth
+                int abn = 0;                 // Australian Business Number
+                
+                
+                // for finding out which type of owner does the licence number belongs to
+                int ownerSearchType = 0;
+                
+                // integers to represent the search result
+                int privateSearchResult = 0;
+                int corporateSearchResult = 0;
+                
+                
+                // checking the search key entered
                 if(ownerSearchArea.getText().equals("")){
-                    errorMessageBox("You must enter licence number");
+                    errorMessageBox("You must enter licence number of owner to search");
                 }
                 else{                    
+                    // checking if registry is empty
                     if(privateOwnerArray.isEmpty() && corporateOwnerArray.isEmpty()){
                         errorMessageBox("There is no owner registered to search");
                         ownerSearchArea.requestFocus();
                     }
                     else{                        
                         int ownerSearchKey;
-                        try{
+                        try{ 
                             Integer.parseInt(ownerSearchArea.getText());
                             ownerSearchKey = Integer.parseInt(ownerSearchArea.getText());
                             
-                            if(ownerSearchType == 1){
+                            // for private owner search
+                            for(int i = 0; i < privateOwnerArray.size(); i++){
                                 
-                                for(int i = 0; i < privateOwnerArray.size(); i++){
+                                if(ownerSearchKey == privateOwnerArray.get(i).getLicenseNumber()){
                                     
-                                    if(ownerSearchKey == privateOwnerArray.get(i).getLicenseNumber()){
-                                        
-                                    }
+                                    firstName = privateOwnerArray.get(i).getFirstName();
+                                    lastName = privateOwnerArray.get(i).getLastName();
+                                    licenceNumber = privateOwnerArray.get(i).getLicenseNumber();
+                                    address = privateOwnerArray.get(i).getAddress();
+                                    phoneNumber = privateOwnerArray.get(i).getPhoneNumber();
+                                    dateOfBirth = privateOwnerArray.get(i).getDateOfBirth();   
                                     
+                                    ownerSearchType = 1;                                    
+                                    break;                                    
+                                }
+                                else{
+                                    privateSearchResult = 1;
+                                }                                
+                            }
+                            
+                            // for corporate owner search
+                            for(int i = 0; i < corporateOwnerArray.size(); i++){
+                                
+                                if(ownerSearchKey == corporateOwnerArray.get(i).getLicenseNumber()){                                    
+                                    
+                                    firstName = corporateOwnerArray.get(i).getFirstName();
+                                    lastName = corporateOwnerArray.get(i).getLastName();
+                                    licenceNumber = corporateOwnerArray.get(i).getLicenseNumber();
+                                    address = corporateOwnerArray.get(i).getAddress();
+                                    phoneNumber = corporateOwnerArray.get(i).getPhoneNumber();
+                                    abn = corporateOwnerArray.get(i).getAustralianBusinessNumber();
+                                    
+                                    ownerSearchType = 2;
+                                    break;
+                                }
+                                else{
+                                    corporateSearchResult = 1;
+                                }                                
+                            }  
+                            
+                            
+                            // when there is no match
+                            if(privateSearchResult == 1 && corporateSearchResult == 1){
+                                
+                                errorMessageBox("Owner not found");
+                                ownerSearchArea.setText("");
+                                ownerSearchArea.requestFocus();
+                                return;                                
+                            }
+                            else{      // when there is a match
+                                
+                                // so that the search menu is hidden
+                                ownerSearchf.hide();
+                                
+                                // frame search result of owner registration information
+                                JFrame searchOwnerFrame = new JFrame();
+
+                                searchOwnerFrame.setTitle("Owner Search Result");                      // title of frame
+                                searchOwnerFrame.setSize(500, 310);                                    // size of app
+                                searchOwnerFrame.setVisible(true);                                     // making app visible
+                                searchOwnerFrame.setLocationRelativeTo(null);                          // making app appear in center of screen
+                                searchOwnerFrame.setResizable(true);                                   // making app sizable
+                                searchOwnerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // making app close when X button is clicked
+                                searchOwnerFrame.setLayout(new BorderLayout());        
+
+                                // making a titled border for owner details
+                                TitledBorder searchOwnerLine = BorderFactory.createTitledBorder(" Owenr Information ");
+                                searchOwnerLine.setTitleColor(Color.black);
+
+                                // making black border 
+                                Border border1 = BorderFactory.createLineBorder(Color.BLACK, 1);
+                                
+                                // making blue border
+                                Border border2 = BorderFactory.createLineBorder(Color.blue, 1);
+
+                                /**
+                                 * showing owner information
+                                 */
+                                JPanel searchOwnerPanel = new JPanel();            // main panel for entering owner details
+                                searchOwnerPanel.setLayout(new BorderLayout());
+
+                                JPanel searchOwnerButton = new JPanel();
+
+                                // labels for owner details
+                                JLabel searchfNameLabel = new JLabel("First Name");
+                                JLabel searchlNameLabel = new JLabel("Last Name");
+                                JLabel searchLicenceNumberLabel = new JLabel("Licence Number");
+                                JLabel searchAddrLabel = new JLabel("Address: ");
+                                JLabel searchPhoneNoLabel = new JLabel("Phone Number");
+                                JLabel searchdobLabel = new JLabel("Date Of Birth");
+                                JLabel searchabnLabel = new JLabel("Australian Business Number");
+                                JLabel searchOwnerType = new JLabel("The type of owner");
+
+                                // Test area for diplaying owner details
+                                JTextField searchfNameText = new JTextField(15);
+                                searchfNameText.setBorder(border1);
+
+                                JTextField searchlNameText = new JTextField(15);
+                                searchlNameText.setBorder(border1);
+
+                                JTextField searchLicenceNumberText = new JTextField(15);
+                                searchLicenceNumberText.setBorder(border1);
+
+                                JTextField searchAddrText = new JTextField(15);
+                                searchAddrText.setBorder(border1);
+
+                                JTextField searchPhoneNoText = new JTextField(15);
+                                searchPhoneNoText.setBorder(border1);
+
+                                JTextField searchdobText = new JTextField(15);
+                                searchdobText.setBorder(border1);
+
+                                JTextField searchabnText = new JTextField(15);
+                                searchabnText.setBorder(border1);                
+
+                                // radiobuttons to show the type of owner
+                                JRadioButton searchPrivateOwner = new JRadioButton("Private");
+                                JRadioButton searchCorporateOwner = new JRadioButton("Corporate");
+                                JRadioButton searchHiddenButton = new JRadioButton();
+
+                                // buttons
+                                JButton ownerSearchEdit = new JButton("Edit");
+                                JButton ownerSaveButton = new JButton("Save");
+                                JButton ownerSearchBack = new JButton("Back");
+                                JButton ownerSearchExit = new JButton("Exit");
+
+                                // nested panels for owner details
+                                JPanel panelb1 = new JPanel();
+                                JPanel panelb2 = new JPanel();
+                                JPanel panelb3 = new JPanel();
+                                JPanel panelb4 = new JPanel();
+                                JPanel panelb5 = new JPanel();
+                                JPanel panelb6 = new JPanel();
+                                JPanel panelb7 = new JPanel();
+                                JPanel panelb8 = new JPanel();
+
+                                // showing the type of owner
+                                panelb1.add(searchOwnerType);
+                                panelb2.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+                                panelb2.add(searchPrivateOwner);
+                                panelb2.add(searchCorporateOwner);
+
+                                // button group for the raido buttons
+                                ButtonGroup buttonGroup = new ButtonGroup();
+                                buttonGroup.add(searchPrivateOwner);
+                                buttonGroup.add(searchCorporateOwner);
+                                buttonGroup.add(searchHiddenButton);
+
+                                panelb3.setLayout(new BorderLayout());
+                                panelb3.add(panelb1, BorderLayout.NORTH);
+                                panelb3.add(panelb2, BorderLayout.CENTER);
+
+                                // adding label and text to the nested panel
+                                panelb4.setLayout(new GridLayout(5, 2, 10, 5));
+
+                                panelb4.add(searchfNameLabel);
+                                panelb4.add(searchfNameText);
+
+                                panelb4.add(searchlNameLabel);
+                                panelb4.add(searchlNameText);
+
+                                panelb4.add(searchLicenceNumberLabel);
+                                panelb4.add(searchLicenceNumberText);
+
+                                panelb4.add(searchAddrLabel);
+                                panelb4.add(searchAddrText);
+
+                                panelb4.add(searchPhoneNoLabel);
+                                panelb4.add(searchPhoneNoText);
+
+                                // adding radiobuttons to panelb5
+                                panelb5.add(panelb3);
+
+                                panelb6.setLayout(new GridLayout(2, 2, 10, 5));
+                                panelb6.add(searchdobLabel);
+                                panelb6.add(searchdobText);
+                                panelb6.add(searchabnLabel);
+                                panelb6.add(searchabnText);
+
+                                // adding all fields to panelb7 
+                                panelb7.setLayout(new BorderLayout());
+                                panelb7.add(panelb4, BorderLayout.NORTH);
+                                panelb7.add(panelb5, BorderLayout.CENTER);
+                                panelb7.add(panelb6, BorderLayout.SOUTH);
+
+                                panelb8.setLayout(new BorderLayout());
+                                panelb8.add(panelb7, BorderLayout.WEST);
+
+                                // adding nested panel to the main panel -> searchOwnerPanel
+                                searchOwnerPanel.add(panelb8, BorderLayout.CENTER);
+                                searchOwnerPanel.setBorder(searchOwnerLine);
+
+                                // adding buttons 
+                                searchOwnerButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+                                searchOwnerButton.add(ownerSearchEdit);
+                                searchOwnerButton.add(ownerSaveButton);
+                                searchOwnerButton.add(ownerSearchBack);
+                                searchOwnerButton.add(ownerSearchExit);
+
+                                // adding searchOwnerPanel and searchOwnerButton to main frame -> searchOwnerFrame
+                                searchOwnerFrame.add(searchOwnerPanel, BorderLayout.NORTH);
+                                searchOwnerFrame.add(searchOwnerButton, BorderLayout.SOUTH);
+                                
+
+                                // adding the reeult of search to their respective places
+                                searchfNameText.setText(firstName);
+                                searchfNameText.setEditable(false);
+                                    
+                                searchlNameText.setText(lastName);
+                                searchlNameText.setEditable(false);
+                                    
+                                String lNumber = Integer.toString(licenceNumber);
+                                searchLicenceNumberText.setText(lNumber);
+                                searchLicenceNumberText.setEditable(false);
+                                    
+                                searchAddrText.setText(address);
+                                searchAddrText.setEditable(false);
+                                    
+                                searchPhoneNoText.setText(phoneNumber);
+                                searchPhoneNoText.setEditable(false);
+                                    
+                                // if the owner is private
+                                if(ownerSearchType == 1){
+                                    searchPrivateOwner.setSelected(true);
+                                    searchCorporateOwner.setEnabled(false);
+                                    
+                                    searchdobText.setText(dateOfBirth);
+                                    searchdobText.setEditable(false);
+                                    
+                                    searchabnText.setEditable(false);
+                                    searchabnLabel.setForeground(Color.gray);
+                                }
+                                // if the owne is corporate
+                                else if(ownerSearchType == 2){
+                                    searchCorporateOwner.setSelected(true);
+                                    searchPrivateOwner.setEnabled(false);
+                                    
+                                    String aBN = Integer.toString(abn);
+                                    searchabnText.setText(aBN);
+                                    searchabnText.setEditable(false);   
+                                    
+                                    searchdobText.setEditable(false);
+                                    searchdobLabel.setForeground(Color.gray);
                                 }
                                 
-                            }                            
+
+                                /**
+                                * adding functionality to "Back" button
+                                */
+                               ownerSearchBack.addActionListener(l -> {
+
+                                   searchOwnerFrame.hide();
+                                   ownerSearchArea.setText("");
+                                   ownerSearchf.setVisible(true); 
+                               });
+
+                               /**
+                                * adding functionality to "Exit" button
+                                */
+                               ownerSearchExit.addActionListener(m -> {
+                                   searchOwnerFrame.hide();
+                                   exit();
+                                   });
+
+
+                               /**
+                                * when the user pushes the system close (X top right corner)
+                                */
+                               // override window closing method
+                               addWindowListener(new WindowAdapter(){
+                                   @Override
+                                   public void windowClosing(WindowEvent d3){  // Attempt to exit application
+                                       exit();				
+                                   }
+                               }); 
+                            }                   
+                            
+                         // try condition   
                         }
                         catch(NumberFormatException g1){
                             errorMessageBox("You must enter numbers in the search area");
+                            ownerSearchArea.setText("");
                             ownerSearchArea.requestFocus();
                             return;
-                        }
-
-                        // so that the search menu is hidden
-                        ownerSearchf.hide();
-
-
-
-
-
-                        // getting private owner details form the object of privateOwnerArray
-                       /* String nameFirst = privateOwnerArray.get(currentOwner).getFirstName();
-                        String nameLast = privateOwnerArray.get(currentOwner).getLastName();
-                        int numberLicence = privateOwnerArray.get(currentOwner).getLicenseNumber();
-                        String adder = privateOwnerArray.get(currentOwner).getAddress();
-                        String numberPhone = privateOwnerArray.get(currentOwner).getPhoneNumber();  */ 
-
-
-                        // frame search result of owner registration information
-                        JFrame searchOwnerFrame = new JFrame();
-
-                        searchOwnerFrame.setTitle("Owner Search Result");                      // title of frame
-                        searchOwnerFrame.setSize(500, 310);                                 // size of app
-                        searchOwnerFrame.setVisible(true);                                  // making app visible
-                        searchOwnerFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
-                        searchOwnerFrame.setResizable(true);                                // making app sizable
-                        searchOwnerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    // making app close when X button is clicked
-                        searchOwnerFrame.setLayout(new BorderLayout());        
-
-                        // making a titled border for owner details
-                        TitledBorder searchOwnerLine = BorderFactory.createTitledBorder(" Owenr Information ");
-                        searchOwnerLine.setTitleColor(Color.BLUE);
-
-                        // making border 
-                        Border border1 = BorderFactory.createLineBorder(Color.BLACK, 1);
-
-                        /**
-                         * showing owner information
-                         */
-                        JPanel searchOwnerPanel = new JPanel();            // main panel for entering owner details
-                        searchOwnerPanel.setLayout(new BorderLayout());
-
-                        JPanel searchOwnerButton = new JPanel();
-
-                        // labels for owner details
-                        JLabel searchfNameLabel = new JLabel("First Name");
-                        JLabel searchlNameLabel = new JLabel("Last Name");
-                        JLabel searchLicenceNumberLabel = new JLabel("Licence Number");
-                        JLabel searchAddrLabel = new JLabel("Address: ");
-                        JLabel searchPhoneNoLabel = new JLabel("Phone Number");
-                        JLabel searchdobLabel = new JLabel("Date Of Birth");
-                        JLabel searchabnLabel = new JLabel("Australian Business Number");
-                        JLabel searchOwnerType = new JLabel("The type of owner");
-
-                        // Test area for diplaying owner details
-                        JTextField searchfNameText = new JTextField(15);
-                        searchfNameText.setBorder(border1);
-
-                        JTextField searchlNameText = new JTextField(15);
-                        searchlNameText.setBorder(border1);
-
-                        JTextField searchLicenceNumberText = new JTextField(15);
-                        searchLicenceNumberText.setBorder(border1);
-
-                        JTextField searchAddrText = new JTextField(15);
-                        searchAddrText.setBorder(border1);
-
-                        JTextField searchPhoneNoText = new JTextField(15);
-                        searchPhoneNoText.setBorder(border1);
-
-                        JTextField searchdobText = new JTextField(15);
-                        searchdobText.setBorder(border1);
-
-                        JTextField searchabnText = new JTextField(15);
-                        searchabnText.setBorder(border1);                
-
-                        // radiobuttons to show the type of owner
-                        JRadioButton searchPrivateOwner = new JRadioButton("Private");
-                        JRadioButton searchCorporateOwner = new JRadioButton("Corporate");
-
-                        // buttons
-                        JButton ownerSearchEdit = new JButton("Edit");
-                        JButton ownerSearchBack = new JButton("Back");
-                        JButton ownerSearchExit = new JButton("Exit");
-
-                        // nested panels for owner details
-                        JPanel panelb1 = new JPanel();
-                        JPanel panelb2 = new JPanel();
-                        JPanel panelb3 = new JPanel();
-                        JPanel panelb4 = new JPanel();
-                        JPanel panelb5 = new JPanel();
-                        JPanel panelb6 = new JPanel();
-                        JPanel panelb7 = new JPanel();
-                        JPanel panelb8 = new JPanel();
-
-                        // showing the type of owner
-                        panelb1.add(searchOwnerType);
-                        panelb2.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-                        panelb2.add(searchPrivateOwner);
-                        panelb2.add(searchCorporateOwner);
-
-                        // button group for the raido buttons
-                        ButtonGroup buttonGroup = new ButtonGroup();
-                        buttonGroup.add(searchPrivateOwner);
-                        buttonGroup.add(searchCorporateOwner);
-
-                        panelb3.setLayout(new BorderLayout());
-                        panelb3.add(panelb1, BorderLayout.NORTH);
-                        panelb3.add(panelb2, BorderLayout.CENTER);
-
-                        // adding label and text to the nested panel
-                        panelb4.setLayout(new GridLayout(5, 2, 10, 5));
-
-                        panelb4.add(searchfNameLabel);
-                        panelb4.add(searchfNameText);
-
-                        panelb4.add(searchlNameLabel);
-                        panelb4.add(searchlNameText);
-
-                        panelb4.add(searchLicenceNumberLabel);
-                        panelb4.add(searchLicenceNumberText);
-
-                        panelb4.add(searchAddrLabel);
-                        panelb4.add(searchAddrText);
-
-                        panelb4.add(searchPhoneNoLabel);
-                        panelb4.add(searchPhoneNoText);
-
-                        // adding radiobuttons to panelb5
-                        panelb5.add(panelb3);
-
-                        panelb6.setLayout(new GridLayout(2, 2, 10, 5));
-                        panelb6.add(searchdobLabel);
-                        panelb6.add(searchdobText);
-                        panelb6.add(searchabnLabel);
-                        panelb6.add(searchabnText);
-
-                        // adding all fields to panelb7 
-                        panelb7.setLayout(new BorderLayout());
-                        panelb7.add(panelb4, BorderLayout.NORTH);
-                        panelb7.add(panelb5, BorderLayout.CENTER);
-                        panelb7.add(panelb6, BorderLayout.SOUTH);
-
-                        panelb8.setLayout(new BorderLayout());
-                        panelb8.add(panelb7, BorderLayout.WEST);
-
-                        // adding nested panel to the main panel -> searchOwnerPanel
-                        searchOwnerPanel.add(panelb8, BorderLayout.CENTER);
-                        searchOwnerPanel.setBorder(searchOwnerLine);
-
-                        // adding buttons 
-                        searchOwnerButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-                        searchOwnerButton.add(ownerSearchEdit);
-                        searchOwnerButton.add(ownerSearchBack);
-                        searchOwnerButton.add(ownerSearchExit);
-
-                        // adding searchOwnerPanel and searchOwnerButton to main frame -> searchOwnerFrame
-                        searchOwnerFrame.add(searchOwnerPanel, BorderLayout.NORTH);
-                        searchOwnerFrame.add(searchOwnerButton, BorderLayout.SOUTH);
-
-                        /**
-                         * adding functionality to "Back" button
-                         */
-                        ownerSearchBack.addActionListener(l -> {
-
-                            searchOwnerFrame.hide();
-                            ownerSearchf.setVisible(true); 
-                        });
-
-                        /**
-                         * adding functionality to "Exit" button
-                         */
-                        ownerSearchExit.addActionListener(m -> {
-                            searchOwnerFrame.hide();
-                            exit();
-                            });
-
-
-                        /**
-                         * when the user pushes the system close (X top right corner)
-                         */
-                        // override window closing method
-                        addWindowListener(new WindowAdapter(){
-                            @Override
-                            public void windowClosing(WindowEvent d3){  // Attempt to exit application
-                                exit();				
-                            }
-                        });            
+                        }           
                     }    
                 }                  
             });
