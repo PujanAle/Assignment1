@@ -1363,6 +1363,7 @@ public class SystemGui extends JFrame{
                                  */
                                 ownerSearchEdit.addActionListener(o -> {
                                     
+                                    // changing the title of the frame
                                     searchOwnerFrame.setTitle("Edit Owner Search Result");  
                                     
                                     // making all the text fields to be editable and changing their border colour
@@ -1765,6 +1766,8 @@ public class SystemGui extends JFrame{
 
                                 // buttons
                                 JButton vehicleSearchEdit = new JButton("Edit");
+                                JButton vehicleSave = new JButton("Save");
+                                JButton vehicleClear = new JButton("Clear");
                                 JButton vehicleSearchBack = new JButton("Back");
                                 JButton vehicleSearchExit = new JButton("Exit");                
 
@@ -1855,6 +1858,8 @@ public class SystemGui extends JFrame{
                                 searchYearText.setText(vYear);
                                 searchYearText.setEditable(false);
                                                                
+                                searchVehicleComboBox.setEnabled(false);
+                                searchVehicleComboBox.setForeground(Color.black);
                                 
                                 // checking vehicle type and performing related tasks
                                 switch(vehicleSearchType){
@@ -1895,11 +1900,105 @@ public class SystemGui extends JFrame{
                                         searchSeatNumbersLabel.setForeground(Color.gray);
                                         searchSeatNumbersText.setEnabled(false);
                                         break;
-                                    }
-                                    
-                                }
-                                               
+                                    }                                    
+                                }                                               
                                 
+                                
+                                /**
+                                 * adding functionality to edit button
+                                 */
+                                vehicleSearchEdit.addActionListener(r1 -> {
+                                    
+                                    // modifying buttons and their location
+                                    vehicleSearchEdit.setVisible(false);
+                                    searchVehicleButton.add(vehicleSave);
+                                    searchVehicleButton.add(vehicleClear);
+                                    searchVehicleButton.add(vehicleSearchBack);
+                                    searchVehicleButton.add(vehicleSearchExit);
+                                    
+                                    // changing the frame title
+                                    searchVehicleFrame.setTitle("Edit Vehicle Search Result");
+                                    
+                                    // enabling the combo box
+                                    searchVehicleComboBox.setEnabled(true);
+                                    
+                                    // making everything editable
+                                    searchEngineCapacityText.setEditable(true);
+                                    searchEngineCapacityText.setBorder(border6);
+                                    
+                                    searchMakeText.setEditable(true);
+                                    searchMakeText.setBorder(border6);
+                                    
+                                    searchModelText.setEditable(true);
+                                    searchModelText.setBorder(border6);
+                                    
+                                    searchYearText.setEditable(true);
+                                    searchYearText.setBorder(border6);
+                                    
+                                    searchLoadCapacityText.setEditable(true);
+                                    searchLoadCapacityText.setBorder(border6);
+                                    
+                                    searchSeatNumbersText.setEditable(true);
+                                    searchSeatNumbersText.setBorder(border6);
+                                    
+                                    
+                                    // for the type of vehicle chosen
+                                    searchVehicleComboBox.addItemListener(r2 -> {
+                                    
+                                        Object vs = searchVehicleComboBox.getSelectedItem();
+                                        
+                                        // for motorcycle
+                                        if(vs.equals("Motorcycle")){
+                                            
+                                            searchLoadCapacityLabel.setForeground(Color.gray);
+                                            searchLoadCapacityText.setEnabled(false);
+                                            searchLoadCapacityText.setText("");
+                                            
+                                            searchSeatNumbersLabel.setForeground(Color.gray);
+                                            searchSeatNumbersText.setEnabled(false);
+                                            searchSeatNumbersText.setText("");
+                                        }
+                                        // for light vehicle
+                                        else if(vs.equals("Light vehicle")){
+                                            
+                                            searchLoadCapacityLabel.setForeground(Color.gray);
+                                            searchLoadCapacityText.setEnabled(false);
+                                            searchLoadCapacityText.setText("");
+                                            
+                                            searchSeatNumbersLabel.setForeground(Color.black);
+                                            searchSeatNumbersText.setEnabled(true);
+                                        }
+                                        // for heavy vehicle
+                                        else{
+                                            
+                                            searchLoadCapacityLabel.setForeground(Color.black);
+                                            searchLoadCapacityText.setEnabled(true);
+                                            
+                                            searchSeatNumbersLabel.setForeground(Color.gray);
+                                            searchSeatNumbersText.setEnabled(false);
+                                            searchSeatNumbersText.setText("");
+                                        }                                        
+                                    });                                            
+                                });
+                                
+                                
+                                
+                                /**
+                                 * adding functionality to "Clear" button
+                                 */
+                                vehicleClear.addActionListener(r4 -> {
+                                    
+                                    // clearing all the text fields
+                                    searchEngineCapacityText.setText("");
+                                    searchMakeText.setText("");
+                                    searchModelText.setText("");
+                                    searchYearText.setText("");                                    
+                                    searchLoadCapacityText.setText("");
+                                    searchSeatNumbersText.setText("");
+                                    
+                                    // changing the default choice to motorcycle
+                                    searchVehicleComboBox.setSelectedItem("Motorcycle"); 
+                                });
                                 
                                 
                                 
@@ -1909,6 +2008,7 @@ public class SystemGui extends JFrame{
                                 vehicleSearchBack.addActionListener(r -> {
 
                                     searchVehicleFrame.hide();
+                                    vehicleSearchArea.setText("");
                                     vehicleSearchf.setVisible(true);
                                 });
 
