@@ -999,7 +999,7 @@ public class SystemGui extends JFrame{
              * when the user pushes the system close (X top right corner)
              */
             // override window closing method
-            addWindowListener(new WindowAdapter(){
+            regFrame.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d2){  // Attempt to exit application
                     exit();				
@@ -1482,7 +1482,7 @@ public class SystemGui extends JFrame{
                                 * when the user pushes the system close (X top right corner)
                                 */
                                // override window closing method
-                               addWindowListener(new WindowAdapter(){
+                                searchOwnerFrame.addWindowListener(new WindowAdapter(){
                                    @Override
                                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
                                        exit();				
@@ -1531,7 +1531,7 @@ public class SystemGui extends JFrame{
              * when the user pushes the system close (X top right corner)
              */
             // override window closing method
-            addWindowListener(new WindowAdapter(){
+            ownerSearchf.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d4){  // Attempt to exit application
                     exit();				
@@ -1748,7 +1748,7 @@ public class SystemGui extends JFrame{
                  * when the user pushes the system close (X top right corner)
                  */
                 // override window closing method
-                addWindowListener(new WindowAdapter(){
+                searchVehicleFrame.addWindowListener(new WindowAdapter(){
                     @Override
                     public void windowClosing(WindowEvent d5){  // Attempt to exit application
                         exit();				
@@ -1782,7 +1782,7 @@ public class SystemGui extends JFrame{
              * when the user pushes the system close (X top right corner)
              */
             // override window closing method
-            addWindowListener(new WindowAdapter(){
+            vehicleSearchf.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d6){  // Attempt to exit application
                     exit();				
