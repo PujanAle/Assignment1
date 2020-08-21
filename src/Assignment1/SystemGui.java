@@ -479,7 +479,7 @@ public class SystemGui extends JFrame{
                 char[] charLArray = checkinglName.toCharArray();
                 
                 // checking if character is not a string
-                for(char ch : charLArray){
+                for(char ch: charLArray){
                     if(Character.isLetter(ch) == false){
                         checklNameBool = false;
                         break;
@@ -1092,7 +1092,7 @@ public class SystemGui extends JFrame{
                 // for finding out which type of owner does the licence number belongs to
                 int ownerSearchType = 0;
                 
-                // integers to represent the search result
+                // booleans to represent the search result
                 boolean privateSearchResult = false;
                 boolean corporateSearchResult = false;
                 
@@ -1100,11 +1100,13 @@ public class SystemGui extends JFrame{
                 // checking the search key entered
                 if(ownerSearchArea.getText().equals("")){
                     errorMessageBox("You must enter licence number of owner to search");
+                    ownerSearchArea.requestFocus();
                 }
                 else{                    
                     // checking if registry is empty
                     if(privateOwnerArray.isEmpty() && corporateOwnerArray.isEmpty()){
                         errorMessageBox("There is no owner registered to search");
+                        ownerSearchArea.setText("");
                         ownerSearchArea.requestFocus();
                     }
                     else{                        
@@ -1153,7 +1155,7 @@ public class SystemGui extends JFrame{
                             // when there is no match
                             if(privateSearchResult == false && corporateSearchResult == false){
                                 
-                                errorMessageBox("Owner with the provied licence number not found");
+                                errorMessageBox("Owner with the provided licence number not found");
                                 ownerSearchArea.setText("");
                                 ownerSearchArea.requestFocus();
                             }
@@ -1338,7 +1340,7 @@ public class SystemGui extends JFrame{
                                     searchdobText.setText(dateOfBirth);
                                     searchdobText.setEditable(false);
                                     
-                                    searchabnText.setEditable(false);
+                                    searchabnText.setEnabled(false);
                                     searchabnLabel.setForeground(Color.gray);
                                 }
                                 // if the owne is corporate
@@ -1350,7 +1352,7 @@ public class SystemGui extends JFrame{
                                     searchabnText.setText(aBN);
                                     searchabnText.setEditable(false);   
                                     
-                                    searchdobText.setEditable(false);
+                                    searchdobText.setEnabled(false);
                                     searchdobLabel.setForeground(Color.gray);
                                 }
                                 
@@ -1586,8 +1588,8 @@ public class SystemGui extends JFrame{
             panelc2.setLayout(new BorderLayout());
             
             // making black border 
-            Border border2 = BorderFactory.createLineBorder(Color.BLACK, 1);
-            vehicleSearchArea.setBorder(border2);
+            Border border3 = BorderFactory.createLineBorder(Color.BLACK, 1);
+            vehicleSearchArea.setBorder(border3);
             
             panelc1.add(vehicleSearchArea);
             panelc1.add(vehicleSearchButton);
@@ -1617,144 +1619,323 @@ public class SystemGui extends JFrame{
              */
             vehicleSearchButton.addActionListener(q -> {
                 
-                // so that the search menu is hidden
-                vehicleSearchf.hide();
-            
-                // frame search result of vehicle registration information
-                JFrame searchVehicleFrame = new JFrame();
-            
-                searchVehicleFrame.setTitle("Vehicle Search Result");                 // title of frame
-                searchVehicleFrame.setSize(500, 260);                                 // size of app
-                searchVehicleFrame.setVisible(true);                                  // making app visible
-                searchVehicleFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
-                searchVehicleFrame.setResizable(true);                                // making app sizable
-                searchVehicleFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    // making app close when X button is clicked
-                searchVehicleFrame.setLayout(new BorderLayout());        
-            
-                // making a titled border for vehicle details
-                TitledBorder searchVehicleLine = BorderFactory.createTitledBorder(" Vehicle Information ");
-                searchVehicleLine.setTitleColor(Color.BLUE);
-            
-                // making border
-                Border border3 = BorderFactory.createLineBorder(Color.BLACK, 1);
+                // variables to store the result of search
+                double engineC = 0;
+                String vehicleMake = "";
+                String vehicleModel = "";
+                int vehicleYear = 0;
+                double loadC = 0;
+                int seatN = 0;               
                 
-                // main panel for vehicle info
-                JPanel vehicleSearchPanel = new JPanel();           
-                vehicleSearchPanel.setLayout(new BorderLayout());
+                // vehicle search type 
+                int vehicleSearchType = 0;
                 
-                // main and nested panels
-                JPanel searchVehicleButton = new JPanel();
-                JPanel paneld1 = new JPanel();
-                JPanel paneld2 = new JPanel();
-                JPanel paneld3 = new JPanel();
-                
-                // buttons
-                JButton vehicleSearchEdit = new JButton("Edit");
-                JButton vehicleSearchBack = new JButton("Back");
-                JButton vehicleSearchExit = new JButton("Exit");                
-            
-                // label for vehicle details
-                JLabel vehicleSearchTypeLabel = new JLabel("Type of vehicle");
-                JLabel searchEngineCapacityLabel = new JLabel("Engine Capacity");
-                JLabel searchMakeLabel = new JLabel("Make");
-                JLabel searchModelLabel = new JLabel("Model");
-                JLabel searchYearLabel = new JLabel("Year");
-                JLabel searchLoadCapacityLabel = new JLabel("Load Capacity (tonnes)");
-                JLabel searchSeatNumbersLabel = new JLabel("Seat Number");
-            
-                // making combobox for type of vehicles
-                String[] searchVehicleTypeArray = {"Motorcycle", "Light vehicle", "Heavy vehicle"};
-                JComboBox searchVehicleComboBox = new JComboBox(searchVehicleTypeArray);
-                searchVehicleComboBox.setSelectedIndex(0);
-            
-                // textarea for dispalying vehicle details
-                JTextField searchEngineCapacityText = new JTextField(15);
-                searchEngineCapacityText.setBorder(border3);
-            
-                JTextField searchMakeText = new JTextField(15);
-                searchMakeText.setBorder(border3);
-            
-                JTextField searchModelText = new JTextField(15);
-                searchModelText.setBorder(border3);
-            
-                JTextField searchYearText = new JTextField(15);
-                searchYearText.setBorder(border3);
-            
-                JTextField searchLoadCapacityText = new JTextField(15);
-                searchLoadCapacityText.setBorder(border3);
-
-                JTextField searchSeatNumbersText = new JTextField(15);
-                searchSeatNumbersText.setBorder(border3);
-                
-                // nested panels
-                paneld1.setLayout(new FlowLayout());
-                paneld3.setLayout(new BorderLayout());
-
-                paneld1.add(vehicleSearchTypeLabel);
-                paneld1.add(searchVehicleComboBox);
-                paneld3.add(paneld1, BorderLayout.NORTH);
-
-                // adding detail label and field to a nested panel
-                paneld2.setLayout(new GridLayout(6, 2, 10, 4));
-                paneld2.add(searchEngineCapacityLabel);
-                paneld2.add(searchEngineCapacityText);
-                paneld2.add(searchMakeLabel);
-                paneld2.add(searchMakeText);
-                paneld2.add(searchModelLabel);
-                paneld2.add(searchModelText);
-                paneld2.add(searchYearLabel);
-                paneld2.add(searchYearText);
-                paneld2.add(searchLoadCapacityLabel);
-                paneld2.add(searchLoadCapacityText);
-                paneld2.add(searchSeatNumbersLabel);
-                paneld2.add(searchSeatNumbersText);            
-                paneld3.add(paneld2, BorderLayout.CENTER);
-
-                // adding all nested panels to main search vehicle panel
-                vehicleSearchPanel.add(paneld3, BorderLayout.WEST);
-                vehicleSearchPanel.setBorder(searchVehicleLine);             
-                          
-                // adding buttons 
-                searchVehicleButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-                searchVehicleButton.add(vehicleSearchEdit);
-                searchVehicleButton.add(vehicleSearchBack);
-                searchVehicleButton.add(vehicleSearchExit);
-                
-                // adding main panel and buttons to searchVehicleFrame
-                searchVehicleFrame.add(vehicleSearchPanel, BorderLayout.NORTH);
-                searchVehicleFrame.add(searchVehicleButton, BorderLayout.SOUTH);
+                // booleans to represent the search result
+                boolean motorcycleResult = false;
+                boolean lightResult = false;
+                boolean heavyResult = false;
                 
                 
-                /**
-                 * adding functionality to "Back" button
-                 */
-                vehicleSearchBack.addActionListener(r -> {
-                    
-                    searchVehicleFrame.hide();
-                    vehicleSearchf.setVisible(true);
-                });
-                
-                
-                /**
-                 * adding functionality to "Exit" button
-                 */
-                vehicleSearchExit.addActionListener(s -> {
-                    searchVehicleFrame.hide();
-                    exit();
-                    });
-                
-                
-                /**
-                 * when the user pushes the system close (X top right corner)
-                 */
-                // override window closing method
-                searchVehicleFrame.addWindowListener(new WindowAdapter(){
-                    @Override
-                    public void windowClosing(WindowEvent d5){  // Attempt to exit application
-                        exit();				
+                // checking if search area is empty
+                if(vehicleSearchArea.getText().equals("")){
+                    errorMessageBox("You must enter plate number of vehicle");
+                    vehicleSearchArea.requestFocus();
+                }
+                else{                 
+                    // checking if there are no vehicles registered
+                    if(motorcycleArray.isEmpty() && lightVehicleArray.isEmpty() && heavyVehicleArray.isEmpty()){
+                        
+                        errorMessageBox("There is no vehicle registered to search");
+                        vehicleSearchArea.setText("");
+                        vehicleSearchArea.requestFocus();                        
                     }
-                });
-                
+                    else{
+                        // checking if the search key is alphanumeric or not
+                        String vehicleSearchKey = vehicleSearchArea.getText();
+                        boolean checkVehicle = true;
+                        
+                        char[] vehicleSearch = vehicleSearchKey.toCharArray();
+                        
+                        for(char ch: vehicleSearch){
+                            if(Character.isLetterOrDigit(ch) == false){
+                                checkVehicle = false;
+                                break;
+                            }
+                        }
+                        // when the search key is alphanumeric
+                        if(checkVehicle == false){
+                            errorMessageBox("You must enter plate number with numbers and alphabets only");
+                            vehicleSearchArea.setText("");
+                            vehicleSearchArea.requestFocus();
+                        }
+                        else{
+                            // checking array of motorcycle for the plate number similar search key
+                            for(int i = 0; i < motorcycleArray.size(); i++){
+                                
+                                if(vehicleSearchKey.equalsIgnoreCase(motorcycleArray.get(i).getPlateNumber())){
+                                    
+                                    engineC = motorcycleArray.get(i).getEngineCapacity();
+                                    vehicleMake = motorcycleArray.get(i).getMake();
+                                    vehicleModel = motorcycleArray.get(i).getModel();
+                                    vehicleYear = motorcycleArray.get(i).getYear();
+                                    
+                                    vehicleSearchType = 1;
+                                    motorcycleResult = true;
+                                    break;
+                                }
+                            }
+                            
+                            // checking array of motorcycle for the plate number similar search key
+                            for(int i = 0; i < lightVehicleArray.size(); i++){
+                                
+                                if(vehicleSearchKey.equalsIgnoreCase(lightVehicleArray.get(i).getPlateNumber())){
+                                    
+                                    engineC = lightVehicleArray.get(i).getEngineCapacity();
+                                    vehicleMake = lightVehicleArray.get(i).getMake();
+                                    vehicleModel = lightVehicleArray.get(i).getModel();
+                                    vehicleYear = lightVehicleArray.get(i).getYear();
+                                    seatN = lightVehicleArray.get(i).getSeatNumber();
+                                    
+                                    vehicleSearchType = 2;
+                                    lightResult = true;
+                                    break;
+                                }
+                            }
+                            
+                            // checking array of motorcycle for the plate number similar search key
+                            for(int i = 0; i < heavyVehicleArray.size(); i++){
+                                
+                                if(vehicleSearchKey.equalsIgnoreCase(heavyVehicleArray.get(i).getPlateNumber())){
+                                    
+                                    engineC = heavyVehicleArray.get(i).getEngineCapacity();
+                                    vehicleMake = heavyVehicleArray.get(i).getMake();
+                                    vehicleModel = heavyVehicleArray.get(i).getModel();
+                                    vehicleYear = heavyVehicleArray.get(i).getYear();
+                                    loadC = heavyVehicleArray.get(i).getLoadCapacity();
+                                    
+                                    vehicleSearchType = 3;
+                                    heavyResult = true;
+                                    break;
+                                }
+                            }
+                                
+                            
+                            // when the search key is no match in any array
+                            if(motorcycleResult == false && lightResult == false && heavyResult == false){
+                                
+                                errorMessageBox("Vehicle with the provided plate number not found");
+                                vehicleSearchArea.setText("");
+                                vehicleSearchArea.requestFocus();
+                            }
+                            else{      // when there is a match
+                                
+                                // so that the search menu is hidden
+                                vehicleSearchf.hide();
+
+                                // frame search result of vehicle registration information
+                                JFrame searchVehicleFrame = new JFrame();
+
+                                searchVehicleFrame.setTitle("Vehicle Search Result");                 // title of frame
+                                searchVehicleFrame.setSize(500, 260);                                 // size of app
+                                searchVehicleFrame.setVisible(true);                                  // making app visible
+                                searchVehicleFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
+                                searchVehicleFrame.setResizable(true);                                // making app sizable
+                                searchVehicleFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    // making app close when X button is clicked
+                                searchVehicleFrame.setLayout(new BorderLayout());        
+
+                                // making a titled border for vehicle details
+                                TitledBorder searchVehicleLine = BorderFactory.createTitledBorder(" Vehicle Information ");
+                                searchVehicleLine.setTitleColor(Color.BLUE);
+
+                                // making black border
+                                Border border5 = BorderFactory.createLineBorder(Color.BLACK, 1);
+                                
+                                // making blue border
+                                Border border6 = BorderFactory.createLineBorder(Color.blue, 1);
+
+                                // main panel for vehicle info
+                                JPanel vehicleSearchPanel = new JPanel();           
+                                vehicleSearchPanel.setLayout(new BorderLayout());
+
+                                // main and nested panels
+                                JPanel searchVehicleButton = new JPanel();
+                                JPanel paneld1 = new JPanel();
+                                JPanel paneld2 = new JPanel();
+                                JPanel paneld3 = new JPanel();
+
+                                // buttons
+                                JButton vehicleSearchEdit = new JButton("Edit");
+                                JButton vehicleSearchBack = new JButton("Back");
+                                JButton vehicleSearchExit = new JButton("Exit");                
+
+                                // label for vehicle details
+                                JLabel vehicleSearchTypeLabel = new JLabel("Type of vehicle");
+                                JLabel searchEngineCapacityLabel = new JLabel("Engine Capacity");
+                                JLabel searchMakeLabel = new JLabel("Make");
+                                JLabel searchModelLabel = new JLabel("Model");
+                                JLabel searchYearLabel = new JLabel("Year");
+                                JLabel searchLoadCapacityLabel = new JLabel("Load Capacity (tonnes)");
+                                JLabel searchSeatNumbersLabel = new JLabel("Seat Number");
+
+                                // making combobox for type of vehicles
+                                String[] searchVehicleTypeArray = {"Motorcycle", "Light vehicle", "Heavy vehicle"};
+                                JComboBox searchVehicleComboBox = new JComboBox(searchVehicleTypeArray);
+                                searchVehicleComboBox.setSelectedIndex(0);
+
+                                // textarea for dispalying vehicle details
+                                JTextField searchEngineCapacityText = new JTextField(15);
+                                searchEngineCapacityText.setBorder(border3);
+
+                                JTextField searchMakeText = new JTextField(15);
+                                searchMakeText.setBorder(border3);
+
+                                JTextField searchModelText = new JTextField(15);
+                                searchModelText.setBorder(border3);
+
+                                JTextField searchYearText = new JTextField(15);
+                                searchYearText.setBorder(border3);
+
+                                JTextField searchLoadCapacityText = new JTextField(15);
+                                searchLoadCapacityText.setBorder(border3);
+
+                                JTextField searchSeatNumbersText = new JTextField(15);
+                                searchSeatNumbersText.setBorder(border3);
+
+                                // nested panels
+                                paneld1.setLayout(new FlowLayout());
+                                paneld3.setLayout(new BorderLayout());
+
+                                paneld1.add(vehicleSearchTypeLabel);
+                                paneld1.add(searchVehicleComboBox);
+                                paneld3.add(paneld1, BorderLayout.NORTH);
+
+                                // adding detail label and field to a nested panel
+                                paneld2.setLayout(new GridLayout(6, 2, 10, 4));
+                                paneld2.add(searchEngineCapacityLabel);
+                                paneld2.add(searchEngineCapacityText);
+                                paneld2.add(searchMakeLabel);
+                                paneld2.add(searchMakeText);
+                                paneld2.add(searchModelLabel);
+                                paneld2.add(searchModelText);
+                                paneld2.add(searchYearLabel);
+                                paneld2.add(searchYearText);
+                                paneld2.add(searchLoadCapacityLabel);
+                                paneld2.add(searchLoadCapacityText);
+                                paneld2.add(searchSeatNumbersLabel);
+                                paneld2.add(searchSeatNumbersText);            
+                                paneld3.add(paneld2, BorderLayout.CENTER);
+
+                                // adding all nested panels to main search vehicle panel
+                                vehicleSearchPanel.add(paneld3, BorderLayout.WEST);
+                                vehicleSearchPanel.setBorder(searchVehicleLine);             
+
+                                // adding buttons 
+                                searchVehicleButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+                                searchVehicleButton.add(vehicleSearchEdit);
+                                searchVehicleButton.add(vehicleSearchBack);
+                                searchVehicleButton.add(vehicleSearchExit);
+
+                                // adding main panel and buttons to searchVehicleFrame
+                                searchVehicleFrame.add(vehicleSearchPanel, BorderLayout.NORTH);
+                                searchVehicleFrame.add(searchVehicleButton, BorderLayout.SOUTH);
+                                                     
+                                
+                                // adding details to the result frame according to the vehicle type
+                                String engineCap = Double.toString(engineC);
+                                searchEngineCapacityText.setText(engineCap);
+                                searchEngineCapacityText.setEditable(false);
+                                
+                                searchMakeText.setText(vehicleMake);
+                                searchMakeText.setEditable(false);
+                                
+                                searchModelText.setText(vehicleModel);
+                                searchModelText.setEditable(false);
+                                
+                                String vYear = Integer.toString(vehicleYear);
+                                searchYearText.setText(vYear);
+                                searchYearText.setEditable(false);
+                                                               
+                                
+                                // checking vehicle type and performing related tasks
+                                switch(vehicleSearchType){
+                                    
+                                    // motorcycle
+                                    case 1: {
+                                        searchVehicleComboBox.setSelectedItem("Motorcycle");
+                                    
+                                        searchLoadCapacityLabel.setForeground(Color.gray);
+                                        searchLoadCapacityText.setEnabled(false);
+
+                                        searchSeatNumbersLabel.setForeground(Color.gray);
+                                        searchSeatNumbersText.setEnabled(false);
+                                        break;
+                                    }
+                                    
+                                    // light vehicle
+                                    case 2: {
+                                        searchVehicleComboBox.setSelectedItem("Light vehicle");
+                                    
+                                        searchLoadCapacityLabel.setForeground(Color.gray);
+                                        searchLoadCapacityText.setEnabled(false);
+                                            
+                                        String numberSeat = Integer.toString(seatN);
+                                        searchSeatNumbersText.setText(numberSeat);
+                                        searchSeatNumbersText.setEditable(false);
+                                        break;
+                                    }
+                                    
+                                    // heavy vehicle
+                                    case 3: {
+                                        searchVehicleComboBox.setSelectedItem("Heavy vehicle");
+                                    
+                                        String capacityLoad = Double.toString(loadC);
+                                        searchLoadCapacityText.setText(capacityLoad);
+                                        searchLoadCapacityText.setEditable(false);
+
+                                        searchSeatNumbersLabel.setForeground(Color.gray);
+                                        searchSeatNumbersText.setEnabled(false);
+                                        break;
+                                    }
+                                    
+                                }
+                                               
+                                
+                                
+                                
+                                
+                                /**
+                                 * adding functionality to "Back" button
+                                 */
+                                vehicleSearchBack.addActionListener(r -> {
+
+                                    searchVehicleFrame.hide();
+                                    vehicleSearchf.setVisible(true);
+                                });
+
+
+                                /**
+                                 * adding functionality to "Exit" button
+                                 */
+                                vehicleSearchExit.addActionListener(s -> {
+                                    searchVehicleFrame.hide();
+                                    exit();
+                                    });
+
+
+                                /**
+                                 * when the user pushes the system close (X top right corner)
+                                 */
+                                // override window closing method
+                                searchVehicleFrame.addWindowListener(new WindowAdapter(){
+                                    @Override
+                                    public void windowClosing(WindowEvent d5){  // Attempt to exit application
+                                        exit();				
+                                    }
+                                });
+                            }                            
+                        }                            
+                    }
+                }             
             });
             
             
