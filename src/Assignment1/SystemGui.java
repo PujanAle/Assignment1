@@ -653,7 +653,7 @@ public class SystemGui extends JFrame{
                     engineCapacity = Double.parseDouble(engineCapacityText.getText());
                 }
                 catch(NumberFormatException c3){
-                    errorMessageBox("You should enter number only numbers");
+                    errorMessageBox("You should enter engine capacity as numbers only");
                     engineCapacityText.setText("");
                     engineCapacityText.requestFocus();
                     return;
@@ -1093,8 +1093,8 @@ public class SystemGui extends JFrame{
                 int ownerSearchType = 0;
                 
                 // integers to represent the search result
-                int privateSearchResult = 0;
-                int corporateSearchResult = 0;
+                boolean privateSearchResult = false;
+                boolean corporateSearchResult = false;
                 
                 
                 // checking the search key entered
@@ -1125,12 +1125,10 @@ public class SystemGui extends JFrame{
                                     phoneNumber = privateOwnerArray.get(i).getPhoneNumber();
                                     dateOfBirth = privateOwnerArray.get(i).getDateOfBirth();   
                                     
-                                    ownerSearchType = 1;                                    
+                                    ownerSearchType = 1;    
+                                    privateSearchResult = true;
                                     break;                                    
-                                }
-                                else{
-                                    privateSearchResult = 1;
-                                }                                
+                                }                                                               
                             }
                             
                             // for corporate owner search
@@ -1146,23 +1144,20 @@ public class SystemGui extends JFrame{
                                     abn = corporateOwnerArray.get(i).getAustralianBusinessNumber();
                                     
                                     ownerSearchType = 2;
+                                    corporateSearchResult = true;
                                     break;
-                                }
-                                else{
-                                    corporateSearchResult = 1;
-                                }                                
+                                }                                                             
                             }  
                             
                             
                             // when there is no match
-                            if(privateSearchResult == 1 && corporateSearchResult == 1){
+                            if(privateSearchResult == false && corporateSearchResult == false){
                                 
-                                errorMessageBox("Owner not found");
+                                errorMessageBox("Owner with the provied licence number not found");
                                 ownerSearchArea.setText("");
                                 ownerSearchArea.requestFocus();
-                                return;                                
                             }
-                            else{      // when there is a match
+                            else if(privateSearchResult == false || corporateSearchResult == false ){      // when there is a match
                                 
                                 // so that the search menu is hidden
                                 ownerSearchf.hide();
@@ -1231,7 +1226,6 @@ public class SystemGui extends JFrame{
                                 // radiobuttons to show the type of owner
                                 JRadioButton searchPrivateOwner = new JRadioButton("Private");
                                 JRadioButton searchCorporateOwner = new JRadioButton("Corporate");
-                                JRadioButton searchHiddenButton = new JRadioButton();
 
                                 // buttons
                                 JButton ownerSearchEdit = new JButton("Edit");
@@ -1259,7 +1253,6 @@ public class SystemGui extends JFrame{
                                 ButtonGroup buttonGroup = new ButtonGroup();
                                 buttonGroup.add(searchPrivateOwner);
                                 buttonGroup.add(searchCorporateOwner);
-                                buttonGroup.add(searchHiddenButton);
 
                                 panelb3.setLayout(new BorderLayout());
                                 panelb3.add(panelb1, BorderLayout.NORTH);
@@ -1359,6 +1352,76 @@ public class SystemGui extends JFrame{
                                 }
                                 
 
+                                
+                                /**
+                                 * adding functionality to "Edit" button
+                                 */
+                                ownerSearchEdit.addActionListener(o -> {
+                                    
+                                    // making all the text fields to be editable and changing their border colour
+                                    searchfNameText.setEditable(true);
+                                    searchfNameText.setBorder(border2);
+                                            
+                                    searchlNameText.setEditable(true);
+                                    searchlNameText.setBorder(border2);
+                                            
+                                    searchLicenceNumberText.setEditable(true);
+                                    searchLicenceNumberText.setBorder(border2);
+                                            
+                                    searchAddrText.setEditable(true);
+                                    searchAddrText.setBorder(border2);
+                                            
+                                    searchPhoneNoText.setEditable(true);
+                                    searchPhoneNoText.setBorder(border2);
+                                            
+                                    searchdobText.setEditable(true);
+                                    searchdobText.setBorder(border2);
+                                            
+                                    searchabnText.setEditable(true);
+                                    searchabnText.setBorder(border2);
+                                    
+                                    
+                                    // enabling the two radio buttons
+                                    searchCorporateOwner.setEnabled(true);
+                                    searchPrivateOwner.setEnabled(true);   
+                                    
+                                    // changing the color of radio buttons to blue
+                                    searchCorporateOwner.setForeground(Color.blue);
+                                    searchPrivateOwner.setForeground(Color.blue);
+
+                                    // when private radio button is selected
+                                    searchPrivateOwner.addActionListener(p -> {
+
+                                        searchdobLabel.setForeground(Color.black);                                                  
+                                        searchdobText.setEnabled(true);
+                                        searchabnLabel.setForeground(Color.gray);
+                                        searchabnText.setEnabled(false);
+                                        searchabnText.setText("");
+                                    });
+
+                                    // when corporate radio button is selected
+                                    searchCorporateOwner.addActionListener(p1 -> {
+
+                                        searchabnLabel.setForeground(Color.black);                
+                                        searchabnText.setEnabled(true);
+                                        searchdobLabel.setForeground(Color.gray);
+                                        searchdobText.setEnabled(false);
+                                        searchdobText.setText("");
+                                    });
+                                    
+                                });
+                                
+                                
+                                                                
+                                /**
+                                 * adding functionality to "Save" button
+                                 */
+                                ownerSaveButton.addActionListener(o2 -> {
+                                    
+                                    
+                                    
+                                });
+                                
                                 /**
                                 * adding functionality to "Back" button
                                 */
