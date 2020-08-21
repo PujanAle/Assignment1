@@ -1157,7 +1157,7 @@ public class SystemGui extends JFrame{
                                 ownerSearchArea.setText("");
                                 ownerSearchArea.requestFocus();
                             }
-                            else if(privateSearchResult == false || corporateSearchResult == false ){      // when there is a match
+                            else{      // when there is a match
                                 
                                 // so that the search menu is hidden
                                 ownerSearchf.hide();
@@ -1226,10 +1226,12 @@ public class SystemGui extends JFrame{
                                 // radiobuttons to show the type of owner
                                 JRadioButton searchPrivateOwner = new JRadioButton("Private");
                                 JRadioButton searchCorporateOwner = new JRadioButton("Corporate");
+                                JRadioButton searchHiddenButton = new JRadioButton();
 
                                 // buttons
                                 JButton ownerSearchEdit = new JButton("Edit");
                                 JButton ownerSaveButton = new JButton("Save");
+                                JButton ownerClearButton = new JButton("Clear");
                                 JButton ownerSearchBack = new JButton("Back");
                                 JButton ownerSearchExit = new JButton("Exit");
 
@@ -1253,6 +1255,7 @@ public class SystemGui extends JFrame{
                                 ButtonGroup buttonGroup = new ButtonGroup();
                                 buttonGroup.add(searchPrivateOwner);
                                 buttonGroup.add(searchCorporateOwner);
+                                buttonGroup.add(searchHiddenButton);
 
                                 panelb3.setLayout(new BorderLayout());
                                 panelb3.add(panelb1, BorderLayout.NORTH);
@@ -1301,7 +1304,6 @@ public class SystemGui extends JFrame{
                                 // adding buttons 
                                 searchOwnerButton.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
                                 searchOwnerButton.add(ownerSearchEdit);
-                                searchOwnerButton.add(ownerSaveButton);
                                 searchOwnerButton.add(ownerSearchBack);
                                 searchOwnerButton.add(ownerSearchExit);
 
@@ -1310,7 +1312,8 @@ public class SystemGui extends JFrame{
                                 searchOwnerFrame.add(searchOwnerButton, BorderLayout.SOUTH);
                                 
 
-                                // adding the reeult of search to their respective places
+                                
+                                // adding the result of search to their respective places
                                 searchfNameText.setText(firstName);
                                 searchfNameText.setEditable(false);
                                     
@@ -1357,6 +1360,8 @@ public class SystemGui extends JFrame{
                                  * adding functionality to "Edit" button
                                  */
                                 ownerSearchEdit.addActionListener(o -> {
+                                    
+                                    searchOwnerFrame.setTitle("Edit Owner Search Result");  
                                     
                                     // making all the text fields to be editable and changing their border colour
                                     searchfNameText.setEditable(true);
@@ -1409,6 +1414,11 @@ public class SystemGui extends JFrame{
                                         searchdobText.setText("");
                                     });
                                     
+                                    ownerSearchEdit.setVisible(false);
+                                    searchOwnerButton.add(ownerSaveButton);
+                                    searchOwnerButton.add(ownerClearButton);
+                                    searchOwnerButton.add(ownerSearchBack);
+                                    searchOwnerButton.add(ownerSearchExit);                             
                                 });
                                 
                                 
@@ -1418,9 +1428,36 @@ public class SystemGui extends JFrame{
                                  */
                                 ownerSaveButton.addActionListener(o2 -> {
                                     
-                                    
+                                    /////////////////////////////////////////////////////////////////////////////
                                     
                                 });
+                                
+                                
+                                
+                                /**
+                                 * adding  functionality to the "Clear" button
+                                 */
+                                ownerClearButton.addActionListener(o3 -> {
+                                    
+                                    // clearing all the textField and deselecting the radio buttons
+                                    searchfNameText.setText("");
+                                    searchlNameText.setText("");
+                                    searchLicenceNumberText.setText("");
+                                    searchAddrText.setText("");
+                                    searchPhoneNoText.setText("");
+                                    searchHiddenButton.setSelected(true);
+                                    
+                                    searchabnLabel.setForeground(Color.gray);                
+                                    searchabnText.setEnabled(false);
+                                    searchdobLabel.setForeground(Color.gray);
+                                    searchdobText.setEnabled(false);
+                                    
+                                    searchdobText.setText("");
+                                    searchabnText.setText("");
+                                    
+                                });
+                                
+                                
                                 
                                 /**
                                 * adding functionality to "Back" button
