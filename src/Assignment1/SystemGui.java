@@ -1138,8 +1138,13 @@ public class SystemGui extends JFrame{
                                     phoneNumber = privateOwnerArray.get(i).getPhoneNumber();
                                     dateOfBirth = privateOwnerArray.get(i).getDateOfBirth();   
                                     
+                                    // type of owner searched
                                     ownerSearchType = 1;    
+                                    
+                                    // when there is a match
                                     privateSearchResult = true;
+                                    
+                                    // private owner position in the array
                                     ownerArrayPlace = i;
                                     break;                                    
                                 }                                                               
@@ -1157,8 +1162,13 @@ public class SystemGui extends JFrame{
                                     phoneNumber = corporateOwnerArray.get(i).getPhoneNumber();
                                     abn = corporateOwnerArray.get(i).getAustralianBusinessNumber();
                                     
+                                    // type of owner searched
                                     ownerSearchType = 2;
+                                    
+                                    // when there is a match
                                     corporateSearchResult = true;
+                                    
+                                    // corporate owner position in the array
                                     ownerArrayPlace = i;
                                     break;
                                 }                                                             
@@ -1600,6 +1610,7 @@ public class SystemGui extends JFrame{
                                             // adding details of private owner object in arraylist
                                             privateOwnerArray.add(ownerArrayPlace, new PrivateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));
                                             
+                                            // making confirmation message
                                             confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
                                                     + "Licence Number: %d\n"
                                                     + "Address: %s\n"
@@ -1628,6 +1639,7 @@ public class SystemGui extends JFrame{
                                             // adding details of corporate owner object in arraylist
                                             corporateOwnerArray.add(ownerArrayPlace, new CorporateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
 
+                                            // making confirmation message
                                             confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
                                                     + "Licence Number: %d\n"
                                                     + "Address: %s\n"
@@ -1886,8 +1898,13 @@ public class SystemGui extends JFrame{
                                     vehicleModel = motorcycleArray.get(i).getModel();
                                     vehicleYear = motorcycleArray.get(i).getYear();
                                     
+                                    // type of vehicle
                                     vehicleSearchType = 1;
+                                    
+                                    // when there is a match
                                     motorcycleResult = true;
+                                    
+                                    // position of the vehicle in the array
                                     vehicleArrayPlace = i;
                                     break;
                                 }
@@ -1904,8 +1921,13 @@ public class SystemGui extends JFrame{
                                     vehicleYear = lightVehicleArray.get(i).getYear();
                                     seatN = lightVehicleArray.get(i).getSeatNumber();
                                     
+                                    // type of vehicle
                                     vehicleSearchType = 2;
+                                    
+                                    // when there is a match
                                     lightResult = true;
+                                    
+                                    // position of vehicle in the array
                                     vehicleArrayPlace = i;
                                     break;
                                 }
@@ -1922,8 +1944,13 @@ public class SystemGui extends JFrame{
                                     vehicleYear = heavyVehicleArray.get(i).getYear();
                                     loadC = heavyVehicleArray.get(i).getLoadCapacity();
                                     
+                                    // type of vehicle
                                     vehicleSearchType = 3;
+                                    
+                                    // when there is a match
                                     heavyResult = true;
+                                    
+                                    // position of the vehicle in the array
                                     vehicleArrayPlace = i;
                                     break;
                                 }
@@ -2271,12 +2298,17 @@ public class SystemGui extends JFrame{
                                     // for checking the type of vehicle
                                     switch ((String)searchVehicleComboBox.getSelectedItem()) {
 
+                                        // for motorcycle
                                         case "Motorcycle":
 
-                                            // adding motorcycle details to object of motorcycleArray
-                                            motorcycleArray.add(vehicleArrayPlace, new Motorcycle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, licenceNumber));
+                                            // getting the licence number of the specific vehicle searched
+                                            int motoLicence = motorcycleArray.get(vehicleArrayPlace).getOwnerId();
                                             
-                                             confirmationMessage(String.format("The motorcycle has been updated with the following details: \n"
+                                            // adding motorcycle details to object of motorcycleArray
+                                            motorcycleArray.add(vehicleArrayPlace, new Motorcycle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, motoLicence));
+                                            
+                                            // confirmation message
+                                            confirmationMessage(String.format("The motorcycle has been updated with the following details: \n"
                                                     + "Plate Number: %s\n"
                                                     + "Engine Capacity: %.1f Litre\n"
                                                     + "Make: %s\n"
@@ -2285,6 +2317,7 @@ public class SystemGui extends JFrame{
                                             
                                             break;
 
+                                        // for light vehicle    
                                         case "Light vehicle":                        
 
                                             // for number of seats of light vehicle
@@ -2298,9 +2331,13 @@ public class SystemGui extends JFrame{
                                                 Integer.parseInt(searchSeatNumbersText.getText());
                                                 vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
 
-                                                // adding light vehicle details to object of lightVehicleArray
-                                                lightVehicleArray.add(vehicleArrayPlace, new LightVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, licenceNumber, vehicleSeatNumbers));
+                                                // getting licence number of the searched vehicle
+                                                int lightLicence = lightVehicleArray.get(vehicleArrayPlace).getOwnerId();
                                                 
+                                                // adding light vehicle details to object of lightVehicleArray
+                                                lightVehicleArray.add(vehicleArrayPlace, new LightVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, lightLicence, vehicleSeatNumbers));
+                                                
+                                                // confiramtion message
                                                 confirmationMessage(String.format("The light vehicle is registered with the following details: \n"
                                                             + "Plate Number: %s\n"
                                                             + "Engine Capacity: %.1f Litre\n"
@@ -2318,6 +2355,7 @@ public class SystemGui extends JFrame{
                                             }                       
                                             break;
 
+                                        // for heavy vehicle    
                                         case "Heavy vehicle":
 
                                             // for load capacity of heavy vehicle
@@ -2331,9 +2369,13 @@ public class SystemGui extends JFrame{
                                                 Double.parseDouble(searchLoadCapacityText.getText());
                                                 vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
 
-                                                // adding heavy vehicle details to object of heavyVehicleArray
-                                                heavyVehicleArray.add(new HeavyVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, licenceNumber, vehicleLoadCapacity));
+                                                // getting licence number of searched vehicle
+                                                int heavyLicence = heavyVehicleArray.get(vehicleArrayPlace).getOwnerId();
                                                 
+                                                // adding heavy vehicle details to object of heavyVehicleArray
+                                                heavyVehicleArray.add(new HeavyVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, heavyLicence, vehicleLoadCapacity));
+                                                
+                                                // confirmation message
                                                 confirmationMessage(String.format("The heavy vehicle has been updated with the following details: \n"
                                                         + "Plate Number: %s\n"
                                                         + "Engine Capacity: %.1f Litre\n"
