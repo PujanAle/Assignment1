@@ -51,6 +51,15 @@ public class SystemGui extends JFrame{
     int ownerSelection = 0;
     int vehicleSelection = 0;
     
+    // owner array that the owner search key is in
+    int ownerArrayPlace = 0;
+    
+    // vehicle array that the vehicle search key is in
+    int vehicleArrayPlace = 0;
+    
+    // getting the plate number of the vehicle being edited
+    String EditingPlateNumber;
+    
     // welcome text in the app
     private final JLabel welcomeLabel;
     
@@ -491,8 +500,8 @@ public class SystemGui extends JFrame{
                 }
                 else{
                     errorMessageBox("You must enter last name with alphabets");
-                    fNameText.setText("");
-                    fNameText.requestFocus();
+                    lNameText.setText("");
+                    lNameText.requestFocus();
                     return;
                 }          
                 
@@ -633,8 +642,7 @@ public class SystemGui extends JFrame{
                         abnText.requestFocus();
                         return;
                     }                                 
-                }
-                                           
+                }                                           
                 
                                 
                 /**
@@ -875,7 +883,7 @@ public class SystemGui extends JFrame{
                         String model2 = heavyVehicleArray.get(currentHeavy   - 1).getModel();
                         int year1 = heavyVehicleArray.get(currentHeavy   - 1).getYear();
                         double loadC = heavyVehicleArray.get(currentHeavy   - 1).getLoadCapacity();
-                        vehicleString = String.format("The light vehicle is registered with the following details: \n"
+                        vehicleString = String.format("The heavy vehicle is registered with the following details: \n"
                                 + "Plate Number: %s\n"
                                 + "Engine Capacity: %.1f Litre\n"
                                 + "Make: %s\n"
@@ -1096,6 +1104,9 @@ public class SystemGui extends JFrame{
                 boolean privateSearchResult = false;
                 boolean corporateSearchResult = false;
                 
+                // owner array that the owner search key is in
+                // int ownerArrayPlace = 0;
+                
                 
                 // checking the search key entered
                 if(ownerSearchArea.getText().equals("")){
@@ -1129,6 +1140,7 @@ public class SystemGui extends JFrame{
                                     
                                     ownerSearchType = 1;    
                                     privateSearchResult = true;
+                                    ownerArrayPlace = i;
                                     break;                                    
                                 }                                                               
                             }
@@ -1147,6 +1159,7 @@ public class SystemGui extends JFrame{
                                     
                                     ownerSearchType = 2;
                                     corporateSearchResult = true;
+                                    ownerArrayPlace = i;
                                     break;
                                 }                                                             
                             }  
@@ -1431,10 +1444,203 @@ public class SystemGui extends JFrame{
                                  */
                                 ownerSaveButton.addActionListener(o2 -> {
                                     
-                                    /////////////////////////////////////////////////////////////////////////////
-                                    
-                                });
-                                
+                                    // checking first name
+                                    String ownerFName;
+                                    if(searchfNameText.getText().equals("")){
+                                        errorMessageBox("You must enter first name");
+                                        searchfNameText.requestFocus();
+                                        return;
+                                    }
+
+                                    String checkingOwnerFName = searchfNameText.getText();
+                                    boolean checkOnwerFNameBool  = true;
+
+                                    // converting string to an array of its characters
+                                    char[] charFArray = checkingOwnerFName.toCharArray();
+
+                                    // checking if character is not a string
+                                    for(char ch : charFArray){
+                                        if(Character.isLetter(ch) == false){
+                                            checkOnwerFNameBool = false;
+                                            break;
+                                        }
+                                    }
+                                    if(checkOnwerFNameBool == true){
+                                        ownerFName = searchfNameText.getText();
+                                    }
+                                    else{
+                                        errorMessageBox("You must enter first name with alphabets");
+                                        searchfNameText.setText("");
+                                        searchfNameText.requestFocus();
+                                        return;
+                                    }
+
+
+                                    // checking last name
+                                    String ownerLName;             
+                                    if(searchlNameText.getText().equals("")){
+                                        errorMessageBox("You must enter last name");
+                                        searchlNameText.requestFocus();
+                                        return;
+                                    }
+
+                                    String checkingOwnerLName = searchlNameText.getText();
+                                    boolean checkOwnerLNameBool  = true;
+
+                                    // converting string to an array of its characters
+                                    char[] charLArray = checkingOwnerLName.toCharArray();
+
+                                    // checking if character is not a string
+                                    for(char ch: charLArray){
+                                        if(Character.isLetter(ch) == false){
+                                            checkOwnerLNameBool = false;
+                                            break;
+                                        }
+                                    }
+                                    if(checkOwnerLNameBool == true){
+                                        ownerLName = searchlNameText.getText();
+                                    }
+                                    else{
+                                        errorMessageBox("You must enter last name with alphabets");
+                                        searchlNameText.setText("");
+                                        searchlNameText.requestFocus();
+                                        return;
+                                    }
+
+
+                                    // for licence number
+                                    int ownerLicenceNumber;
+                                    if(searchLicenceNumberText.getText().equals("")){
+                                        errorMessageBox("You must enter a licence number");
+                                        searchLicenceNumberText.requestFocus();
+                                        return;
+                                    }   
+                                    try{ 
+                                        Integer.parseInt(searchLicenceNumberText.getText()); 
+                                        ownerLicenceNumber = Integer.parseInt(searchLicenceNumberText.getText());
+                                    }  
+                                    catch(NumberFormatException g1){ 
+                                        errorMessageBox("You must enter numbers for licence number");
+                                        searchLicenceNumberText.setText("");
+                                        searchLicenceNumberText.requestFocus();
+                                        return;
+                                    } 
+
+
+                                    // for address
+                                    String ownerAddress;
+                                    if(searchAddrText.getText().equals("")){
+                                        errorMessageBox("You must enter address");
+                                        searchAddrText.requestFocus();
+                                        return;
+                                    }
+                                    else{
+                                        ownerAddress = searchAddrText.getText();
+                                    }
+
+
+                                    // for phone number
+                                    String ownerPhoneNo; 
+                                    if(searchPhoneNoText.getText().equals("")){
+                                        errorMessageBox("You must enter phone number");
+                                        searchPhoneNoText.requestFocus();
+                                        return;
+                                    }
+
+                                    String checkOwnerPhoneNo = searchPhoneNoText.getText();
+                                    boolean checkOwnerPhoneBool = true;
+
+                                    // converitng the phone number entry to character array
+                                    char[] phoneCharArray = checkOwnerPhoneNo.toCharArray();
+                                    for(char ch: phoneCharArray){
+
+                                        if(Character.isLetterOrDigit(ch) == false){
+                                            checkOwnerPhoneBool = false;
+                                            break;
+                                        }                    
+                                    }
+
+                                    if(checkOwnerPhoneBool == true){
+                                        ownerPhoneNo = searchPhoneNoText.getText();
+                                    }
+                                    else{
+                                        errorMessageBox("You must enter alphabets or digits for phone number");
+                                        searchPhoneNoText.setText("");
+                                        searchPhoneNoText.requestFocus();
+                                        return;
+                                    }
+
+
+
+                                    // checking if type of owner                                    
+                                    if(searchPrivateOwner.isSelected()){
+
+                                        // for date of birth
+                                        String ownerDateOfBirth;
+                                        if(searchdobText.getText().equals("")){
+                                            errorMessageBox("You must enter date of birth");
+                                            return;
+                                        }
+
+                                        String checkOwnerDob = searchdobText.getText();
+                                        boolean checkOwnerDobBool = true;
+
+                                        char[] dobCharArray = checkOwnerDob.toCharArray();
+                                        for(char ch: dobCharArray){
+
+                                            if(Character.isLetterOrDigit(ch) == false){
+                                                checkOwnerDobBool = false;
+                                                break;
+                                            }
+                                        }
+
+                                        if(checkOwnerDobBool == true){
+                                            ownerDateOfBirth = searchdobText.getText();
+                                            
+                                            // adding details of private owner object in arraylist
+                                            privateOwnerArray.add(ownerArrayPlace, new PrivateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));
+                                            
+                                            confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
+                                                    + "Licence Number: %d\n"
+                                                    + "Address: %s\n"
+                                                    + "Phone number: %s\n"
+                                                    + "Date of Birth: %s\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));                                                                                       
+                                        }
+                                        else{
+                                            errorMessageBox("You must enter alphabets or digits for date of birth");
+                                            searchdobText.setText("");
+                                            searchdobText.requestFocus();
+                                        }                  
+                                    }
+
+                                    else{
+                                        // for Australian Business Number
+                                        int onwerAbn;
+                                        if(searchabnText.getText().equals("")){
+                                            errorMessageBox("You must enter Australian Business Number");
+                                            searchabnText.requestFocus();
+                                            return;
+                                        }
+                                        try{
+                                            Integer.parseInt(searchabnText.getText());
+                                            onwerAbn = Integer.parseInt(searchabnText.getText());
+
+                                            // adding details of corporate owner object in arraylist
+                                            corporateOwnerArray.add(ownerArrayPlace, new CorporateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+
+                                            confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
+                                                    + "Licence Number: %d\n"
+                                                    + "Address: %s\n"
+                                                    + "Phone Number: %s\n"
+                                                    + "Australian Business Number: %d\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+                                        }
+                                        catch(NumberFormatException h1){
+                                            errorMessageBox("You must enter numbers for Australian Business Number");
+                                            searchabnText.setText("");
+                                            searchabnText.requestFocus();
+                                        }                                 
+                                    }                                   
+                                });                                
                                 
                                 
                                 /**
@@ -1458,8 +1664,7 @@ public class SystemGui extends JFrame{
                                     searchdobText.setText("");
                                     searchabnText.setText("");
                                     
-                                });
-                                
+                                });                                
                                 
                                 
                                 /**
@@ -1670,6 +1875,7 @@ public class SystemGui extends JFrame{
                             vehicleSearchArea.requestFocus();
                         }
                         else{
+                            
                             // checking array of motorcycle for the plate number similar search key
                             for(int i = 0; i < motorcycleArray.size(); i++){
                                 
@@ -1682,6 +1888,7 @@ public class SystemGui extends JFrame{
                                     
                                     vehicleSearchType = 1;
                                     motorcycleResult = true;
+                                    vehicleArrayPlace = i;
                                     break;
                                 }
                             }
@@ -1699,6 +1906,7 @@ public class SystemGui extends JFrame{
                                     
                                     vehicleSearchType = 2;
                                     lightResult = true;
+                                    vehicleArrayPlace = i;
                                     break;
                                 }
                             }
@@ -1716,6 +1924,7 @@ public class SystemGui extends JFrame{
                                     
                                     vehicleSearchType = 3;
                                     heavyResult = true;
+                                    vehicleArrayPlace = i;
                                     break;
                                 }
                             }
@@ -1729,6 +1938,9 @@ public class SystemGui extends JFrame{
                                 vehicleSearchArea.requestFocus();
                             }
                             else{      // when there is a match
+                                
+                                // getting the plate number of the vehicle for editing later on
+                                EditingPlateNumber = vehicleSearchKey;
                                 
                                 // so that the search menu is hidden
                                 vehicleSearchf.hide();
@@ -1981,6 +2193,165 @@ public class SystemGui extends JFrame{
                                     });                                            
                                 });
                                 
+                                                                
+                                /**
+                                 * adding functionality to "Save" button 
+                                 */
+                                vehicleSave.addActionListener(r5 ->{
+                                    
+                                    // for engine capacity of vehicle
+                                    double vehicleEngine;
+                                    if(searchEngineCapacityText.getText().equals("")){
+                                        errorMessageBox("You must enter the engine capacity");
+                                        searchEngineCapacityText.requestFocus();
+                                        return;
+                                    }
+                                    try{
+                                        Double.parseDouble(searchEngineCapacityText.getText()); 
+                                        vehicleEngine = Double.parseDouble(searchEngineCapacityText.getText());
+                                    }
+                                    catch(NumberFormatException c3){
+                                        errorMessageBox("You should enter engine capacity as numbers only");
+                                        searchEngineCapacityText.setText("");
+                                        searchEngineCapacityText.requestFocus();
+                                        return;
+                                    }
+
+
+                                    // for brand of vehicle
+                                    String vehicleMake1; 
+                                    if(searchMakeText.getText().equals("")){
+                                        errorMessageBox("You must enter the vehicle's brand");
+                                        searchMakeText.requestFocus();
+                                        return;
+                                    }
+                                    else if(!(searchMakeText.getText() instanceof String)){
+                                        errorMessageBox("You must brand name with words");
+                                        searchMakeText.setText("");
+                                        searchMakeText.requestFocus();
+                                        return;
+                                    }
+                                    else{
+                                        vehicleMake1 = searchMakeText.getText();
+                                    }
+
+
+                                    // for model of vehicle
+                                    String vehicleModel1;                      // vehicle's model
+                                    if(searchModelText.getText().equals("")){
+                                        errorMessageBox("You must enter the model of vehicle");
+                                        searchModelText.requestFocus();
+                                        return;
+                                    }
+                                    else{
+                                        vehicleModel1 = searchModelText.getText();
+                                    }
+
+
+                                    // for year of manufacture of vehicle
+                                    int vehicleYear1; 
+                                    if(searchYearText.getText().equals("")){
+                                        errorMessageBox("You must enter vehicle's year of manufacture");
+                                        searchYearText.requestFocus();
+                                        return;
+                                    }
+                                    try{
+                                        Integer.parseInt(searchYearText.getText());
+                                        vehicleYear1 = Integer.parseInt(searchYearText.getText()); 
+                                    }
+                                    catch(NumberFormatException c4){
+                                        errorMessageBox("You must enter year as numbers");
+                                        searchYearText.setText("");
+                                        searchYearText.requestFocus();
+                                        return;
+                                    }
+                                    
+                                    
+
+                                    // for checking the type of vehicle
+                                    switch ((String)searchVehicleComboBox.getSelectedItem()) {
+
+                                        case "Motorcycle":
+
+                                            // adding motorcycle details to object of motorcycleArray
+                                            motorcycleArray.add(vehicleArrayPlace, new Motorcycle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, licenceNumber));
+                                            
+                                             confirmationMessage(String.format("The motorcycle has been updated with the following details: \n"
+                                                    + "Plate Number: %s\n"
+                                                    + "Engine Capacity: %.1f Litre\n"
+                                                    + "Make: %s\n"
+                                                    + "Model: %s\n"
+                                                    + "Year: %d", EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
+                                            
+                                            break;
+
+                                        case "Light vehicle":                        
+
+                                            // for number of seats of light vehicle
+                                            int vehicleSeatNumbers;
+                                            if(searchSeatNumbersText.getText().equals("")){
+                                                errorMessageBox("You must enter the number of seats");
+                                                searchSeatNumbersText.requestFocus();
+                                                return;
+                                            }   
+                                            try{
+                                                Integer.parseInt(searchSeatNumbersText.getText());
+                                                vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
+
+                                                // adding light vehicle details to object of lightVehicleArray
+                                                lightVehicleArray.add(vehicleArrayPlace, new LightVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, licenceNumber, vehicleSeatNumbers));
+                                                
+                                                confirmationMessage(String.format("The light vehicle is registered with the following details: \n"
+                                                            + "Plate Number: %s\n"
+                                                            + "Engine Capacity: %.1f Litre\n"
+                                                            + "Make: %s\n"
+                                                            + "Model: %s\n"
+                                                            + "Year: %d\n"
+                                                            + "Seat number: %d", EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));
+
+                                                
+                                            }
+                                            catch(NumberFormatException c6){
+                                                errorMessageBox("You must enter number of seats a number");
+                                                searchSeatNumbersText.setText("");
+                                                searchSeatNumbersText.requestFocus();
+                                            }                       
+                                            break;
+
+                                        case "Heavy vehicle":
+
+                                            // for load capacity of heavy vehicle
+                                            double vehicleLoadCapacity;
+                                            if(searchLoadCapacityText.getText().equals("")){
+                                                errorMessageBox("You must enter the load capacity");
+                                                searchLoadCapacityText.requestFocus();
+                                                return;
+                                            }   
+                                            try{
+                                                Double.parseDouble(searchLoadCapacityText.getText());
+                                                vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
+
+                                                // adding heavy vehicle details to object of heavyVehicleArray
+                                                heavyVehicleArray.add(new HeavyVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, licenceNumber, vehicleLoadCapacity));
+                                                
+                                                confirmationMessage(String.format("The heavy vehicle has been updated with the following details: \n"
+                                                        + "Plate Number: %s\n"
+                                                        + "Engine Capacity: %.1f Litre\n"
+                                                        + "Make: %s\n"
+                                                        + "Model: %s\n"
+                                                        + "Year: %d\n"
+                                                        + "Load Capacity: %.1f Tonne", EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));
+                                                
+                                            }
+                                            catch(NumberFormatException c5){
+                                                errorMessageBox("You must enter load capacity as numbers");
+                                                searchLoadCapacityText.setText("");
+                                                searchLoadCapacityText.requestFocus();
+                                            }                        
+                                            break;
+                                    }                                    
+                                });
+                                
                                 
                                 
                                 /**
@@ -1998,8 +2369,7 @@ public class SystemGui extends JFrame{
                                     
                                     // changing the default choice to motorcycle
                                     searchVehicleComboBox.setSelectedItem("Motorcycle"); 
-                                });
-                                
+                                });                                                          
                                 
                                 
                                 /**
