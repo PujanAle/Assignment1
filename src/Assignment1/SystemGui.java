@@ -48,8 +48,9 @@ public class SystemGui extends JFrame{
     
     // selection of owner and vehicle
     int ownerSelection = 0;
-    int vehicleSelection = 0;
+    int vehicleSelection = 0;    
     
+    // licence number of the owner
     int ownerId;
     
     // owner array that the owner search key is in
@@ -61,10 +62,12 @@ public class SystemGui extends JFrame{
     // getting the plate number of the vehicle being edited
     String EditingPlateNumber;    
        
+    // variables to find out if the type of vehicle has been changed
+    // when the vehicle details is edited
     int vehicleBeforeEdit = 0;
     int vehicleAfterEdit = 0;
     
-     // welcome text in the app
+    // welcome text in the app
     private final JLabel welcomeLabel;
     
     // panels for upper buttons
@@ -78,6 +81,7 @@ public class SystemGui extends JFrame{
     // main panel
     private final JPanel panel5;
     
+    // buttons in main menu
     private final JButton register;        // button to register owenr and vehicle
     private final JButton sAndEOwner;      // button to search a owner and edit info
     private final JButton sAndEVehicle;    // button to search a vehicle and edit info
@@ -111,6 +115,7 @@ public class SystemGui extends JFrame{
         panel5 = new JPanel();
         panel5.setLayout(new BorderLayout());
         
+        // buttons
         register = new JButton("Register");                          // button to register owner and vehicle
         sAndEOwner = new JButton("Search and Edit Owner Info");      // button to search and edit owner info
         sAndEVehicle = new JButton("Search and Edit Vehicle Info");  // button to search and edit vehicle info
@@ -518,6 +523,8 @@ public class SystemGui extends JFrame{
                     licenceNumberText.requestFocus();
                     return;
                 }   
+                
+                // checking if the licence number entered is an integer or not
                 try{ 
                     Integer.parseInt(licenceNumberText.getText()); 
                     licenceNumber = Integer.parseInt(licenceNumberText.getText());
@@ -550,6 +557,9 @@ public class SystemGui extends JFrame{
                     return;
                 }
                 
+                /**
+                 * checking if phone number entered is an alphanumeric or not
+                 */
                 String checkPhoneNo = phoneNoText.getText();
                 boolean checkPhoneBool = true;
                 
@@ -590,6 +600,7 @@ public class SystemGui extends JFrame{
                         return;
                     }
                     
+                    // checking if the date of birth is an alphanumeric
                     String checkDob = dobText.getText();
                     boolean checkDobBool = true;
                     
@@ -628,6 +639,8 @@ public class SystemGui extends JFrame{
                         abnText.requestFocus();
                         return;
                     }
+                    
+                    // checking whether the entered abn is integer or not
                     try{
                         Integer.parseInt(abnText.getText());
                         abn = Integer.parseInt(abnText.getText());
@@ -660,6 +673,8 @@ public class SystemGui extends JFrame{
                     engineCapacityText.requestFocus();
                     return;
                 }
+                
+                // checking whether the entered engine capacity is a double or not
                 try{
                     Double.parseDouble(engineCapacityText.getText()); 
                     engineCapacity = Double.parseDouble(engineCapacityText.getText());
@@ -723,6 +738,8 @@ public class SystemGui extends JFrame{
                     yearText.requestFocus();
                     return;
                 }
+                
+                // checking whether the entered year is an integer or not
                 try{
                     Integer.parseInt(yearText.getText());
                     year = Integer.parseInt(yearText.getText()); 
@@ -758,7 +775,9 @@ public class SystemGui extends JFrame{
                             errorMessageBox("You must enter the number of seats");
                             seatNumbersText.requestFocus();
                             return;
-                        }   
+                        }  
+                        
+                        // checking whether the entered seat number is an integer or not
                         try{
                             Integer.parseInt(seatNumbersText.getText());
                             seatNumbers = Integer.parseInt(seatNumbersText.getText());
@@ -789,6 +808,8 @@ public class SystemGui extends JFrame{
                             loadCapacityText.requestFocus();
                             return;
                         }   
+                        
+                        // checking whether the entered loac capacity is a a double or not
                         try{
                             Double.parseDouble(loadCapacityText.getText());
                             loadCapacity = Double.parseDouble(loadCapacityText.getText());
@@ -820,15 +841,13 @@ public class SystemGui extends JFrame{
                 String confirmMessage;
                 
                 // checking the owner type and giving the appropriate confirmation message
+                // when the owner is private
                 if(ownerSelection == 1){
-                    
-                    OwnerString = privateOwnerArray.get(currentPrivateOwner - 1).toString();
-                    
+                    OwnerString = privateOwnerArray.get(currentPrivateOwner - 1).toString();                    
                 }
-                else if(ownerSelection == 2){
-                   
-                    OwnerString = corporateOwnerArray.get(currentCorporateOwner - 1).toString();
-                    
+                // when the owner is corporate
+                else if(ownerSelection == 2){                   
+                    OwnerString = corporateOwnerArray.get(currentCorporateOwner - 1).toString();                    
                 }
                 
                 
@@ -836,27 +855,22 @@ public class SystemGui extends JFrame{
                 switch(vehicleSelection){
                     
                     // for motorcycle
-                    case 1:{
-                        
-                        vehicleString = motorcycleArray.get(currentMotorcycle - 1).toString();                        
+                    case 1:{                        
+                        vehicleString = motorcycleArray.get(currentMotorcycle - 1).toString();                   
                         break;
                     }
                     
                     // for light vehicle
-                    case 2:{
-                        
+                    case 2:{                        
                         vehicleString = lightVehicleArray.get(currentLight - 1).toString();                        
                         break;
                     }
                     
                     // for heavy vehicle
-                    case 3:{
-                       
+                    case 3:{                       
                         vehicleString = heavyVehicleArray.get(currentHeavy - 1).toString();                        
                         break;
                     }
-                    default:
-                    break;
                 }
                                 
                 
@@ -955,6 +969,7 @@ public class SystemGui extends JFrame{
                 this.setVisible(true);
             });
             
+            
             /**
              * adding functionality to exit button
              */
@@ -983,7 +998,6 @@ public class SystemGui extends JFrame{
             regFrame.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d2){  // Attempt to exit application
-                    regFrame.hide();
                     exit();				
                 }
             });
@@ -1500,7 +1514,9 @@ public class SystemGui extends JFrame{
                                         errorMessageBox("You must enter a licence number");
                                         searchLicenceNumberText.requestFocus();
                                         return;
-                                    }   
+                                    } 
+                                    
+                                    // checking whether the entered licence number is an integer or not
                                     try{ 
                                         Integer.parseInt(searchLicenceNumberText.getText()); 
                                         ownerLicenceNumber = Integer.parseInt(searchLicenceNumberText.getText());
@@ -1608,6 +1624,8 @@ public class SystemGui extends JFrame{
                                             searchabnText.requestFocus();
                                             return;
                                         }
+                                        
+                                        // checking whether the entered abn is an integer or not
                                         try{
                                             Integer.parseInt(searchabnText.getText());
                                             onwerAbn = Integer.parseInt(searchabnText.getText());
@@ -1629,6 +1647,8 @@ public class SystemGui extends JFrame{
                                         }                                 
                                     }   
                                     
+                                    
+                                    // after saving the details the frame is closed and the user is taken back to the search bar
                                     searchOwnerFrame.hide();
                                     ownerSearchArea.setText("");
                                     ownerSearchf.setVisible(true);
@@ -1688,8 +1708,7 @@ public class SystemGui extends JFrame{
                                 searchOwnerFrame.addWindowListener(new WindowAdapter(){
                                    @Override
                                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
-                                       searchOwnerFrame.hide();
-                                       exit();				
+                                        exit();				
                                    }
                                }); 
                             }                   
@@ -1700,7 +1719,6 @@ public class SystemGui extends JFrame{
                             errorMessageBox("You must enter numbers in the search area");
                             ownerSearchArea.setText("");
                             ownerSearchArea.requestFocus();
-                            return;
                         }           
                     }    
                 }                  
@@ -1738,7 +1756,6 @@ public class SystemGui extends JFrame{
             ownerSearchf.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d4){  // Attempt to exit application
-                    ownerSearchf.hide();
                     exit();				
                 }
             });
@@ -1893,6 +1910,7 @@ public class SystemGui extends JFrame{
                                     // position of the vehicle in the array
                                     vehicleArrayPlace = i;
                                     
+                                    // vehicle is a motorcycle before editing details
                                     vehicleBeforeEdit = 1;
                                     break;
                                 }
@@ -1919,6 +1937,7 @@ public class SystemGui extends JFrame{
                                     // position of vehicle in the array
                                     vehicleArrayPlace = i;
                                     
+                                    // vehicle is a light vehicle before editing
                                     vehicleBeforeEdit = 2;
                                     break;
                                 }
@@ -1945,6 +1964,7 @@ public class SystemGui extends JFrame{
                                     // position of the vehicle in the array
                                     vehicleArrayPlace = i;
                                     
+                                    // vehicle is a heavy vehicle before editing
                                     vehicleBeforeEdit = 3;
                                     break;
                                 }
@@ -2191,6 +2211,7 @@ public class SystemGui extends JFrame{
                                             searchSeatNumbersText.setEnabled(false);
                                             searchSeatNumbersText.setText("");
                                             
+                                            // vehicle is a motorcycle if edited
                                             vehicleAfterEdit = 1;
                                         }
                                         // for light vehicle
@@ -2203,6 +2224,7 @@ public class SystemGui extends JFrame{
                                             searchSeatNumbersLabel.setForeground(Color.black);
                                             searchSeatNumbersText.setEnabled(true);
                                             
+                                            // vehicle is light vehicle if edited
                                             vehicleAfterEdit = 2;
                                         }
                                         // for heavy vehicle
@@ -2215,6 +2237,7 @@ public class SystemGui extends JFrame{
                                             searchSeatNumbersText.setEnabled(false);
                                             searchSeatNumbersText.setText("");
                                             
+                                            // vehicle is a heavy vehicle if edited
                                             vehicleAfterEdit = 3;
                                         }                                        
                                     });                                            
@@ -2233,6 +2256,8 @@ public class SystemGui extends JFrame{
                                         searchEngineCapacityText.requestFocus();
                                         return;
                                     }
+                                    
+                                    //checking whether the entered engine capacity is a double or not
                                     try{
                                         Double.parseDouble(searchEngineCapacityText.getText()); 
                                         vehicleEngine = Double.parseDouble(searchEngineCapacityText.getText());
@@ -2297,6 +2322,8 @@ public class SystemGui extends JFrame{
                                         searchYearText.requestFocus();
                                         return;
                                     }
+                                    
+                                    // checking whether the year entered is an integer or not
                                     try{
                                         Integer.parseInt(searchYearText.getText());
                                         vehicleYear1 = Integer.parseInt(searchYearText.getText()); 
@@ -2347,7 +2374,9 @@ public class SystemGui extends JFrame{
                                                     errorMessageBox("You must enter the number of seats");
                                                     searchSeatNumbersText.requestFocus();
                                                     return;
-                                                }   
+                                                }  
+                                                
+                                                // checking whether the entered seat number is an integer or not
                                                 try{
                                                     Integer.parseInt(searchSeatNumbersText.getText());
                                                     vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
@@ -2382,7 +2411,9 @@ public class SystemGui extends JFrame{
                                                     errorMessageBox("You must enter the load capacity");
                                                     searchLoadCapacityText.requestFocus();
                                                     return;
-                                                }   
+                                                }  
+                                                
+                                                // checking whether the entered load capacity is a double or not
                                                 try{
                                                     Double.parseDouble(searchLoadCapacityText.getText());
                                                     vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
@@ -2413,10 +2444,10 @@ public class SystemGui extends JFrame{
                                     /**
                                      * when the type of vehicle of owner is updated
                                      * the previous vehicle's details is deleted and
-                                     * the new type of vehicle is given a new plate number
-                                     * This is because a single owner cannot have multiple vehicles
+                                     * the new type of vehicle is given a new plate number.
+                                     * This is because one owner cannot have multiple vehicles
                                      */
-                                    else{                                       
+                                    else if(vehicleBeforeEdit != vehicleAfterEdit){                                       
                                         plateAfterEdit = plateNumber;                                        
                                         
                                         // removing the previous vehicle form their respective arraylist
@@ -2453,7 +2484,6 @@ public class SystemGui extends JFrame{
                                                         + "Make: %s\n"
                                                         + "Model: %s\n"
                                                         + "Year: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
-
                                                 break;
 
                                                 
@@ -2467,6 +2497,8 @@ public class SystemGui extends JFrame{
                                                     searchSeatNumbersText.requestFocus();
                                                     return;
                                                 }   
+                                                
+                                                // checking whether the entered seat number is an integer or not
                                                 try{
                                                     Integer.parseInt(searchSeatNumbersText.getText());
                                                     vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
@@ -2501,7 +2533,9 @@ public class SystemGui extends JFrame{
                                                     errorMessageBox("You must enter the load capacity");
                                                     searchLoadCapacityText.requestFocus();
                                                     return;
-                                                }   
+                                                } 
+                                                
+                                                // checking whether the entered load capacity is a double or not
                                                 try{
                                                     Double.parseDouble(searchLoadCapacityText.getText());
                                                     vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
@@ -2609,7 +2643,6 @@ public class SystemGui extends JFrame{
                                 searchVehicleFrame.addWindowListener(new WindowAdapter(){
                                     @Override
                                     public void windowClosing(WindowEvent d5){  // Attempt to exit application
-                                        searchVehicleFrame.hide();
                                         exit();				
                                     }
                                 });
@@ -2647,7 +2680,6 @@ public class SystemGui extends JFrame{
             vehicleSearchf.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d6){  // Attempt to exit application
-                    vehicleSearchf.hide();
                     exit();				
                 }
             });
@@ -2674,7 +2706,6 @@ public class SystemGui extends JFrame{
         addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent d1){  // Attempt to exit application      
-               hide();
                exit();				
             }
 	});
@@ -2691,8 +2722,18 @@ public class SystemGui extends JFrame{
     public void exit(){
         JFrame frame6 = new JFrame();
         String title = "Motor Vehicle Registration (MVR)";
-        JOptionPane.showMessageDialog(frame6, "Thank you for using Victoria's Motor Vehicle Registration System", title, JOptionPane.PLAIN_MESSAGE);
-        System.exit(0);
+                
+        int n = JOptionPane.showConfirmDialog(frame6, "Do you want to exit the system?", title,
+                            JOptionPane.YES_NO_OPTION);
+        
+        // for "Yes" button
+        if(n == JOptionPane.YES_OPTION){
+            System.exit(0);
+        } 
+        // for "No" button
+        else if (n == JOptionPane.NO_OPTION) {
+            frame6.hide();
+        }
     }
     
     
