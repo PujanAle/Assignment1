@@ -55,7 +55,7 @@ public class CorporateOwner extends Owner{
     public String toString(){
         
         return String.format(super.toString() + 
-                " Their Australian Business Number is %d.", australianBusinessNumber);
+                "Australian Business Number: %d \n\n", australianBusinessNumber);
     }
     
  // End of class
