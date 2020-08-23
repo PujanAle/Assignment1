@@ -32,7 +32,7 @@ public class Motorcycle extends Vehicle{
     @Override
     public String toString(){
         
-        return String.format(super.toString());
+        return String.format("The motorcycle " + super.toString());
     }
 
  // End of class
