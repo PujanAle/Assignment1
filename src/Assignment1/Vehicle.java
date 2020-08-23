@@ -150,10 +150,13 @@ public abstract class Vehicle{
      */
     @Override
     public String toString(){
-        
-        return String.format("The vehicle's plate number is %s. It was made by %s. It's model is %s.\n "
-                + "It was made in %d. It's engine capacity is %.2f litre. The owner ID of the vehicle is %d.",
-                plateNumber, make, model, year, engineCapacity, ownerId);
+          
+        return String.format("is registered with the following details: \n"
+                                + "Plate Number: %s\n"
+                                + "Engine Capacity: %.1f Litre\n"
+                                + "Make: %s\n"
+                                + "Model: %s\n"
+                                + "Year: %d\n", plateNumber, engineCapacity, make, model, year);
     }
     
  // End of class
