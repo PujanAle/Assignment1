@@ -833,24 +833,21 @@ public class SystemGui extends JFrame{
                     // for motorcycle
                     case 1:{
                         
-                        vehicleString = motorcycleArray.get(currentMotorcycle - 1).toString();
-                        
+                        vehicleString = motorcycleArray.get(currentMotorcycle - 1).toString();                        
                         break;
                     }
                     
                     // for light vehicle
                     case 2:{
                         
-                        vehicleString = lightVehicleArray.get(currentLight - 1).toString();
-                        
+                        vehicleString = lightVehicleArray.get(currentLight - 1).toString();                        
                         break;
                     }
                     
                     // for heavy vehicle
                     case 3:{
                        
-                        vehicleString = heavyVehicleArray.get(currentHeavy - 1).toString();
-                        
+                        vehicleString = heavyVehicleArray.get(currentHeavy - 1).toString();                        
                         break;
                     }
                     default:
@@ -910,6 +907,7 @@ public class SystemGui extends JFrame{
                 loadCapacityText.setText("");  
                 seatNumbersText.setText("");
             
+                fNameText.requestFocus();
             });
             
                         
@@ -1622,7 +1620,13 @@ public class SystemGui extends JFrame{
                                             searchabnText.setText("");
                                             searchabnText.requestFocus();
                                         }                                 
-                                    }                                   
+                                    }   
+                                    
+                                    searchOwnerFrame.hide();
+                                    ownerSearchArea.setText("");
+                                    ownerSearchf.setVisible(true);
+                                    ownerSearchArea.requestFocus();
+                                    
                                 });                                
                                 
                                 
@@ -2380,7 +2384,13 @@ public class SystemGui extends JFrame{
                                                 searchLoadCapacityText.requestFocus();
                                             }                        
                                             break;
-                                    }                                    
+                                    }  
+                                    
+                                    searchVehicleFrame.hide();
+                                    vehicleSearchArea.setText("");
+                                    vehicleSearchf.setVisible(true);
+                                    vehicleSearchArea.requestFocus();
+                                    
                                 });
                                 
                                 
