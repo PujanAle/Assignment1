@@ -55,7 +55,7 @@ public class LightVehicle extends Vehicle{
     @Override
     public String toString(){
         
-        return String.format(super.toString() + " It has %d seats.", seatNumber);
+        return String.format("The light vehicle " + super.toString() + "Seat Number: %d", seatNumber);
     }
 
  // End of class
