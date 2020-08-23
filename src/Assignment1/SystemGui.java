@@ -50,6 +50,8 @@ public class SystemGui extends JFrame{
     int ownerSelection = 0;
     int vehicleSelection = 0;
     
+    int ownerId;
+    
     // owner array that the owner search key is in
     int ownerArrayPlace = 0;
     
@@ -57,7 +59,10 @@ public class SystemGui extends JFrame{
     int vehicleArrayPlace = 0;
     
     // getting the plate number of the vehicle being edited
-    String EditingPlateNumber;
+    String EditingPlateNumber;    
+       
+    int vehicleBeforeEdit = 0;
+    int vehicleAfterEdit = 0;
     
      // welcome text in the app
     private final JLabel welcomeLabel;
@@ -1194,6 +1199,8 @@ public class SystemGui extends JFrame{
                                 JLabel searchdobLabel = new JLabel("Date Of Birth");
                                 JLabel searchabnLabel = new JLabel("Australian Business Number");
                                 JLabel searchOwnerType = new JLabel("The type of owner");
+                                
+                                
 
                                 // Test area for diplaying owner details
                                 JTextField searchfNameText = new JTextField(15);
@@ -1830,7 +1837,7 @@ public class SystemGui extends JFrame{
                 boolean motorcycleResult = false;
                 boolean lightResult = false;
                 boolean heavyResult = false;
-                
+                         
                 
                 // checking if search area is empty
                 if(vehicleSearchArea.getText().equals("")){
@@ -1875,6 +1882,7 @@ public class SystemGui extends JFrame{
                                     vehicleMake = motorcycleArray.get(i).getMake();
                                     vehicleModel = motorcycleArray.get(i).getModel();
                                     vehicleYear = motorcycleArray.get(i).getYear();
+                                    ownerId = motorcycleArray.get(i).getOwnerId();
                                     
                                     // type of vehicle
                                     vehicleSearchType = 1;
@@ -1884,6 +1892,8 @@ public class SystemGui extends JFrame{
                                     
                                     // position of the vehicle in the array
                                     vehicleArrayPlace = i;
+                                    
+                                    vehicleBeforeEdit = 1;
                                     break;
                                 }
                             }
@@ -1898,6 +1908,7 @@ public class SystemGui extends JFrame{
                                     vehicleModel = lightVehicleArray.get(i).getModel();
                                     vehicleYear = lightVehicleArray.get(i).getYear();
                                     seatN = lightVehicleArray.get(i).getSeatNumber();
+                                    ownerId = lightVehicleArray.get(i).getOwnerId();
                                     
                                     // type of vehicle
                                     vehicleSearchType = 2;
@@ -1907,6 +1918,8 @@ public class SystemGui extends JFrame{
                                     
                                     // position of vehicle in the array
                                     vehicleArrayPlace = i;
+                                    
+                                    vehicleBeforeEdit = 2;
                                     break;
                                 }
                             }
@@ -1921,6 +1934,7 @@ public class SystemGui extends JFrame{
                                     vehicleModel = heavyVehicleArray.get(i).getModel();
                                     vehicleYear = heavyVehicleArray.get(i).getYear();
                                     loadC = heavyVehicleArray.get(i).getLoadCapacity();
+                                    ownerId = heavyVehicleArray.get(i).getOwnerId();
                                     
                                     // type of vehicle
                                     vehicleSearchType = 3;
@@ -1930,6 +1944,8 @@ public class SystemGui extends JFrame{
                                     
                                     // position of the vehicle in the array
                                     vehicleArrayPlace = i;
+                                    
+                                    vehicleBeforeEdit = 3;
                                     break;
                                 }
                             }
@@ -1943,7 +1959,7 @@ public class SystemGui extends JFrame{
                                 vehicleSearchArea.requestFocus();
                             }
                             else{      // when there is a match
-                                
+                                                
                                 // getting the plate number of the vehicle for editing later on
                                 EditingPlateNumber = vehicleSearchKey;
                                 
@@ -2174,6 +2190,8 @@ public class SystemGui extends JFrame{
                                             searchSeatNumbersLabel.setForeground(Color.gray);
                                             searchSeatNumbersText.setEnabled(false);
                                             searchSeatNumbersText.setText("");
+                                            
+                                            vehicleAfterEdit = 1;
                                         }
                                         // for light vehicle
                                         else if(vs.equals("Light vehicle")){
@@ -2184,6 +2202,8 @@ public class SystemGui extends JFrame{
                                             
                                             searchSeatNumbersLabel.setForeground(Color.black);
                                             searchSeatNumbersText.setEnabled(true);
+                                            
+                                            vehicleAfterEdit = 2;
                                         }
                                         // for heavy vehicle
                                         else{
@@ -2194,6 +2214,8 @@ public class SystemGui extends JFrame{
                                             searchSeatNumbersLabel.setForeground(Color.gray);
                                             searchSeatNumbersText.setEnabled(false);
                                             searchSeatNumbersText.setText("");
+                                            
+                                            vehicleAfterEdit = 3;
                                         }                                        
                                     });                                            
                                 });
@@ -2286,106 +2308,252 @@ public class SystemGui extends JFrame{
                                         return;
                                     }
                                     
+                                    // temporary variable to store plate number
+                                    String plateAfterEdit;
                                     
+                                    /**
+                                     * when the vehicle type of the owner is not changed
+                                     * only the details is updated and not the vehicle type
+                                     */
+                                    if(vehicleBeforeEdit == vehicleAfterEdit){
+                                        
+                                        plateAfterEdit = EditingPlateNumber;
+                                        
+                                        // for checking the type of vehicle
+                                        switch ((String)searchVehicleComboBox.getSelectedItem()) {
 
-                                    // for checking the type of vehicle
-                                    switch ((String)searchVehicleComboBox.getSelectedItem()) {
+                                            // for motorcycle
+                                            case "Motorcycle":
 
-                                        // for motorcycle
-                                        case "Motorcycle":
+                                                // adding motorcycle details to object of motorcycleArray
+                                                motorcycleArray.add(vehicleArrayPlace, new Motorcycle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId));
 
-                                            // getting the licence number of the specific vehicle searched
-                                            int motoLicence = motorcycleArray.get(vehicleArrayPlace).getOwnerId();
-                                            
-                                            // adding motorcycle details to object of motorcycleArray
-                                            motorcycleArray.add(vehicleArrayPlace, new Motorcycle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, motoLicence));
-                                            
-                                            // confirmation message
-                                            confirmationMessage(String.format("The motorcycle has been updated with the following details: \n"
-                                                    + "Plate Number: %s\n"
-                                                    + "Engine Capacity: %.1f Litre\n"
-                                                    + "Make: %s\n"
-                                                    + "Model: %s\n"
-                                                    + "Year: %d", EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
-                                            
-                                            break;
+                                                // confirmation message
+                                                confirmationMessage(String.format("The motorcycle has been updated with the following details: \n"
+                                                        + "Plate Number: %s\n"
+                                                        + "Engine Capacity: %.1f Litre\n"
+                                                        + "Make: %s\n"
+                                                        + "Model: %s\n"
+                                                        + "Year: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
 
-                                        // for light vehicle    
-                                        case "Light vehicle":                        
+                                                break;
 
-                                            // for number of seats of light vehicle
-                                            int vehicleSeatNumbers;
-                                            if(searchSeatNumbersText.getText().equals("")){
-                                                errorMessageBox("You must enter the number of seats");
-                                                searchSeatNumbersText.requestFocus();
-                                                return;
-                                            }   
-                                            try{
-                                                Integer.parseInt(searchSeatNumbersText.getText());
-                                                vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
+                                            // for light vehicle    
+                                            case "Light vehicle":                        
 
-                                                // getting licence number of the searched vehicle
-                                                int lightLicence = lightVehicleArray.get(vehicleArrayPlace).getOwnerId();
-                                                
-                                                // adding light vehicle details to object of lightVehicleArray
-                                                lightVehicleArray.add(vehicleArrayPlace, new LightVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, lightLicence, vehicleSeatNumbers));
-                                                
-                                                // confiramtion message
-                                                confirmationMessage(String.format("The light vehicle is registered with the following details: \n"
+                                                // for number of seats of light vehicle
+                                                int vehicleSeatNumbers;
+                                                if(searchSeatNumbersText.getText().equals("")){
+                                                    errorMessageBox("You must enter the number of seats");
+                                                    searchSeatNumbersText.requestFocus();
+                                                    return;
+                                                }   
+                                                try{
+                                                    Integer.parseInt(searchSeatNumbersText.getText());
+                                                    vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
+
+                                                    // adding light vehicle details to object of lightVehicleArray
+                                                    lightVehicleArray.add(vehicleArrayPlace, new LightVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleSeatNumbers));
+
+                                                    // confiramtion message
+                                                    confirmationMessage(String.format("The light vehicle is registered with the following details: \n"
+                                                                + "Plate Number: %s\n"
+                                                                + "Engine Capacity: %.1f Litre\n"
+                                                                + "Make: %s\n"
+                                                                + "Model: %s\n"
+                                                                + "Year: %d\n"
+                                                                + "Seat number: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));
+
+
+                                                }
+                                                catch(NumberFormatException c6){
+                                                    errorMessageBox("You must enter number of seats a number");
+                                                    searchSeatNumbersText.setText("");
+                                                    searchSeatNumbersText.requestFocus();
+                                                }                       
+                                                break;
+
+                                            // for heavy vehicle    
+                                            case "Heavy vehicle":
+
+                                                // for load capacity of heavy vehicle
+                                                double vehicleLoadCapacity;
+                                                if(searchLoadCapacityText.getText().equals("")){
+                                                    errorMessageBox("You must enter the load capacity");
+                                                    searchLoadCapacityText.requestFocus();
+                                                    return;
+                                                }   
+                                                try{
+                                                    Double.parseDouble(searchLoadCapacityText.getText());
+                                                    vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
+
+                                                    // adding heavy vehicle details to object of heavyVehicleArray
+                                                    heavyVehicleArray.add(new HeavyVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleLoadCapacity));
+
+                                                    // confirmation message
+                                                    confirmationMessage(String.format("The heavy vehicle has been updated with the following details: \n"
                                                             + "Plate Number: %s\n"
                                                             + "Engine Capacity: %.1f Litre\n"
                                                             + "Make: %s\n"
                                                             + "Model: %s\n"
                                                             + "Year: %d\n"
-                                                            + "Seat number: %d", EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));
+                                                            + "Load Capacity: %.1f Tonne", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));
 
+                                                }
+                                                catch(NumberFormatException c5){
+                                                    errorMessageBox("You must enter load capacity as numbers");
+                                                    searchLoadCapacityText.setText("");
+                                                    searchLoadCapacityText.requestFocus();
+                                                }                        
+                                                break;
+                                        }                                        
+                                    }
+                                    
+                                    
+                                    /**
+                                     * when the type of vehicle of owner is updated
+                                     * the previous vehicle's details is deleted and
+                                     * the new type of vehicle is given a new plate number
+                                     * This is because a single owner cannot have multiple vehicles
+                                     */
+                                    else{                                       
+                                        plateAfterEdit = plateNumber;                                        
+                                        
+                                        // removing the previous vehicle form their respective arraylist
+                                        switch(vehicleBeforeEdit){
+                                            
+                                            // removing previously owned motorcycle
+                                            case 1: motorcycleArray.remove(vehicleArrayPlace);
+                                                break;
                                                 
-                                            }
-                                            catch(NumberFormatException c6){
-                                                errorMessageBox("You must enter number of seats a number");
-                                                searchSeatNumbersText.setText("");
-                                                searchSeatNumbersText.requestFocus();
-                                            }                       
-                                            break;
-
-                                        // for heavy vehicle    
-                                        case "Heavy vehicle":
-
-                                            // for load capacity of heavy vehicle
-                                            double vehicleLoadCapacity;
-                                            if(searchLoadCapacityText.getText().equals("")){
-                                                errorMessageBox("You must enter the load capacity");
-                                                searchLoadCapacityText.requestFocus();
-                                                return;
-                                            }   
-                                            try{
-                                                Double.parseDouble(searchLoadCapacityText.getText());
-                                                vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
-
-                                                // getting licence number of searched vehicle
-                                                int heavyLicence = heavyVehicleArray.get(vehicleArrayPlace).getOwnerId();
+                                            // removing previously owned light vehicle
+                                            case 2: lightVehicleArray.remove(vehicleArrayPlace);
+                                                break;
                                                 
-                                                // adding heavy vehicle details to object of heavyVehicleArray
-                                                heavyVehicleArray.add(new HeavyVehicle(EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, heavyLicence, vehicleLoadCapacity));
+                                            // removing previously owned heavy vehicle    
+                                            case 3: heavyVehicleArray.remove(vehicleArrayPlace);
+                                                break;
+                                        }
+                                        
+                                        // for checking the new type of type of vehicle
+                                        switch ((String)searchVehicleComboBox.getSelectedItem()) {
+
+                                            // for motorcycle
+                                            case "Motorcycle":
+
+                                                // adding motorcycle details to object of motorcycleArray
+                                                motorcycleArray.add(new Motorcycle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId));
+
+                                                currentMotorcycle++;
                                                 
                                                 // confirmation message
-                                                confirmationMessage(String.format("The heavy vehicle has been updated with the following details: \n"
-                                                        + "Plate Number: %s\n"
+                                                confirmationMessage(String.format("The new motorcycle has been added with the following details: \n"
+                                                        + "New Plate Number: %s\n"
                                                         + "Engine Capacity: %.1f Litre\n"
                                                         + "Make: %s\n"
                                                         + "Model: %s\n"
-                                                        + "Year: %d\n"
-                                                        + "Load Capacity: %.1f Tonne", EditingPlateNumber, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));
+                                                        + "Year: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
+
+                                                break;
+
                                                 
-                                            }
-                                            catch(NumberFormatException c5){
-                                                errorMessageBox("You must enter load capacity as numbers");
-                                                searchLoadCapacityText.setText("");
-                                                searchLoadCapacityText.requestFocus();
-                                            }                        
-                                            break;
-                                    }  
+                                            // for light vehicle    
+                                            case "Light vehicle":                        
+
+                                                // for number of seats of light vehicle
+                                                int vehicleSeatNumbers;
+                                                if(searchSeatNumbersText.getText().equals("")){
+                                                    errorMessageBox("You must enter the number of seats");
+                                                    searchSeatNumbersText.requestFocus();
+                                                    return;
+                                                }   
+                                                try{
+                                                    Integer.parseInt(searchSeatNumbersText.getText());
+                                                    vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());
+
+                                                    // adding light vehicle details to object of lightVehicleArray
+                                                    lightVehicleArray.add(new LightVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleSeatNumbers));
+
+                                                    // confiramtion message
+                                                    confirmationMessage(String.format("The new light vehicle is registered with the following details: \n"
+                                                                + "New Plate Number: %s\n"
+                                                                + "Engine Capacity: %.1f Litre\n"
+                                                                + "Make: %s\n"
+                                                                + "Model: %s\n"
+                                                                + "Year: %d\n"
+                                                                + "Seat number: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));
+
+
+                                                }
+                                                catch(NumberFormatException c6){
+                                                    errorMessageBox("You must enter number of seats a number");
+                                                    searchSeatNumbersText.setText("");
+                                                    searchSeatNumbersText.requestFocus();
+                                                }                       
+                                                break;
+
+                                            // for heavy vehicle    
+                                            case "Heavy vehicle":
+
+                                                // for load capacity of heavy vehicle
+                                                double vehicleLoadCapacity;
+                                                if(searchLoadCapacityText.getText().equals("")){
+                                                    errorMessageBox("You must enter the load capacity");
+                                                    searchLoadCapacityText.requestFocus();
+                                                    return;
+                                                }   
+                                                try{
+                                                    Double.parseDouble(searchLoadCapacityText.getText());
+                                                    vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
+
+                                                    // adding heavy vehicle details to object of heavyVehicleArray
+                                                    heavyVehicleArray.add(new HeavyVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleLoadCapacity));
+
+                                                    // confirmation message
+                                                    confirmationMessage(String.format("The new heavy vehicle has been updated with the following details: \n"
+                                                            + "Plate Number: %s\n"
+                                                            + "Engine Capacity: %.1f Litre\n"
+                                                            + "Make: %s\n"
+                                                            + "Model: %s\n"
+                                                            + "Year: %d\n"
+                                                            + "Load Capacity: %.1f Tonne", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));
+
+                                                }
+                                                catch(NumberFormatException c5){
+                                                    errorMessageBox("You must enter load capacity as numbers");
+                                                    searchLoadCapacityText.setText("");
+                                                    searchLoadCapacityText.requestFocus();
+                                                }                        
+                                                break;
+                                        }  
+                                        
+                                        
+                                        /**
+                                         * changing the global variable plateNumber so that 
+                                         * it can be used for the new vehicle registered
+                                         */
+                                        String num = "";    // initial number of plate number
+
+                                        // seperating the number from plate number
+                                        for(int i = 3; i < plateNumber.length(); i++){
+                                            num += plateNumber.charAt(i);
+                                        }
+
+                                        // converting the 4-digit number in plate number to integer
+                                        Integer num2 = Integer.parseInt(num);
+
+                                        // adding 13 to the 4-digit integer
+                                        int newNum = num2 + 13;  
+
+                                        // converting the new 4-digit number to string
+                                        String num3 = Integer.toString(newNum);
+
+                                        // appending the new 4-digit number to "AUS"
+                                        plateNumber = "VIC" + num3;
+                                    }
+                                              
                                     
+                                    // hiding the search result frame and showing the search frame
                                     searchVehicleFrame.hide();
                                     vehicleSearchArea.setText("");
                                     vehicleSearchf.setVisible(true);
