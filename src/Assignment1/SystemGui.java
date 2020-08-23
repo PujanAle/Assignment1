@@ -5,8 +5,7 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
 
 /**
  * @author pujan
@@ -17,8 +16,8 @@ import javax.swing.border.TitledBorder;
 public class SystemGui extends JFrame{
     
     // size of app
-    private final int DEFAULT_WIDTH = 360;
-    private final int DEFAULT_HEIGHT = 215;
+    private final int DEFAULT_WIDTH = 500;
+    private final int DEFAULT_HEIGHT = 230;
     
     // private owner object arraylist
     ArrayList<PrivateOwner> privateOwnerArray = new ArrayList<>();
@@ -60,7 +59,7 @@ public class SystemGui extends JFrame{
     // getting the plate number of the vehicle being edited
     String EditingPlateNumber;
     
-    // welcome text in the app
+     // welcome text in the app
     private final JLabel welcomeLabel;
     
     // panels for upper buttons
@@ -86,7 +85,7 @@ public class SystemGui extends JFrame{
     public SystemGui(){
         
         // size of app
-        this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);     
         
         // welcome text for the main menu
         welcomeLabel = new JLabel("Welcome to the Motor Vehicle Registration System");
@@ -129,7 +128,8 @@ public class SystemGui extends JFrame{
         
         // adding  main panel to app
         this.add(panel5);
- 
+        
+        
         /**
          * adding functionality to "Register" button
          */
@@ -1059,7 +1059,7 @@ public class SystemGui extends JFrame{
             
             ownerMainPanel.setLayout(new BorderLayout());
             panela1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-            panela2.setLayout(new BorderLayout());
+            panela2.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
             
             // making black border 
             Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -1976,7 +1976,7 @@ public class SystemGui extends JFrame{
                                 JFrame searchVehicleFrame = new JFrame();
 
                                 searchVehicleFrame.setTitle("Vehicle Search Result");                 // title of frame
-                                searchVehicleFrame.setSize(500, 260);                                 // size of app
+                                searchVehicleFrame.setSize(500, 310);                                 // size of app
                                 searchVehicleFrame.setVisible(true);                                  // making app visible
                                 searchVehicleFrame.setLocationRelativeTo(null);                       // making app appear in center of screen
                                 searchVehicleFrame.setResizable(true);                                // making app sizable
