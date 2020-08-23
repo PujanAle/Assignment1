@@ -57,7 +57,7 @@ public class HeavyVehicle extends Vehicle{
     @Override
     public String toString(){
         
-        return String.format("The heavy vehicle " + super.toString() + "Load capacity: %.1f", loadCapacity);
+        return String.format("The heavy vehicle " + super.toString() + "Load capacity: %.1f Tonne", loadCapacity);
     }
     
  // End of class
