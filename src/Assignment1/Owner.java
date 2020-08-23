@@ -130,8 +130,11 @@ public abstract class Owner{
     @Override
     public String toString(){
         
-        return String.format("%s %s's license number is %d, address is %s and phone number is %s.", 
-                firstName, lastName, licenseNumber, address, phoneNumber);
+        return String.format("%s %s has been registered with the following details: \n"
+                            + "Licence Number: %d\n"
+                            + "Address: %s\n"
+                            + "Phone number: %s\n", firstName, lastName, licenseNumber, address, phoneNumber);
+        
     }
     
  // End of abstract class   
