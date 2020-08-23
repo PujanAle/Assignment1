@@ -805,7 +805,7 @@ public class SystemGui extends JFrame{
                 // checking the owner type and giving the appropriate confirmation message
                 if(ownerSelection == 1){
                     
-                    String firstN = privateOwnerArray.get(currentPrivateOwner  - 1).getFirstName();
+                    /*String firstN = privateOwnerArray.get(currentPrivateOwner  - 1).getFirstName();
                     String lastN = privateOwnerArray.get(currentPrivateOwner  - 1).getLastName();
                     int licenceN = privateOwnerArray.get(currentPrivateOwner  - 1).getLicenseNumber();
                     String addres = privateOwnerArray.get(currentPrivateOwner  - 1).getAddress();
@@ -816,10 +816,14 @@ public class SystemGui extends JFrame{
                             + "Licence Number: %d\n"
                             + "Address: %s\n"
                             + "Phone number: %s\n"
-                            + "Date of Birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN,dob);
+                            + "Date of Birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN,dob);*/
+                    
+                    OwnerString = privateOwnerArray.get(currentPrivateOwner - 1).toString();
+                    
                 }
                 else if(ownerSelection == 2){
                     
+                    /*
                     String firstN = corporateOwnerArray.get(currentCorporateOwner  - 1).getFirstName();
                     String lastN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLastName();
                     int licenceN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLicenseNumber();
@@ -831,7 +835,10 @@ public class SystemGui extends JFrame{
                             + "Licence Number: %d\n"
                             + "Address: %s\n"
                             + "Phone Number: %s\n"
-                            + "Australian Business Number: %d\n\n", firstN, lastN, licenceN, addres, phoneN, abn);
+                            + "Australian Business Number: %d\n\n", firstN, lastN, licenceN, addres, phoneN, abn);*/
+                    
+                    OwnerString = corporateOwnerArray.get(currentCorporateOwner - 1).toString();
+                    
                 }
                 
                 
@@ -841,7 +848,7 @@ public class SystemGui extends JFrame{
                     // for motorcycle
                     case 1:{
                         
-                        String plateN = motorcycleArray.get(currentMotorcycle - 1).getPlateNumber();
+                        /*String plateN = motorcycleArray.get(currentMotorcycle - 1).getPlateNumber();
                         double engineC = motorcycleArray.get(currentMotorcycle - 1).getEngineCapacity();
                         String make2 = motorcycleArray.get(currentMotorcycle - 1).getMake();
                         String model2 = motorcycleArray.get(currentMotorcycle - 1).getModel();
@@ -851,13 +858,17 @@ public class SystemGui extends JFrame{
                                 + "Engine Capacity: %.1f Litre\n"
                                 + "Make: %s\n"
                                 + "Model: %s\n"
-                                + "Year: %d", plateN, engineC, make2, model2, year1);
+                                + "Year: %d", plateN, engineC, make2, model2, year1);*/
+                        
+                        vehicleString = motorcycleArray.get(currentMotorcycle - 1).toString();
+                        
                         break;
                     }
                     
                     // for light vehicle
                     case 2:{
                         
+                        /*
                         String plateN = lightVehicleArray.get(currentLight  - 1).getPlateNumber();
                         double engineC = lightVehicleArray.get(currentLight  - 1).getEngineCapacity();
                         String make2 = lightVehicleArray.get(currentLight  - 1).getMake();
@@ -870,13 +881,17 @@ public class SystemGui extends JFrame{
                                 + "Make: %s\n"
                                 + "Model: %s\n"
                                 + "Year: %d\n"
-                                + "Seat number: %d", plateN, engineC, make2, model2, year1, seatN);
+                                + "Seat number: %d", plateN, engineC, make2, model2, year1, seatN);*/
+                        
+                        vehicleString = lightVehicleArray.get(currentLight - 1).toString();
+                        
                         break;
                     }
                     
                     // for heavy vehicle
                     case 3:{
                         
+                        /*
                         String plateN = heavyVehicleArray.get(currentHeavy   - 1).getPlateNumber();
                         double engineC = heavyVehicleArray.get(currentHeavy   - 1).getEngineCapacity();
                         String make2 = heavyVehicleArray.get(currentHeavy   - 1).getMake();
@@ -889,7 +904,10 @@ public class SystemGui extends JFrame{
                                 + "Make: %s\n"
                                 + "Model: %s\n"
                                 + "Year: %d\n"
-                                + "Load Capacity: %.1f Tonne", plateN, engineC, make2, model2, year1, loadC);
+                                + "Load Capacity: %.1f Tonne", plateN, engineC, make2, model2, year1, loadC);*/
+                        
+                        vehicleString = heavyVehicleArray.get(currentHeavy - 1).toString();
+                        
                         break;
                     }
                     default:
