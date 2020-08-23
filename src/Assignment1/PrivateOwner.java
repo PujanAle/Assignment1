@@ -56,7 +56,7 @@ public class PrivateOwner extends Owner{
     @Override
     public String toString(){
         
-        return String.format(super.toString() + " Their date of birth is %s.", dateOfBirth);
+        return String.format(super.toString() + "Date of birth: %s\n\n", dateOfBirth);
     }
     
  // End of class
