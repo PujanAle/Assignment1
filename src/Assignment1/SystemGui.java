@@ -202,7 +202,7 @@ public class SystemGui extends JFrame{
             // radiobuttons to choose the type of owner
             JRadioButton privateOwnerButton = new JRadioButton("Private");
             JRadioButton corporateOwnerButton = new JRadioButton("Corporate");
-            JRadioButton hiddenButton = new JRadioButton("Hidden");
+            JRadioButton MainOwnerHiddenButton = new JRadioButton("Hidden");
     
             // nested panels for owner details
             JPanel panela = new JPanel();
@@ -218,8 +218,8 @@ public class SystemGui extends JFrame{
             ButtonGroup buttonGroup = new ButtonGroup();
             buttonGroup.add(privateOwnerButton);
             buttonGroup.add(corporateOwnerButton);
-            buttonGroup.add(hiddenButton);
-            hiddenButton.setSelected(true);      
+            buttonGroup.add(MainOwnerHiddenButton);
+            MainOwnerHiddenButton.setSelected(true);      
             
                                  
             // adding label and text to the nested panel
@@ -263,7 +263,7 @@ public class SystemGui extends JFrame{
             
             // when hiddenButton is selected user cannot
             // enter date of birth or ABN
-            if(hiddenButton.isSelected()){
+            if(MainOwnerHiddenButton.isSelected()){
                 abnLabel.setForeground(Color.gray);                                            
                 abnText.setEnabled(false);
                 dobLabel.setForeground(Color.gray);
@@ -458,8 +458,7 @@ public class SystemGui extends JFrame{
                     if(Character.isLetter(ch) == false){
                         checkfNameBool = false;
                         break;
-                    }
-                    
+                    }                    
                 }
                 if(checkfNameBool == true){
                     fName = fNameText.getText();
@@ -572,7 +571,7 @@ public class SystemGui extends JFrame{
                 
                 
                 // checking if type of owner
-                if(hiddenButton.isSelected()){
+                if(MainOwnerHiddenButton.isSelected()){
                     errorMessageBox("You must choose whether you are a private owner or a corporate owner");
                     privateOwnerButton.requestFocus();
                     return;
@@ -675,14 +674,28 @@ public class SystemGui extends JFrame{
                     makeText.requestFocus();
                     return;
                 }
-                else if(!(makeText.getText() instanceof String)){
-                    errorMessageBox("You must brand name with words");
+                
+                String checkingModel = makeText.getText();
+                boolean checkModel  = true;
+                
+                // converting string to an array of its characters
+                char[] charModelArray = checkingModel.toCharArray();
+                
+                // checking if character is not a string
+                for(char ch : charModelArray){
+                    if(Character.isLetter(ch) == false){
+                        checkModel = false;
+                        break;
+                    }                    
+                }
+                if(checkModel == true){
+                    make = makeText.getText();
+                }
+                else{
+                    errorMessageBox("You must enter brand name with alphabets");
                     makeText.setText("");
                     makeText.requestFocus();
                     return;
-                }
-                else{
-                    make = makeText.getText();
                 }
                 
                 
@@ -800,43 +813,15 @@ public class SystemGui extends JFrame{
                 
                 // final confirmation message
                 String confirmMessage;
-
                 
                 // checking the owner type and giving the appropriate confirmation message
                 if(ownerSelection == 1){
-                    
-                    /*String firstN = privateOwnerArray.get(currentPrivateOwner  - 1).getFirstName();
-                    String lastN = privateOwnerArray.get(currentPrivateOwner  - 1).getLastName();
-                    int licenceN = privateOwnerArray.get(currentPrivateOwner  - 1).getLicenseNumber();
-                    String addres = privateOwnerArray.get(currentPrivateOwner  - 1).getAddress();
-                    String phoneN = privateOwnerArray.get(currentPrivateOwner  - 1).getPhoneNumber();
-                    String dob = privateOwnerArray.get(currentPrivateOwner  - 1).getDateOfBirth();
-
-                    OwnerString = String.format("%s %s has been registered with the following details: \n"
-                            + "Licence Number: %d\n"
-                            + "Address: %s\n"
-                            + "Phone number: %s\n"
-                            + "Date of Birth: %s\n\n", firstN, lastN, licenceN, addres, phoneN,dob);*/
                     
                     OwnerString = privateOwnerArray.get(currentPrivateOwner - 1).toString();
                     
                 }
                 else if(ownerSelection == 2){
-                    
-                    /*
-                    String firstN = corporateOwnerArray.get(currentCorporateOwner  - 1).getFirstName();
-                    String lastN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLastName();
-                    int licenceN = corporateOwnerArray.get(currentCorporateOwner  - 1).getLicenseNumber();
-                    String addres = corporateOwnerArray.get(currentCorporateOwner  - 1).getAddress();
-                    String phoneN = corporateOwnerArray.get(currentCorporateOwner  - 1).getPhoneNumber();
-                    int abn = corporateOwnerArray.get(currentCorporateOwner  - 1).getAustralianBusinessNumber();
-                    
-                    OwnerString = String.format("%s %s has been registered with the following details: \n"
-                            + "Licence Number: %d\n"
-                            + "Address: %s\n"
-                            + "Phone Number: %s\n"
-                            + "Australian Business Number: %d\n\n", firstN, lastN, licenceN, addres, phoneN, abn);*/
-                    
+                   
                     OwnerString = corporateOwnerArray.get(currentCorporateOwner - 1).toString();
                     
                 }
@@ -848,18 +833,6 @@ public class SystemGui extends JFrame{
                     // for motorcycle
                     case 1:{
                         
-                        /*String plateN = motorcycleArray.get(currentMotorcycle - 1).getPlateNumber();
-                        double engineC = motorcycleArray.get(currentMotorcycle - 1).getEngineCapacity();
-                        String make2 = motorcycleArray.get(currentMotorcycle - 1).getMake();
-                        String model2 = motorcycleArray.get(currentMotorcycle - 1).getModel();
-                        int year1 = motorcycleArray.get(currentMotorcycle - 1).getYear();
-                        vehicleString = String.format("The motorcycle is registered with the following details: \n"
-                                + "Plate Number: %s\n"
-                                + "Engine Capacity: %.1f Litre\n"
-                                + "Make: %s\n"
-                                + "Model: %s\n"
-                                + "Year: %d", plateN, engineC, make2, model2, year1);*/
-                        
                         vehicleString = motorcycleArray.get(currentMotorcycle - 1).toString();
                         
                         break;
@@ -868,21 +841,6 @@ public class SystemGui extends JFrame{
                     // for light vehicle
                     case 2:{
                         
-                        /*
-                        String plateN = lightVehicleArray.get(currentLight  - 1).getPlateNumber();
-                        double engineC = lightVehicleArray.get(currentLight  - 1).getEngineCapacity();
-                        String make2 = lightVehicleArray.get(currentLight  - 1).getMake();
-                        String model2 = lightVehicleArray.get(currentLight  - 1).getModel();
-                        int year1 = lightVehicleArray.get(currentLight  - 1).getYear();
-                        int seatN = lightVehicleArray.get(currentLight - 1).getSeatNumber();
-                        vehicleString = String.format("The light vehicle is registered with the following details: \n"
-                                + "Plate Number: %s\n"
-                                + "Engine Capacity: %.1f Litre\n"
-                                + "Make: %s\n"
-                                + "Model: %s\n"
-                                + "Year: %d\n"
-                                + "Seat number: %d", plateN, engineC, make2, model2, year1, seatN);*/
-                        
                         vehicleString = lightVehicleArray.get(currentLight - 1).toString();
                         
                         break;
@@ -890,22 +848,7 @@ public class SystemGui extends JFrame{
                     
                     // for heavy vehicle
                     case 3:{
-                        
-                        /*
-                        String plateN = heavyVehicleArray.get(currentHeavy   - 1).getPlateNumber();
-                        double engineC = heavyVehicleArray.get(currentHeavy   - 1).getEngineCapacity();
-                        String make2 = heavyVehicleArray.get(currentHeavy   - 1).getMake();
-                        String model2 = heavyVehicleArray.get(currentHeavy   - 1).getModel();
-                        int year1 = heavyVehicleArray.get(currentHeavy   - 1).getYear();
-                        double loadC = heavyVehicleArray.get(currentHeavy   - 1).getLoadCapacity();
-                        vehicleString = String.format("The heavy vehicle is registered with the following details: \n"
-                                + "Plate Number: %s\n"
-                                + "Engine Capacity: %.1f Litre\n"
-                                + "Make: %s\n"
-                                + "Model: %s\n"
-                                + "Year: %d\n"
-                                + "Load Capacity: %.1f Tonne", plateN, engineC, make2, model2, year1, loadC);*/
-                        
+                       
                         vehicleString = heavyVehicleArray.get(currentHeavy - 1).toString();
                         
                         break;
@@ -941,7 +884,7 @@ public class SystemGui extends JFrame{
                 String num3 = Integer.toString(newNum);
                 
                 // appending the new 4-digit number to "AUS"
-                plateNumber = "AUS" + num3;
+                plateNumber = "VIC" + num3;
                 
                                
                 // making all the textareas empty when registerd
@@ -950,9 +893,14 @@ public class SystemGui extends JFrame{
                 licenceNumberText.setText("");
                 addrText.setText("");
                 phoneNoText.setText("");
-                hiddenButton.setSelected(true);
                 dobText.setText("");
                 abnText.setText("");
+                MainOwnerHiddenButton.setSelected(true);
+                abnLabel.setForeground(Color.gray);                                            
+                abnText.setEnabled(false);
+                dobLabel.setForeground(Color.gray);
+                dobText.setEnabled(false);
+                
                 
                 vehicleComboBox.setSelectedIndex(0);
                 engineCapacityText.setText("");
@@ -975,10 +923,14 @@ public class SystemGui extends JFrame{
                 lNameText.setText("");
                 licenceNumberText.setText("");
                 addrText.setText("");
-                phoneNoText.setText("");
-                hiddenButton.setSelected(true);
+                phoneNoText.setText("");                
                 dobText.setText("");
                 abnText.setText("");
+                MainOwnerHiddenButton.setSelected(true);
+                abnLabel.setForeground(Color.gray);                                            
+                abnText.setEnabled(false);
+                dobLabel.setForeground(Color.gray);
+                dobText.setEnabled(false);
                 
                 vehicleComboBox.setSelectedIndex(0);
                 engineCapacityText.setText("");
@@ -1705,7 +1657,8 @@ public class SystemGui extends JFrame{
 
                                    searchOwnerFrame.hide();
                                    ownerSearchArea.setText("");
-                                   ownerSearchf.setVisible(true); 
+                                   ownerSearchf.setVisible(true);
+                                   ownerSearchArea.requestFocus();
                                });
 
                                /**
@@ -2273,16 +2226,31 @@ public class SystemGui extends JFrame{
                                         searchMakeText.requestFocus();
                                         return;
                                     }
-                                    else if(!(searchMakeText.getText() instanceof String)){
-                                        errorMessageBox("You must brand name with words");
+
+                                    String checkingSearchModel = searchMakeText.getText();
+                                    boolean checkSearchModel  = true;
+
+                                    // converting string to an array of its characters
+                                    char[] charSearchModelArray = checkingSearchModel.toCharArray();
+
+                                    // checking if character is not a string
+                                    for(char ch : charSearchModelArray){
+                                        if(Character.isLetter(ch) == false){
+                                            checkSearchModel = false;
+                                            break;
+                                        }                    
+                                    }
+                                    if(checkSearchModel == true){
+                                        vehicleMake1 = searchMakeText.getText();
+                                    }
+                                    else{
+                                        errorMessageBox("You must enter brand name with alphabets");
                                         searchMakeText.setText("");
                                         searchMakeText.requestFocus();
                                         return;
                                     }
-                                    else{
-                                        vehicleMake1 = searchMakeText.getText();
-                                    }
 
+                                    
 
                                     // for model of vehicle
                                     String vehicleModel1;                      // vehicle's model
@@ -2443,6 +2411,7 @@ public class SystemGui extends JFrame{
                                     searchVehicleFrame.hide();
                                     vehicleSearchArea.setText("");
                                     vehicleSearchf.setVisible(true);
+                                    vehicleSearchArea.requestFocus();
                                 });
 
 
