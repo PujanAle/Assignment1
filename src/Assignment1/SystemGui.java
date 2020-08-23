@@ -1028,6 +1028,7 @@ public class SystemGui extends JFrame{
             regFrame.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d2){  // Attempt to exit application
+                    regFrame.hide();
                     exit();				
                 }
             });
@@ -1723,6 +1724,7 @@ public class SystemGui extends JFrame{
                                 searchOwnerFrame.addWindowListener(new WindowAdapter(){
                                    @Override
                                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
+                                       searchOwnerFrame.hide();
                                        exit();				
                                    }
                                }); 
@@ -1772,6 +1774,7 @@ public class SystemGui extends JFrame{
             ownerSearchf.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d4){  // Attempt to exit application
+                    ownerSearchf.hide();
                     exit();				
                 }
             });
@@ -2459,6 +2462,7 @@ public class SystemGui extends JFrame{
                                 searchVehicleFrame.addWindowListener(new WindowAdapter(){
                                     @Override
                                     public void windowClosing(WindowEvent d5){  // Attempt to exit application
+                                        searchVehicleFrame.hide();
                                         exit();				
                                     }
                                 });
@@ -2496,6 +2500,7 @@ public class SystemGui extends JFrame{
             vehicleSearchf.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent d6){  // Attempt to exit application
+                    vehicleSearchf.hide();
                     exit();				
                 }
             });
@@ -2521,8 +2526,9 @@ public class SystemGui extends JFrame{
         // override window closing method
         addWindowListener(new WindowAdapter(){
             @Override
-            public void windowClosing(WindowEvent d1){  // Attempt to exit application
-		exit();				
+            public void windowClosing(WindowEvent d1){  // Attempt to exit application      
+               hide();
+               exit();				
             }
 	});
         
