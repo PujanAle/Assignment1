@@ -62,6 +62,9 @@ public class SystemGui extends JFrame{
     // getting the plate number of the vehicle being edited
     String EditingPlateNumber;    
        
+    int ownerBeforeEdit = 0;
+    int ownerAfterEdit = 0;
+    
     // variables to find out if the type of vehicle has been changed
     // when the vehicle details is edited
     int vehicleBeforeEdit = 0;
@@ -1142,6 +1145,8 @@ public class SystemGui extends JFrame{
                                     // type of owner searched
                                     ownerSearchType = 1;    
                                     
+                                    ownerBeforeEdit = 1;
+                                    
                                     // when there is a match
                                     privateSearchResult = true;
                                     
@@ -1165,6 +1170,8 @@ public class SystemGui extends JFrame{
                                     
                                     // type of owner searched
                                     ownerSearchType = 2;
+                                    
+                                    ownerBeforeEdit = 2;
                                     
                                     // when there is a match
                                     corporateSearchResult = true;
@@ -1430,7 +1437,7 @@ public class SystemGui extends JFrame{
                                         searchdobText.setEnabled(true);
                                         searchabnLabel.setForeground(Color.gray);
                                         searchabnText.setEnabled(false);
-                                        searchabnText.setText("");
+                                        searchabnText.setText("");                                        
                                     });
 
                                     // when corporate radio button is selected
@@ -1440,7 +1447,7 @@ public class SystemGui extends JFrame{
                                         searchabnText.setEnabled(true);
                                         searchdobLabel.setForeground(Color.gray);
                                         searchdobText.setEnabled(false);
-                                        searchdobText.setText("");
+                                        searchdobText.setText("");                                        
                                     });
                                     
                                     ownerSearchEdit.setVisible(false);
@@ -1585,79 +1592,179 @@ public class SystemGui extends JFrame{
                                         return;
                                     }
 
-
-
-                                    // checking if type of owner                                    
+                                    
+                                    
                                     if(searchPrivateOwner.isSelected()){
-
-                                        // for date of birth
-                                        String ownerDateOfBirth;
-                                        if(searchdobText.getText().equals("")){
-                                            errorMessageBox("You must enter date of birth");
-                                            return;
-                                        }
-
-                                        String checkOwnerDob = searchdobText.getText();
-                                        boolean checkOwnerDobBool = true;
-
-                                        char[] dobCharArray = checkOwnerDob.toCharArray();
-                                        for(char ch: dobCharArray){
-
-                                            if(Character.isLetterOrDigit(ch) == false){
-                                                checkOwnerDobBool = false;
-                                                break;
-                                            }
-                                        }
-
-                                        if(checkOwnerDobBool == true){
-                                            ownerDateOfBirth = searchdobText.getText();
-                                            
-                                            // adding details of private owner object in arraylist
-                                            privateOwnerArray.set(ownerArrayPlace, new PrivateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));
-                                            
-                                            // making confirmation message
-                                            confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
-                                                    + "Licence Number: %d\n"
-                                                    + "Address: %s\n"
-                                                    + "Phone number: %s\n"
-                                                    + "Date of Birth: %s\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));                                                                                       
-                                        }
-                                        else{
-                                            errorMessageBox("You must enter alphabets or digits for date of birth");
-                                            searchdobText.setText("");
-                                            searchdobText.requestFocus();
-                                        }                  
+                                        ownerAfterEdit = 1;
+                                    }
+                                    else if(searchCorporateOwner.isSelected()){
+                                        ownerAfterEdit = 2;
                                     }
 
-                                    else{
-                                        // for Australian Business Number
-                                        int onwerAbn;
-                                        if(searchabnText.getText().equals("")){
-                                            errorMessageBox("You must enter Australian Business Number");
-                                            searchabnText.requestFocus();
-                                            return;
+                                    
+                                    // checking if type of owner                                    
+                                    if(ownerBeforeEdit == ownerAfterEdit){
+                                        
+                                        if(ownerBeforeEdit == 1 && ownerAfterEdit == 1){
+                                            
+                                            // for date of birth
+                                            String ownerDateOfBirth;
+                                            if(searchdobText.getText().equals("")){
+                                                errorMessageBox("You must enter date of birth");
+                                                return;
+                                            }
+
+                                            String checkOwnerDob = searchdobText.getText();
+                                            boolean checkOwnerDobBool = true;
+
+                                            char[] dobCharArray = checkOwnerDob.toCharArray();
+                                            for(char ch: dobCharArray){
+
+                                                if(Character.isLetterOrDigit(ch) == false){
+                                                    checkOwnerDobBool = false;
+                                                    break;
+                                                }
+                                            }
+
+                                            if(checkOwnerDobBool == true){
+                                                ownerDateOfBirth = searchdobText.getText();
+
+                                                // adding details of private owner object in arraylist
+                                                privateOwnerArray.set(ownerArrayPlace, new PrivateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));
+
+                                                // making confirmation message
+                                                confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
+                                                        + "Licence Number: %d\n"
+                                                        + "Address: %s\n"
+                                                        + "Phone number: %s\n"
+                                                        + "Date of Birth: %s\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));                                                                                       
+                                            }
+                                            else{
+                                                errorMessageBox("You must enter alphabets or digits for date of birth");
+                                                searchdobText.setText("");
+                                                searchdobText.requestFocus();
+                                            }
+                                        }
+                                        else if(ownerBeforeEdit == 2 && ownerAfterEdit == 2){
+                                            
+                                            // for getting Australian Business number
+                                            int onwerAbn;
+                                            if(searchabnText.getText().equals("")){
+                                                errorMessageBox("You must enter Australian Business Number");
+                                                searchabnText.requestFocus();
+                                                return;
+                                            }
+
+                                            // checking whether the entered abn is an integer or not
+                                            try{
+                                                Integer.parseInt(searchabnText.getText());
+                                                onwerAbn = Integer.parseInt(searchabnText.getText());
+
+                                                // adding details of corporate owner object in arraylist
+                                                corporateOwnerArray.set(ownerArrayPlace, new CorporateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+
+                                                // making confirmation message
+                                                confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
+                                                        + "Licence Number: %d\n"
+                                                        + "Address: %s\n"
+                                                        + "Phone Number: %s\n"
+                                                        + "Australian Business Number: %d\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+                                            }
+                                            catch(NumberFormatException h1){
+                                                errorMessageBox("You must enter numbers for Australian Business Number");
+                                                searchabnText.setText("");
+                                                searchabnText.requestFocus();
+                                            }                                            
+                                        }                                        
+                                    }
+                                    else if(ownerBeforeEdit != ownerAfterEdit){
+                                        
+                                        switch(ownerBeforeEdit){
+                                            
+                                            case 1:
+                                                privateOwnerArray.remove(ownerArrayPlace);
+                                            break;
+                                            
+                                            case 2:
+                                                corporateOwnerArray.remove(ownerArrayPlace);
+                                            break;                                            
                                         }
                                         
-                                        // checking whether the entered abn is an integer or not
-                                        try{
-                                            Integer.parseInt(searchabnText.getText());
-                                            onwerAbn = Integer.parseInt(searchabnText.getText());
+                                        if(ownerAfterEdit == 1){
+                                            
+                                            // for date of birth
+                                            String ownerDateOfBirth;
+                                            if(searchdobText.getText().equals("")){
+                                                errorMessageBox("You must enter date of birth");
+                                                return;
+                                            }
 
-                                            // adding details of corporate owner object in arraylist
-                                            corporateOwnerArray.set(ownerArrayPlace, new CorporateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+                                            String checkOwnerDob = searchdobText.getText();
+                                            boolean checkOwnerDobBool = true;
 
-                                            // making confirmation message
-                                            confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
-                                                    + "Licence Number: %d\n"
-                                                    + "Address: %s\n"
-                                                    + "Phone Number: %s\n"
-                                                    + "Australian Business Number: %d\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+                                            char[] dobCharArray = checkOwnerDob.toCharArray();
+                                            for(char ch: dobCharArray){
+
+                                                if(Character.isLetterOrDigit(ch) == false){
+                                                    checkOwnerDobBool = false;
+                                                    break;
+                                                }
+                                            }
+
+                                            if(checkOwnerDobBool == true){
+                                                ownerDateOfBirth = searchdobText.getText();
+
+                                                // adding details of private owner object in arraylist
+                                                privateOwnerArray.add(new PrivateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));
+
+                                                currentPrivateOwner++;
+                                                
+                                                // making confirmation message
+                                                confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
+                                                        + "Licence Number: %d\n"
+                                                        + "Address: %s\n"
+                                                        + "Phone number: %s\n"
+                                                        + "Date of Birth: %s\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, ownerDateOfBirth));                                                                                       
+                                            }
+                                            else{
+                                                errorMessageBox("You must enter alphabets or digits for date of birth");
+                                                searchdobText.setText("");
+                                                searchdobText.requestFocus();
+                                            }                                            
                                         }
-                                        catch(NumberFormatException h1){
-                                            errorMessageBox("You must enter numbers for Australian Business Number");
-                                            searchabnText.setText("");
-                                            searchabnText.requestFocus();
-                                        }                                 
+                                        else if(ownerAfterEdit == 2){
+                                            
+                                            // for getting Australian Business number
+                                            int onwerAbn;
+                                            if(searchabnText.getText().equals("")){
+                                                errorMessageBox("You must enter Australian Business Number");
+                                                searchabnText.requestFocus();
+                                                return;
+                                            }
+
+                                            // checking whether the entered abn is an integer or not
+                                            try{
+                                                Integer.parseInt(searchabnText.getText());
+                                                onwerAbn = Integer.parseInt(searchabnText.getText());
+
+                                                // adding details of corporate owner object in arraylist
+                                                corporateOwnerArray.add( new CorporateOwner(ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+
+                                                currentCorporateOwner++;
+                                                
+                                                // making confirmation message
+                                                confirmationMessage(String.format("%s %s's details has been updated with the following details: \n"
+                                                        + "Licence Number: %d\n"
+                                                        + "Address: %s\n"
+                                                        + "Phone Number: %s\n"
+                                                        + "Australian Business Number: %d\n", ownerFName, ownerLName, ownerLicenceNumber, ownerAddress, ownerPhoneNo, onwerAbn));
+                                            }
+                                            catch(NumberFormatException h1){
+                                                errorMessageBox("You must enter numbers for Australian Business Number");
+                                                searchabnText.setText("");
+                                                searchabnText.requestFocus();
+                                            }                                           
+                                        }                                                                     
                                     }   
                                     
                                     
@@ -2251,27 +2358,7 @@ public class SystemGui extends JFrame{
                                 /**
                                  * adding functionality to "Save" button 
                                  */
-                                vehicleSave.addActionListener(r5 ->{
-                                    
-                                    switch((String)searchVehicleComboBox.getSelectedItem()){
-                                            
-                                        case "Select": 
-                                            vehicleAfterEdit = 0;
-                                            break;
-
-                                        case "Motorcycle":
-                                            vehicleAfterEdit = 1;
-                                            break;
-
-                                        case "Light vehicle":
-                                            vehicleAfterEdit = 2;
-                                            break;
-
-                                        case "Heavy vehicle":
-                                            vehicleAfterEdit = 3;
-                                            break;
-                                    }
-                                    
+                                vehicleSave.addActionListener(r5 ->{                                                               
                                     
                                     // for engine capacity of vehicle
                                     double vehicleEngine;
@@ -2360,6 +2447,25 @@ public class SystemGui extends JFrame{
                                     }    
                                     
                                     
+                                    switch((String)searchVehicleComboBox.getSelectedItem()){
+                                            
+                                        case "Select": 
+                                            vehicleAfterEdit = 0;
+                                            break;
+
+                                        case "Motorcycle":
+                                            vehicleAfterEdit = 1;
+                                            break;
+
+                                        case "Light vehicle":
+                                            vehicleAfterEdit = 2;
+                                            break;
+
+                                        case "Heavy vehicle":
+                                            vehicleAfterEdit = 3;
+                                            break;
+                                    }
+                                    
                                     // temporary variable to store plate number
                                     String plateAfterEdit;                                     
                                     
@@ -2386,6 +2492,7 @@ public class SystemGui extends JFrame{
                                                     + "Model: %s\n"
                                                     + "Year: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
                                         }
+                                        
                                         // when vehicle is light vehicle
                                         else if(vehicleBeforeEdit == 2 && vehicleAfterEdit == 2){
 
@@ -2402,27 +2509,28 @@ public class SystemGui extends JFrame{
                                             // checking whether the entered seat number is an integer or not
                                             try{
                                                 Integer.parseInt(searchSeatNumbersText.getText());
-                                                vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());                                    
+                                                vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());  
+                                                
+                                                // adding light vehicle details to object of lightVehicleArray
+                                                lightVehicleArray.set(vehicleArrayPlace, new LightVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleSeatNumbers));
+
+                                                // confiramtion message
+                                                confirmationMessage(String.format("The light vehicle is registered with the following details: \n"
+                                                            + "Plate Number: %s\n"
+                                                            + "Engine Capacity: %.1f Litre\n"
+                                                            + "Make: %s\n"
+                                                            + "Model: %s\n"
+                                                            + "Year: %d\n"
+                                                            + "Seat number: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));                           
                                             }
                                             catch(NumberFormatException c6){
                                                 errorMessageBox("You must enter number of seats a number");
                                                 searchSeatNumbersText.setText("");
                                                 searchSeatNumbersText.requestFocus();
                                                 return;
-                                            }                                   
-
-                                            // adding light vehicle details to object of lightVehicleArray
-                                            lightVehicleArray.set(vehicleArrayPlace, new LightVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleSeatNumbers));
-
-                                            // confiramtion message
-                                            confirmationMessage(String.format("The light vehicle is registered with the following details: \n"
-                                                        + "Plate Number: %s\n"
-                                                        + "Engine Capacity: %.1f Litre\n"
-                                                        + "Make: %s\n"
-                                                        + "Model: %s\n"
-                                                        + "Year: %d\n"
-                                                        + "Seat number: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));                                  
+                                            }                                            
                                         }
+                                        
                                         // when vehicle is heavy vehicle
                                         else if(vehicleBeforeEdit == 3 && vehicleAfterEdit == 3){
 
@@ -2439,28 +2547,29 @@ public class SystemGui extends JFrame{
                                             // checking whether the entered load capacity is a double or not
                                             try{
                                                 Double.parseDouble(searchLoadCapacityText.getText());
-                                                vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());                                       
+                                                vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());
+                                                
+                                                // adding heavy vehicle details to object of heavyVehicleArray
+                                                heavyVehicleArray.set(vehicleArrayPlace, new HeavyVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleLoadCapacity));
+
+                                                // confirmation message
+                                                confirmationMessage(String.format("The heavy vehicle has been updated with the following details: \n"
+                                                        + "Plate Number: %s\n"
+                                                        + "Engine Capacity: %.1f Litre\n"
+                                                        + "Make: %s\n"
+                                                        + "Model: %s\n"
+                                                        + "Year: %d\n"
+                                                        + "Load Capacity: %.1f Tonne", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));                                                 
                                             }
                                             catch(NumberFormatException c5){
                                                 errorMessageBox("You must enter load capacity as numbers");
                                                 searchLoadCapacityText.setText("");
                                                 searchLoadCapacityText.requestFocus();
                                                 return;
-                                            }
-
-                                            // adding heavy vehicle details to object of heavyVehicleArray
-                                            heavyVehicleArray.set(vehicleArrayPlace, new HeavyVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleLoadCapacity));
-
-                                            // confirmation message
-                                            confirmationMessage(String.format("The heavy vehicle has been updated with the following details: \n"
-                                                    + "Plate Number: %s\n"
-                                                    + "Engine Capacity: %.1f Litre\n"
-                                                    + "Make: %s\n"
-                                                    + "Model: %s\n"
-                                                    + "Year: %d\n"
-                                                    + "Load Capacity: %.1f Tonne", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));                                       
+                                            }                                                                                
                                         }
                                     }                                  
+                                    
                                     
                                     /**
                                      * when the type of vehicle of owner is updated
@@ -2471,9 +2580,7 @@ public class SystemGui extends JFrame{
                                     else if(vehicleBeforeEdit != vehicleAfterEdit){     
                                         
                                         // getting plate number
-                                        plateAfterEdit = plateNumber;        
-                                        
-                                        
+                                        plateAfterEdit = plateNumber;                    
                                         
                                         
                                         /**
@@ -2529,27 +2636,27 @@ public class SystemGui extends JFrame{
                                                 // checking whether the entered seat number is an integer or not
                                                 try{
                                                     Integer.parseInt(searchSeatNumbersText.getText());
-                                                    vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());                                    
+                                                    vehicleSeatNumbers = Integer.parseInt(searchSeatNumbersText.getText());  
+                                                    
+                                                    // adding light vehicle details to object of lightVehicleArray
+                                                    lightVehicleArray.add(new LightVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleSeatNumbers));
+
+                                                    currentLight++;
+                                                    // confiramtion message
+                                                    confirmationMessage(String.format("The new light vehicle is registered with the following details: \n"
+                                                            + "New Plate Number: %s\n"
+                                                            + "Engine Capacity: %.1f Litre\n"
+                                                            + "Make: %s\n"
+                                                            + "Model: %s\n"
+                                                            + "Year: %d\n"
+                                                            + "Seat number: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));   
                                                 }
                                                 catch(NumberFormatException c6){
                                                     errorMessageBox("You must enter number of seats a number");
                                                     searchSeatNumbersText.setText("");
                                                     searchSeatNumbersText.requestFocus();
                                                     return;
-                                                } 
-                                                
-                                                // adding light vehicle details to object of lightVehicleArray
-                                                lightVehicleArray.add(new LightVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleSeatNumbers));
-
-                                                currentLight++;
-                                                // confiramtion message
-                                                confirmationMessage(String.format("The new light vehicle is registered with the following details: \n"
-                                                        + "New Plate Number: %s\n"
-                                                        + "Engine Capacity: %.1f Litre\n"
-                                                        + "Make: %s\n"
-                                                        + "Model: %s\n"
-                                                        + "Year: %d\n"
-                                                        + "Seat number: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleSeatNumbers));                                      
+                                                }                                                                        
                                                 break;
                                                 
                                             // when heavy vehicle is choosen after edit    
@@ -2565,27 +2672,27 @@ public class SystemGui extends JFrame{
                                                 // checking whether the entered load capacity is a double or not
                                                 try{
                                                     Double.parseDouble(searchLoadCapacityText.getText());
-                                                    vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());                                       
+                                                    vehicleLoadCapacity = Double.parseDouble(searchLoadCapacityText.getText());     
+                                                    
+                                                    // adding heavy vehicle details to object of heavyVehicleArray
+                                                    heavyVehicleArray.add(new HeavyVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleLoadCapacity));
+
+                                                    currentHeavy++;
+                                                    // confirmation message
+                                                    confirmationMessage(String.format("The new heavy vehicle has been updated with the following details: \n"
+                                                            + "Plate Number: %s\n"
+                                                            + "Engine Capacity: %.1f Litre\n"
+                                                            + "Make: %s\n"
+                                                            + "Model: %s\n"
+                                                            + "Year: %d\n"
+                                                            + "Load Capacity: %.1f Tonne", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));  
                                                 }
                                                 catch(NumberFormatException c5){
                                                     errorMessageBox("You must enter load capacity as numbers");
                                                     searchLoadCapacityText.setText("");
                                                     searchLoadCapacityText.requestFocus();
                                                     return;
-                                                }
-                                                
-                                                // adding heavy vehicle details to object of heavyVehicleArray
-                                                heavyVehicleArray.add(new HeavyVehicle(plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, ownerId, vehicleLoadCapacity));
-
-                                                currentHeavy++;
-                                                // confirmation message
-                                                confirmationMessage(String.format("The new heavy vehicle has been updated with the following details: \n"
-                                                        + "Plate Number: %s\n"
-                                                        + "Engine Capacity: %.1f Litre\n"
-                                                        + "Make: %s\n"
-                                                        + "Model: %s\n"
-                                                        + "Year: %d\n"
-                                                        + "Load Capacity: %.1f Tonne", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1, vehicleLoadCapacity));                                               
+                                                }                                                                                  
                                                 break;                                            
                                         }
                                                                                 
