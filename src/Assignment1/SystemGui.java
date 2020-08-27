@@ -62,6 +62,8 @@ public class SystemGui extends JFrame{
     // getting the plate number of the vehicle being edited
     String EditingPlateNumber;    
        
+    // variables to find out if the type of owner has been changed
+    // when the owner details is edited
     int ownerBeforeEdit = 0;
     int ownerAfterEdit = 0;
     
@@ -91,8 +93,10 @@ public class SystemGui extends JFrame{
     private final JButton exit;            // button to exit system
        
     
+    
     /**
-     * constructor
+     * constructor 
+     * The GUI containing the main menu of the system
      */
     public SystemGui(){
         
@@ -280,8 +284,7 @@ public class SystemGui extends JFrame{
                 abnLabel.setForeground(Color.gray);                                            
                 abnText.setEnabled(false);
                 dobLabel.setForeground(Color.gray);
-                dobText.setEnabled(false);
-               
+                dobText.setEnabled(false);               
             }           
             
             // when private radio button is selected
@@ -317,6 +320,7 @@ public class SystemGui extends JFrame{
             // adding nested panel to the main panel -> ownerPanel
             ownerPanel.add(panelh, BorderLayout.CENTER);
             ownerPanel.setBorder(ownerLine);
+            
             
                      
             /**
@@ -402,6 +406,8 @@ public class SystemGui extends JFrame{
             vehicleComboBox.addItemListener(event5 -> {
                 
                 Object vh = vehicleComboBox.getSelectedItem();
+                
+                // for motorcycle
                 if(vh.equals("Motorcycle")){
                     
                     loadCapacityLabel.setForeground(Color.gray);
@@ -412,6 +418,7 @@ public class SystemGui extends JFrame{
                     seatNumbersText.setEnabled(false);   
                     loadCapacityText.setText("");
                 }
+                // for light vehicle
                 else if(vh.equals("Light vehicle")){
                     
                     loadCapacityLabel.setForeground(Color.gray);
@@ -421,6 +428,7 @@ public class SystemGui extends JFrame{
                     seatNumbersLabel.setForeground(Color.black);
                     seatNumbersText.setEnabled(true);
                 }
+                // for heavy vehicle
                 else if(vh.equals("Heavy vehicle")){
                     
                     loadCapacityLabel.setForeground(Color.black);
@@ -431,6 +439,7 @@ public class SystemGui extends JFrame{
                     seatNumbersText.setText("");
                 }                
             });
+            
             
                       
             /**
@@ -445,8 +454,7 @@ public class SystemGui extends JFrame{
             JButton backButton = new JButton("Back");            // to go back to main menu
             JButton exitButton = new JButton("Exit");
             
-            
-            
+                        
             /**
              * adding functionality to "Register" button
              */
@@ -594,6 +602,7 @@ public class SystemGui extends JFrame{
                     privateOwnerButton.requestFocus();
                     return;
                 }
+                // when private owner is selected
                 else if(privateOwnerButton.isSelected()){
                     
                     // for date of birth
@@ -624,6 +633,7 @@ public class SystemGui extends JFrame{
                         // owner selection for private owner
                         ownerSelection = 1;
                         
+                        // incrementing the number of owner objcets
                         currentPrivateOwner++;
                     }
                     else{
@@ -632,9 +642,9 @@ public class SystemGui extends JFrame{
                         dobText.requestFocus();
                         return;
                     }                  
-                }
-                
-                else{
+                }            
+                // when corporate owner is selected
+                else if(corporateOwnerButton.isSelected()){
                     // for Australian Business Number
                     int abn;
                     if(abnText.getText().equals("")){
@@ -664,7 +674,8 @@ public class SystemGui extends JFrame{
                     }                                 
                 }                                           
                 
-                                
+                      
+                
                 /**
                  * for vehicle registration
                  */ 
@@ -764,9 +775,8 @@ public class SystemGui extends JFrame{
                 else{
                     // for checking the type of vehicle
                     switch ((String)vehicleComboBox.getSelectedItem()) {
-
-
-
+                        
+                        // for motorcycle
                         case "Motorcycle":{
 
                             // adding motorcycle details to object of motorcycleArray
@@ -779,6 +789,8 @@ public class SystemGui extends JFrame{
 
                             break;
                         }
+                        
+                        // for light vehicles
                         case "Light vehicle":{                       
 
                             // for number of seats of light vehicle
@@ -811,6 +823,8 @@ public class SystemGui extends JFrame{
                             }                       
                             break;
                         }
+                        
+                        // for heavy vehicles
                         case "Heavy vehicle":{
 
                             // for load capacity of heavy vehicle
@@ -946,7 +960,8 @@ public class SystemGui extends JFrame{
                 fNameText.requestFocus();
             });
             
-                        
+                    
+            
             /**
              * adding functionality to "Clear" button
              */
@@ -972,19 +987,19 @@ public class SystemGui extends JFrame{
                 modelText.setText(""); 
                 yearText.setText("");     
                 loadCapacityText.setText("");  
-                seatNumbersText.setText(""); 
-                        
+                seatNumbersText.setText("");                        
             });
+            
             
             
             /**
              * adding functionality to back button
              */
-            backButton.addActionListener(f -> {
-                
+            backButton.addActionListener(f -> {                
                 regFrame.hide();
                 this.setVisible(true);
             });
+            
             
             
             /**
@@ -1007,6 +1022,7 @@ public class SystemGui extends JFrame{
             regFrame.add(buttons, BorderLayout.SOUTH);
             
             
+            
             /**
              * when the user pushes the system close (X top right corner)
              */
@@ -1016,8 +1032,7 @@ public class SystemGui extends JFrame{
                 public void windowClosing(WindowEvent d2){  // Attempt to exit application
                     exit();				
                 }
-            });
-            
+            });            
                     
          // end of register button action listener            
         });
@@ -1025,7 +1040,8 @@ public class SystemGui extends JFrame{
         
         
         /**
-         * adding functionality to "Search and Edit Owner Info" button
+         * adding functionality to 
+         * "Search and Edit Owner Info" button
          */
         sAndEOwner.addActionListener( h -> {
             
@@ -1084,6 +1100,7 @@ public class SystemGui extends JFrame{
             panela4.setLayout(new GridLayout(2, 1, 1, 1));
             panela4.add(panela2);
             panela4.add(panela3);
+            
             
             
             /**
@@ -1145,6 +1162,7 @@ public class SystemGui extends JFrame{
                                     // type of owner searched
                                     ownerSearchType = 1;    
                                     
+                                    // owner type before editing
                                     ownerBeforeEdit = 1;
                                     
                                     // when there is a match
@@ -1171,6 +1189,7 @@ public class SystemGui extends JFrame{
                                     // type of owner searched
                                     ownerSearchType = 2;
                                     
+                                    // owner type before editing 
                                     ownerBeforeEdit = 2;
                                     
                                     // when there is a match
@@ -1232,8 +1251,7 @@ public class SystemGui extends JFrame{
                                 JLabel searchPhoneNoLabel = new JLabel("Phone Number");
                                 JLabel searchdobLabel = new JLabel("Date Of Birth");
                                 JLabel searchabnLabel = new JLabel("Australian Business Number");
-                                JLabel searchOwnerType = new JLabel("The type of owner");
-                                
+                                JLabel searchOwnerType = new JLabel("The type of owner");                                
                                 
 
                                 // Test area for diplaying owner details
@@ -1593,18 +1611,19 @@ public class SystemGui extends JFrame{
                                     }
 
                                     
-                                    
-                                    if(searchPrivateOwner.isSelected()){
+                                    // finding which type of owner is selected after editing
+                                    if(searchPrivateOwner.isSelected()){   // for private owner
                                         ownerAfterEdit = 1;
                                     }
-                                    else if(searchCorporateOwner.isSelected()){
+                                    else if(searchCorporateOwner.isSelected()){     // for corporate owner
                                         ownerAfterEdit = 2;
                                     }
 
                                     
-                                    // checking if type of owner                                    
+                                    // checking if the type of owner did not change after edit                                
                                     if(ownerBeforeEdit == ownerAfterEdit){
                                         
+                                        // when owner type is unchanged from private type
                                         if(ownerBeforeEdit == 1 && ownerAfterEdit == 1){
                                             
                                             // for date of birth
@@ -1645,6 +1664,8 @@ public class SystemGui extends JFrame{
                                                 searchdobText.requestFocus();
                                             }
                                         }
+                                        
+                                        // when owner type is not changed from corporate owner
                                         else if(ownerBeforeEdit == 2 && ownerAfterEdit == 2){
                                             
                                             // for getting Australian Business number
@@ -1677,19 +1698,22 @@ public class SystemGui extends JFrame{
                                             }                                            
                                         }                                        
                                     }
-                                    else if(ownerBeforeEdit != ownerAfterEdit){
+                                    else if(ownerBeforeEdit != ownerAfterEdit){     // when the owner type is changed when editing
                                         
                                         switch(ownerBeforeEdit){
                                             
+                                            // deleting the private owner
                                             case 1:
                                                 privateOwnerArray.remove(ownerArrayPlace);
                                             break;
                                             
+                                            // deleting the corporate owner
                                             case 2:
                                                 corporateOwnerArray.remove(ownerArrayPlace);
                                             break;                                            
                                         }
                                         
+                                        // when the owner type is changed to private
                                         if(ownerAfterEdit == 1){
                                             
                                             // for date of birth
@@ -1732,6 +1756,8 @@ public class SystemGui extends JFrame{
                                                 searchdobText.requestFocus();
                                             }                                            
                                         }
+                                        
+                                        // when the owner type is changed to corporate
                                         else if(ownerAfterEdit == 2){
                                             
                                             // for getting Australian Business number
@@ -1772,9 +1798,9 @@ public class SystemGui extends JFrame{
                                     searchOwnerFrame.hide();
                                     ownerSearchArea.setText("");
                                     ownerSearchf.setVisible(true);
-                                    ownerSearchArea.requestFocus();
-                                    
+                                    ownerSearchArea.requestFocus();                                    
                                 });                                
+                                
                                 
                                 
                                 /**
@@ -1796,34 +1822,37 @@ public class SystemGui extends JFrame{
                                     searchdobText.setEnabled(false);
                                     
                                     searchdobText.setText("");
-                                    searchabnText.setText("");
-                                    
+                                    searchabnText.setText("");                                    
                                 });                                
+                                
                                 
                                 
                                 /**
                                 * adding functionality to "Back" button
                                 */
-                               ownerSearchBack.addActionListener(l -> {
+                                ownerSearchBack.addActionListener(l -> {
 
                                    searchOwnerFrame.hide();
                                    ownerSearchArea.setText("");
                                    ownerSearchf.setVisible(true);
                                    ownerSearchArea.requestFocus();
-                               });
+                                });
 
-                               /**
+                                
+                                
+                                /**
                                 * adding functionality to "Exit" button
                                 */
-                               ownerSearchExit.addActionListener(m -> {
+                                ownerSearchExit.addActionListener(m -> {
                                    exit();
-                                   });
+                                });
 
+                                
 
-                               /**
+                                /**
                                 * when the user pushes the system close (X top right corner)
                                 */
-                               // override window closing method
+                                // override window closing method
                                 searchOwnerFrame.addWindowListener(new WindowAdapter(){
                                    @Override
                                    public void windowClosing(WindowEvent d3){  // Attempt to exit application
@@ -1844,6 +1873,7 @@ public class SystemGui extends JFrame{
             });
                 
           
+            
             /**
              * adding functionality to "Back" button
              */
@@ -1853,12 +1883,16 @@ public class SystemGui extends JFrame{
                 this.setVisible(true);                     
             });
             
+            
+            
             /**
              * adding functionality to "Exit" button
              */
             ownerExitButton.addActionListener(j -> {
                 exit();
-                });
+            });
+            
+            
             
             // adding all nested panel to main panel
             ownerMainPanel.add(panela4, BorderLayout.CENTER);
@@ -1876,8 +1910,7 @@ public class SystemGui extends JFrame{
                 public void windowClosing(WindowEvent d4){  // Attempt to exit application
                     exit();				
                 }
-            });
-            
+            });            
                        
          // end of owner info search and edit button action listener
         });
@@ -1885,7 +1918,8 @@ public class SystemGui extends JFrame{
         
         
         /**
-         * adding functionality to "Search and Edit Vehicle Info" button
+         * adding functionality to 
+         * "Search and Edit Vehicle Info" button
          */
         sAndEVehicle.addActionListener(n -> {
             
@@ -1953,7 +1987,8 @@ public class SystemGui extends JFrame{
             
             
             /**
-             * adding functionality to "Search" button for vehicles
+             * adding functionality to 
+             * "Search" button for vehicles
              */
             vehicleSearchButton.addActionListener(q -> {
                 
@@ -2272,7 +2307,8 @@ public class SystemGui extends JFrame{
                                         searchSeatNumbersText.setEnabled(false);
                                         break;
                                     }                                    
-                                }                                               
+                                }   
+                                
                                 
                                 
                                 /**
@@ -2354,9 +2390,11 @@ public class SystemGui extends JFrame{
                                     });                                            
                                 });
                                 
+                                
                                                                 
                                 /**
-                                 * adding functionality to "Save" button 
+                                 * adding functionality to 
+                                 * "Save" button 
                                  */
                                 vehicleSave.addActionListener(r5 ->{                                                               
                                     
@@ -2380,6 +2418,7 @@ public class SystemGui extends JFrame{
                                         return;
                                     }
 
+                                    
 
                                     // for brand of vehicle
                                     String vehicleMake1; 
@@ -2426,6 +2465,7 @@ public class SystemGui extends JFrame{
                                     }
 
 
+                                    
                                     // for year of manufacture of vehicle
                                     int vehicleYear1; 
                                     if(searchYearText.getText().equals("")){
@@ -2447,27 +2487,34 @@ public class SystemGui extends JFrame{
                                     }    
                                     
                                     
+                                    
+                                    // checking which type of vehicle has been selected when editing
                                     switch((String)searchVehicleComboBox.getSelectedItem()){
                                             
                                         case "Select": 
                                             vehicleAfterEdit = 0;
                                             break;
 
+                                        // for motorcycle
                                         case "Motorcycle":
                                             vehicleAfterEdit = 1;
                                             break;
 
+                                        // for light vehicle    
                                         case "Light vehicle":
                                             vehicleAfterEdit = 2;
                                             break;
 
+                                        // for heavy vehicle    
                                         case "Heavy vehicle":
                                             vehicleAfterEdit = 3;
                                             break;
                                     }
                                     
+                                    
                                     // temporary variable to store plate number
                                     String plateAfterEdit;                                     
+                                    
                                     
                                     /**
                                      * when the vehicle type of the owner is not changed
@@ -2571,6 +2618,7 @@ public class SystemGui extends JFrame{
                                     }                                  
                                     
                                     
+                                    
                                     /**
                                      * when the type of vehicle of owner is updated
                                      * the previous vehicle's details is deleted and
@@ -2590,24 +2638,27 @@ public class SystemGui extends JFrame{
                                          */
                                         switch (vehicleBeforeEdit){
                                             
+                                            // removing an instance of motorcycle 
                                             case 1:
                                                 motorcycleArray.remove(vehicleArrayPlace);
-                                                break;
+                                            break;
                                             
+                                            // removing an instance of light vehicle    
                                             case 2:
                                                 lightVehicleArray.remove(vehicleArrayPlace);
-                                                break;
+                                            break;
                                                 
+                                            // removing an instance of heavy vehicle
                                             case 3:
                                                 heavyVehicleArray.remove(vehicleArrayPlace);
-                                                break;
+                                            break;
                                         }
                                         
                                         
                                         // finding the vehicle choosen after editing 
                                         switch(vehicleAfterEdit){
                                             
-                                            // when motorcycle is choosen after edit
+                                            // when motorcycle is choosen during edit
                                             case 1:                              
                                                 
                                                 // adding motorcycle details to object of motorcycleArray
@@ -2621,9 +2672,9 @@ public class SystemGui extends JFrame{
                                                         + "Make: %s\n"
                                                         + "Model: %s\n"
                                                         + "Year: %d", plateAfterEdit, vehicleEngine, vehicleMake1, vehicleModel1, vehicleYear1));
-                                                break;
+                                            break;
                                                 
-                                            // when light vehicle is choosen after edit    
+                                            // when light vehicle is choosen during edit    
                                             case 2:
                                                              
                                                 int vehicleSeatNumbers;
@@ -2657,9 +2708,9 @@ public class SystemGui extends JFrame{
                                                     searchSeatNumbersText.requestFocus();
                                                     return;
                                                 }                                                                        
-                                                break;
+                                            break;
                                                 
-                                            // when heavy vehicle is choosen after edit    
+                                            // when heavy vehicle is choosen during edit    
                                             case 3:
                                                       
                                                 double vehicleLoadCapacity;
@@ -2693,9 +2744,10 @@ public class SystemGui extends JFrame{
                                                     searchLoadCapacityText.requestFocus();
                                                     return;
                                                 }                                                                                  
-                                                break;                                            
+                                            break;                                            
                                         }
                                                                                 
+                                        
                                         
                                         /**
                                          * changing the global variable plateNumber so that 
@@ -2732,7 +2784,8 @@ public class SystemGui extends JFrame{
                                 
                                 
                                 /**
-                                 * adding functionality to "Clear" button
+                                 * adding functionality to 
+                                 * "Clear" button
                                  */
                                 vehicleClear.addActionListener(r4 -> {
                                     
@@ -2749,6 +2802,7 @@ public class SystemGui extends JFrame{
                                 });                                                          
                                 
                                 
+                                
                                 /**
                                  * adding functionality to "Back" button
                                  */
@@ -2760,6 +2814,7 @@ public class SystemGui extends JFrame{
                                     vehicleSearchArea.requestFocus();
                                 });
 
+                                
 
                                 /**
                                  * adding functionality to "Exit" button
@@ -2769,6 +2824,7 @@ public class SystemGui extends JFrame{
                                     });
 
 
+                                
                                 /**
                                  * when the user pushes the system close (X top right corner)
                                  */
@@ -2796,6 +2852,7 @@ public class SystemGui extends JFrame{
                 this.setVisible(true);
             });
             
+            
                         
             /**
              * adding functionality to "Exit" button
@@ -2803,6 +2860,7 @@ public class SystemGui extends JFrame{
             vehicleExitButton.addActionListener(p -> {
                 exit();
                 });
+            
             
             
             /**
@@ -2814,8 +2872,7 @@ public class SystemGui extends JFrame{
                 public void windowClosing(WindowEvent d6){  // Attempt to exit application
                     exit();				
                 }
-            });
-            
+            });            
             
          // end of vehicle info search and edit button action listener    
         });
@@ -2830,6 +2887,7 @@ public class SystemGui extends JFrame{
             });
         
         
+        
         /**
          * when the user pushes the system close (X top right corner)
          */
@@ -2839,11 +2897,11 @@ public class SystemGui extends JFrame{
             public void windowClosing(WindowEvent d1){  // Attempt to exit application      
                exit();				
             }
-	});
-        
+	});        
                       
      // end of constructor   
     }
+    
     
 
     /**
@@ -2854,8 +2912,7 @@ public class SystemGui extends JFrame{
         JFrame frame6 = new JFrame();
         String title = "Motor Vehicle Registration (MVR)";
                
-        int n = JOptionPane.showConfirmDialog(frame6, "Do you want to exit the system?", title,
-                            JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(frame6, "Do you want to exit the system?", title, JOptionPane.YES_NO_OPTION);
         
         // for "Yes" button
         if(n == JOptionPane.YES_OPTION){
@@ -2868,17 +2925,20 @@ public class SystemGui extends JFrame{
     }
     
     
+    
     /**
      * errorMessageBox method
      * @param errorMessage 
      * frame for all the error messages
      */
-    private void errorMessageBox(String errorMessage){                  //method to create an error message window
-            
+    private void errorMessageBox(String errorMessage){                  
+    //method to create an error message window   
+    
         JFrame frame2 = new JFrame();
         String title = "Error message";
         JOptionPane.showMessageDialog(frame2, errorMessage, title, JOptionPane.ERROR_MESSAGE);
     }
+    
     
     
     /**
@@ -2894,6 +2954,7 @@ public class SystemGui extends JFrame{
     }
     
     
+    
     /**
      * main method 
      * @param args 
@@ -2906,15 +2967,16 @@ public class SystemGui extends JFrame{
             // making a new frame
             JFrame frame = new SystemGui();        
             
-            frame.setTitle("Motor Vehicle Registration(MVR)");      // title of app 
-            frame.setLocationRelativeTo(null);                      // placing app at center of screen
-            frame.setVisible(true);                                 // making app visible
-            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);   // making app close when the X button is clicked
-            frame.setResizable(true);                               // making app resizable
+            frame.setTitle("Motor Vehicle Registration(MVR)");             // title of app 
+            frame.setLocationRelativeTo(null);                             // placing app at center of screen
+            frame.setVisible(true);                                        // making app visible
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    // making app close when the X button is clicked
+            frame.setResizable(false);                                     // making app resizable
         });
         
      // end of main method   
     }
     
- // End of class
+    
+ // End of GUI class
 }
